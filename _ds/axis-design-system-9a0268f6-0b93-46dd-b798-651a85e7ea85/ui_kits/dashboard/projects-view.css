@@ -1,0 +1,162 @@
+/* =====================================================================
+   Projects view — table patterns + board view
+   ===================================================================== */
+
+/* ── Row affordances ────────────────────────────────────────────────── */
+.task-row { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.task-row__main { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.task-row__title { font-size: 13px; font-weight: 500; color: var(--fg-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.task-row__sub   { display: flex; align-items: center; gap: 8px; }
+.task-row__meta  { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; color: var(--fg-3); }
+
+.priority-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Progress bar inside table cells ────────────────────────────────── */
+.progress-cell {
+  display: flex; align-items: center; gap: 8px;
+  min-width: 100px;
+}
+.progress-cell__bar {
+  flex: 1; height: 5px;
+  background: var(--neutral-100);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+[data-theme="dark"] .progress-cell__bar { background: var(--neutral-800); }
+.progress-cell__fill { height: 100%; border-radius: var(--radius-full); transition: width var(--duration-large) var(--ease-out); }
+.progress-cell__num {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--fg-2);
+  font-variant-numeric: tabular-nums;
+  min-width: 32px; text-align: end;
+  unicode-bidi: isolate;
+}
+
+/* ── Board view (kanban) ────────────────────────────────────────────── */
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.board-col {
+  background: var(--neutral-50);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex; flex-direction: column;
+  min-width: 0;
+}
+[data-theme="dark"] .board-col { background: var(--surface-1); }
+
+.board-col__head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px 8px;
+}
+.board-col__title {
+  display: flex; align-items: center; gap: 8px;
+  flex: 1;
+}
+.board-col__count {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--fg-3);
+  unicode-bidi: isolate;
+}
+.board-col__add {
+  width: 24px; height: 24px;
+  border: 0; background: transparent;
+  display: grid; place-items: center;
+  color: var(--fg-3); cursor: pointer;
+  border-radius: var(--radius-xs);
+}
+.board-col__add:hover { background: var(--action-ghost-hover); color: var(--fg-1); }
+
+.board-col__body {
+  display: flex; flex-direction: column;
+  gap: 8px;
+  padding: 0 10px 10px;
+  min-height: 100px;
+}
+
+.board-col__empty {
+  padding: 16px 8px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 12px; color: var(--fg-3);
+  text-align: center;
+}
+
+/* ── Board card ─────────────────────────────────────────────────────── */
+.board-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 8px;
+  cursor: pointer;
+  transition: border-color var(--duration-micro) var(--ease-out), box-shadow var(--duration-micro) var(--ease-out), transform var(--duration-micro) var(--ease-out);
+}
+.board-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.board-card__head {
+  display: flex; align-items: center; gap: 8px;
+}
+.board-card__id {
+  margin-inline-start: auto;
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--fg-3);
+  unicode-bidi: isolate;
+}
+.board-card__title {
+  font-size: 13px; font-weight: 500;
+  color: var(--fg-1);
+  line-height: 1.45;
+}
+.board-card__foot {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 11px; color: var(--fg-3);
+  margin-top: 2px;
+}
+.board-card__due  { display: inline-flex; align-items: center; gap: 4px; }
+.board-card__meta { display: inline-flex; align-items: center; gap: 4px; margin-inline-start: auto; }
+
+/* ── Task detail (drawer body) ──────────────────────────────────────── */
+.task-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 24px;
+}
+.task-detail-cell { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.task-detail-cell__label {
+  font-family: var(--font-mono); font-size: 10px;
+  color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.06em;
+}
+.task-detail-cell__value { font-size: 14px; color: var(--fg-1); }
+
+.subtasks { display: flex; flex-direction: column; gap: 6px; }
+.subtask {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px;
+  background: var(--neutral-50);
+  border-radius: var(--radius-sm);
+  font-size: 13px; color: var(--fg-1);
+}
+[data-theme="dark"] .subtask { background: var(--neutral-900); }
+.subtask .axis-check__box { width: 16px; height: 16px; }
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .board-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .board-grid { grid-template-columns: 1fr; }
+  .task-detail-grid { grid-template-columns: 1fr; }
+  .axis-table-toolbar { flex-wrap: wrap; gap: 8px; padding: 10px 14px; }
+  .axis-table-toolbar__search { max-width: none; width: 100%; }
+  .axis-table-toolbar__actions { width: 100%; flex-wrap: wrap; }
+  .axis-table-toolbar__actions .axis-seg { flex: 1 1 100%; }
+  .axis-table-toolbar__actions .axis-seg button { flex: 1; padding: 4px 6px; font-size: 11px; }
+}

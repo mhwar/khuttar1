@@ -1,0 +1,244 @@
+/* =====================================================================
+   Tables — simple + complex with sticky header, sticky first column,
+   sortable headers, density, row selection, empty states. RTL-aware.
+   ===================================================================== */
+
+/* ── Wrapper provides horizontal scroll for wide tables ─────────────── */
+.axis-table__wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface-1);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Base table ─────────────────────────────────────────────────────── */
+.axis-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--fg-1);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Density ────────────────────────────────────────────────────────── */
+.axis-table--compact     th, .axis-table--compact     td { padding: 8px 12px; }
+.axis-table--comfortable th, .axis-table--comfortable td { padding: 12px 16px; }
+.axis-table--spacious    th, .axis-table--spacious    td { padding: 16px 18px; }
+
+/* ── Header ─────────────────────────────────────────────────────────── */
+.axis-table thead th {
+  background: var(--neutral-50);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--fg-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: start;
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+  user-select: none;
+  position: relative;
+}
+[data-theme="dark"] .axis-table thead th { background: var(--neutral-900); }
+
+.axis-table thead th[aria-sort],
+.axis-table thead th[onclick],
+.axis-table thead th:has(.axis-table__sort) {
+  cursor: pointer;
+  transition: background var(--duration-micro) var(--ease-out), color var(--duration-micro) var(--ease-out);
+}
+.axis-table thead th:hover { color: var(--fg-1); }
+
+.axis-table__th {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.axis-table__sort {
+  display: inline-flex;
+  color: var(--fg-4);
+  opacity: 0.6;
+  transition: all var(--duration-micro) var(--ease-out);
+}
+.axis-table thead th:hover .axis-table__sort { opacity: 1; }
+.axis-table__sort.is-active { color: var(--iris-500); opacity: 1; }
+
+/* ── Sticky header ──────────────────────────────────────────────────── */
+.axis-table.has-sticky-head thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+/* ── Sticky first column (after checkbox if present) ────────────────── */
+.axis-table.has-sticky-col tbody td.is-sticky,
+.axis-table.has-sticky-col thead th.is-sticky {
+  position: sticky;
+  inset-inline-start: 0;
+  background: var(--surface-1);
+  z-index: 1;
+}
+.axis-table.has-sticky-col thead th.is-sticky {
+  background: var(--neutral-50);
+  z-index: 3;
+}
+[data-theme="dark"] .axis-table.has-sticky-col tbody td.is-sticky { background: var(--surface-1); }
+[data-theme="dark"] .axis-table.has-sticky-col thead th.is-sticky { background: var(--neutral-900); }
+
+/* Subtle shadow on sticky column edge */
+.axis-table.has-sticky-col tbody td.is-sticky::after,
+.axis-table.has-sticky-col thead th.is-sticky::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  inset-inline-end: -1px;
+  width: 1px;
+  background: var(--border-subtle);
+  pointer-events: none;
+}
+
+/* RTL: shadow on the inline-end (left in RTL) — handled by inset-inline-end */
+
+/* ── Body rows ──────────────────────────────────────────────────────── */
+.axis-table tbody td {
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+.axis-table tbody tr:last-child td { border-bottom: 0; }
+
+.axis-table tbody tr {
+  transition: background var(--duration-micro) var(--ease-out);
+}
+.axis-table tbody tr:hover { background: oklch(0.62 0.21 275 / 0.04); }
+[data-theme="dark"] .axis-table tbody tr:hover { background: oklch(1 0 0 / 0.03); }
+
+.axis-table tbody tr.is-clickable { cursor: pointer; }
+.axis-table tbody tr.is-selected { background: oklch(0.62 0.21 275 / 0.06); }
+[data-theme="dark"] .axis-table tbody tr.is-selected { background: oklch(0.62 0.21 275 / 0.10); }
+
+.axis-table td.is-end, .axis-table th.is-end { text-align: end; }
+.axis-table td.is-mono, .axis-table th.is-mono { font-family: var(--font-mono); font-size: 12px; }
+
+/* Sticky col hover: ensure sticky cell follows row hover background */
+.axis-table tbody tr:hover td.is-sticky {
+  background: oklch(0.97 0.03 275);
+}
+[data-theme="dark"] .axis-table tbody tr:hover td.is-sticky { background: oklch(0.18 0.025 275); }
+.axis-table tbody tr.is-selected td.is-sticky {
+  background: oklch(0.95 0.04 275);
+}
+[data-theme="dark"] .axis-table tbody tr.is-selected td.is-sticky { background: oklch(0.20 0.04 275); }
+
+/* ── Checkbox cell ──────────────────────────────────────────────────── */
+.axis-table__check {
+  width: 36px;
+  padding-inline-end: 0 !important;
+}
+
+/* ── Empty state ────────────────────────────────────────────────────── */
+.axis-table__empty {
+  text-align: center !important;
+  padding: 48px 16px !important;
+  color: var(--fg-3);
+  font-size: 13px;
+}
+
+/* ── Checkbox primitive ─────────────────────────────────────────────── */
+.axis-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+.axis-check input { position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0; }
+.axis-check__box {
+  width: 16px; height: 16px;
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  background: var(--surface-1);
+  display: inline-grid;
+  place-items: center;
+  color: transparent;
+  transition: all var(--duration-micro) var(--ease-out);
+}
+.axis-check:hover .axis-check__box { border-color: var(--iris-400); }
+.axis-check.is-on .axis-check__box,
+.axis-check.is-indet .axis-check__box {
+  background: var(--iris-500);
+  border-color: var(--iris-500);
+  color: white;
+}
+.axis-check input:focus-visible + .axis-check__box {
+  box-shadow: 0 0 0 3px oklch(0.62 0.21 275 / 0.20);
+}
+.axis-check__label { font-size: 13px; color: var(--fg-1); }
+
+/* ── Pagination ─────────────────────────────────────────────────────── */
+.axis-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+.axis-pagination__info { font-size: 13px; color: var(--fg-2); }
+.axis-pagination__info strong { color: var(--fg-1); font-weight: 600; }
+.axis-pagination__controls { display: flex; align-items: center; gap: 10px; }
+.axis-pagination__page { font-size: 13px; color: var(--fg-2); }
+.axis-pagination__page strong { color: var(--fg-1); font-weight: 600; }
+
+/* ── Card containing a table — strip its own border ─────────────────── */
+.axis-card > .axis-table__wrap {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* ── Toolbar above tables ───────────────────────────────────────────── */
+.axis-table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+}
+.axis-table-toolbar__search {
+  flex: 1; min-width: 180px; max-width: 320px;
+  display: flex; align-items: center; gap: 8px;
+  height: 32px; padding: 0 10px;
+  background: var(--surface-0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--fg-3);
+}
+.axis-table-toolbar__search input {
+  border: 0; outline: 0; background: transparent;
+  flex: 1; font: inherit; font-size: 13px; color: var(--fg-1);
+  font-family: var(--font-sans);
+}
+.axis-table-toolbar__search input::placeholder { color: var(--fg-3); }
+.axis-table-toolbar__actions {
+  display: flex; align-items: center; gap: 8px;
+  margin-inline-start: auto;
+}
+.axis-table-toolbar__bulk {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 6px;
+  font-size: 13px; color: var(--iris-700);
+  font-weight: 500;
+}
+[data-theme="dark"] .axis-table-toolbar__bulk { color: var(--iris-300); }
+
+/* ── Mobile: stack table rows as cards ──────────────────────────────── */
+@media (max-width: 640px) {
+  .axis-table-toolbar__search { max-width: none; width: 100%; }
+}

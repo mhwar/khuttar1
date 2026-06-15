@@ -1,0 +1,87 @@
+/* =====================================================================
+   Axis × Sultan — Tailwind v4 token bridge
+   ---------------------------------------------------------------------
+   Drop this into src/app/ and add ONE line to the top of globals.css:
+
+       @import "./axis-theme.css";
+
+   It EXTENDS your existing @theme with the full Axis scale (neutrals,
+   iris, semantic 50-steps, spacing, radii, shadows, motion) while keeping
+   ALL your current variable names (--color-brand, --color-surface-*,
+   --color-text-*, status, priority) untouched. Nothing breaks; you just
+   gain a richer, consistent system to design against.
+
+   Usage in JSX (Tailwind v4 reads @theme vars as utilities):
+       <div className="bg-iris-500 text-neutral-0 rounded-md p-4">
+       <span className="text-fg-2">…</span>
+   ===================================================================== */
+
+@theme {
+  /* ── Neutral spine (cool cast, hue 260) — aligns to your surfaces ── */
+  --color-neutral-0:    #ffffff;
+  --color-neutral-50:   #f7f7fa;
+  --color-neutral-100:  #eeeef3;
+  --color-neutral-200:  #dcdce4;
+  --color-neutral-300:  #c3c3cf;
+  --color-neutral-400:  #9a9aab;
+  --color-neutral-500:  #74748a;
+  --color-neutral-600:  #565669;
+  --color-neutral-700:  #3f3f4e;
+  --color-neutral-800:  #2a2a37;
+  --color-neutral-900:  #1c1c27;
+  --color-neutral-950:  #12121a;
+  --color-neutral-1000: #08080f;   /* == your --color-surface-base */
+
+  /* ── Iris accent — built around your brand #6366F1 ─────────────── */
+  --color-iris-50:   #eef0ff;
+  --color-iris-100:  #e0e2ff;
+  --color-iris-200:  #c6caff;
+  --color-iris-300:  #a5a9fb;
+  --color-iris-400:  #818cf8;   /* == your --color-brand-light */
+  --color-iris-500:  #6366f1;   /* == your --color-brand */
+  --color-iris-600:  #5457e0;
+  --color-iris-700:  #4548c2;
+  --color-iris-800:  #3730a3;   /* == your --color-brand-muted */
+  --color-iris-900:  #2e2a7d;
+
+  /* ── Semantic — match your status/priority, add soft 50-tints ──── */
+  --color-success-500: #10b981;
+  --color-success-50:  rgba(16, 185, 129, 0.12);
+  --color-warning-500: #f59e0b;
+  --color-warning-50:  rgba(245, 158, 11, 0.12);
+  --color-danger-500:  #ef4444;
+  --color-danger-50:   rgba(239, 68, 68, 0.12);
+  --color-info-500:    #3b82f6;
+  --color-info-50:     rgba(59, 130, 246, 0.12);
+
+  /* ── Foreground aliases (mirror your --color-text-*) ───────────── */
+  --color-fg-1: var(--color-text-primary);
+  --color-fg-2: var(--color-text-secondary);
+  --color-fg-3: var(--color-text-muted);
+
+  /* ── Spacing — 8-pt grid (Tailwind already has these; explicit for clarity) ── */
+  --spacing-axis-1:  4px;
+  --spacing-axis-2:  8px;
+  --spacing-axis-3:  12px;
+  --spacing-axis-4:  16px;
+  --spacing-axis-6:  24px;
+  --spacing-axis-8:  32px;
+  --spacing-axis-12: 48px;
+  --spacing-axis-16: 64px;
+
+  /* ── Radii ─────────────────────────────────────────────────────── */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+
+  /* ── Shadows (neutral-tinted, dark-friendly) ───────────────────── */
+  --shadow-axis-sm: 0 1px 3px 0 rgba(0,0,0,0.40), 0 1px 2px -1px rgba(0,0,0,0.30);
+  --shadow-axis-md: 0 4px 8px -2px rgba(0,0,0,0.45), 0 2px 4px -2px rgba(0,0,0,0.30);
+  --shadow-axis-lg: 0 12px 24px -6px rgba(0,0,0,0.55), 0 4px 8px -4px rgba(0,0,0,0.30);
+
+  /* ── Motion — one easing, three durations ──────────────────────── */
+  --ease-axis: cubic-bezier(0.2, 0.8, 0.2, 1);
+}

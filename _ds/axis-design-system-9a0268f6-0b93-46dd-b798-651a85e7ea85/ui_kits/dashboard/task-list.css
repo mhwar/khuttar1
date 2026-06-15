@@ -1,0 +1,110 @@
+/* =====================================================================
+   TaskList — grouped checklist
+   ===================================================================== */
+
+.axis-tasklist {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.axis-tasklist__group {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.axis-tasklist__group-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px;
+  background: var(--neutral-50);
+  border-bottom: 1px solid var(--border-subtle);
+}
+[data-theme="dark"] .axis-tasklist__group-head { background: var(--neutral-900); }
+.axis-tasklist__group-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fg-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.axis-tasklist__group-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--fg-3);
+  background: var(--surface-1);
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  unicode-bidi: isolate;
+}
+
+.axis-tasklist__items {
+  list-style: none;
+  margin: 0; padding: 0;
+}
+
+.axis-tasklist__item {
+  display: grid;
+  grid-template-columns: 22px 1fr 24px;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background var(--duration-micro) var(--ease-out);
+}
+.axis-tasklist__item:last-child { border-bottom: 0; }
+.axis-tasklist__item:hover { background: oklch(0.62 0.21 275 / 0.03); }
+
+.axis-tasklist__item.is-done .axis-tasklist__title {
+  color: var(--fg-3);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+.axis-tasklist__check {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--border-default);
+  background: var(--surface-1);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: white;
+  flex-shrink: 0;
+  transition: all var(--duration-micro) var(--ease-out);
+}
+.axis-tasklist__check:hover { border-color: var(--iris-400); }
+.axis-tasklist__check.is-on {
+  background: var(--iris-500);
+  border-color: var(--iris-500);
+}
+
+.axis-tasklist__body {
+  min-width: 0;
+  cursor: pointer;
+  display: flex; flex-direction: column; gap: 4px;
+}
+
+.axis-tasklist__title-row {
+  display: flex; align-items: center; gap: 8px;
+  flex-wrap: wrap;
+}
+.axis-tasklist__title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fg-1);
+}
+
+.axis-tasklist__meta {
+  display: flex; align-items: center; gap: 16px;
+  font-size: 11px;
+  color: var(--fg-3);
+  flex-wrap: wrap;
+}
+.axis-tasklist__meta-item {
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.axis-tasklist__meta-item svg { color: var(--fg-4); }

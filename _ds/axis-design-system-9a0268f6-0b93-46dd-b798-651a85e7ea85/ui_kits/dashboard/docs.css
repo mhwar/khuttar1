@@ -1,0 +1,128 @@
+/* =====================================================================
+   Docs views (Tokens + Components)
+   ===================================================================== */
+
+.docs { display: flex; flex-direction: column; gap: 36px; }
+
+.docs-header { display: flex; flex-direction: column; gap: 6px; max-width: 720px; }
+.docs-header__eyebrow {
+  font-family: var(--font-mono); font-size: 10px; color: var(--iris-600);
+  text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;
+}
+.docs-header__title { font-size: 36px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; color: var(--fg-1); }
+.docs-header__sub { font-size: 15px; color: var(--fg-2); line-height: 1.5; max-width: 640px; }
+.docs-header__sub code { background: var(--neutral-100); padding: 1px 6px; border-radius: var(--radius-xs); font-size: 13px; }
+[data-theme="dark"] .docs-header__sub code { background: var(--neutral-800); color: var(--fg-1); }
+
+.docs-section { display: flex; flex-direction: column; gap: 14px; }
+.docs-section__head { display: flex; flex-direction: column; gap: 4px; }
+.docs-section__eyebrow {
+  font-family: var(--font-mono); font-size: 10px; color: var(--fg-3);
+  text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;
+}
+.docs-section__title { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: var(--fg-1); }
+.docs-section__sub { font-size: 13px; color: var(--fg-2); line-height: 1.5; max-width: 560px; }
+.docs-section__body { padding-top: 4px; }
+
+/* ── Color swatches ─────────────────────────────────────────────────── */
+/* Use auto-fit so the grid reflows whatever the container width is.
+   Min width chosen so step name + var token don't truncate awkwardly. */
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+  gap: 10px;
+}
+.swatch-grid--13 {
+  grid-template-columns: repeat(auto-fit, minmax(78px, 1fr));
+}
+.swatch { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.swatch__chip { height: 64px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); }
+.swatch__meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.swatch__name { font-size: 12px; font-weight: 500; color: var(--fg-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.swatch__var  { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; unicode-bidi: isolate; }
+
+/* ── Radii ──────────────────────────────────────────────────────────── */
+.radii-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 14px;
+}
+.radius-cell { display: flex; flex-direction: column; gap: 6px; align-items: center; padding: 8px 0; }
+.radius-cell__box { width: 72px; height: 72px; background: var(--neutral-100); border: 1px solid var(--border-subtle); }
+[data-theme="dark"] .radius-cell__box { background: var(--neutral-800); }
+.radius-cell__name { font-size: 12px; font-weight: 500; color: var(--fg-1); }
+
+/* ── Shadows ────────────────────────────────────────────────────────── */
+.shadow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 18px; padding: 12px 0;
+}
+.shadow-cell { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.shadow-cell__box {
+  width: 96px; height: 96px; background: var(--surface-1);
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);
+}
+.shadow-cell__name { font-family: var(--font-mono); font-size: 11px; color: var(--fg-2); }
+
+/* ── Spacing list ───────────────────────────────────────────────────── */
+.space-list { display: flex; flex-direction: column; gap: 6px; }
+.space-row { display: flex; align-items: center; gap: 14px; height: 24px; }
+.space-row__key { font-family: var(--font-mono); font-size: 12px; color: var(--fg-2); width: 96px; }
+.space-row__px  { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); width: 56px; }
+.space-row__bar { height: 12px; background: var(--iris-500); border-radius: 2px; }
+
+/* ── Motion ─────────────────────────────────────────────────────────── */
+.motion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+.motion-key { font-size: 13px; font-weight: 600; color: var(--fg-1); }
+.motion-use { font-size: 12px; color: var(--fg-3); margin-top: 4px; }
+.motion-ease {
+  margin-top: 14px;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  background: var(--neutral-50); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+[data-theme="dark"] .motion-ease { background: var(--neutral-900); }
+.motion-ease__label { font-size: 12px; font-weight: 500; color: var(--fg-2); }
+.motion-ease__code  { font-family: var(--font-mono); font-size: 12px; color: var(--fg-1); }
+.motion-ease__note  { font-size: 12px; color: var(--fg-3); margin-left: auto; }
+
+/* ── Components view groups ─────────────────────────────────────────── */
+.comp-group { display: flex; flex-direction: column; gap: 14px; }
+.comp-row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 320px)); gap: 16px 20px; }
+.control-pair { display: inline-flex; align-items: center; gap: 10px; }
+.control-label { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ── Rules list (tables anatomy) ────────────────────────────────────── */
+.rules-list {
+  margin: 0; padding: 0; list-style: none;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.rules-list li {
+  position: relative;
+  padding-inline-start: 22px;
+  font-size: 13px; line-height: 1.55;
+  color: var(--fg-2);
+}
+.rules-list li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 4px;
+  top: 8px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--iris-500);
+}
+.rules-list li strong { color: var(--fg-1); font-weight: 600; }
+.rules-list code {
+  font-family: var(--font-mono); font-size: 12px;
+  background: var(--neutral-100); padding: 1px 5px;
+  border-radius: var(--radius-xs); color: var(--fg-1);
+}
+[data-theme="dark"] .rules-list code { background: var(--neutral-800); }
