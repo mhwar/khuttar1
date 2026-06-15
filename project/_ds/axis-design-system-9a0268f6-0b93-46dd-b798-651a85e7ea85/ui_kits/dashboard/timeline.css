@@ -1,0 +1,267 @@
+/* =====================================================================
+   Timeline — vertical event rail
+   ===================================================================== */
+
+.axis-timeline-wrap { display: flex; flex-direction: column; gap: 18px; }
+.axis-timeline-group { display: flex; flex-direction: column; gap: 10px; }
+.axis-timeline-group__label {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--fg-3);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding-inline-start: 40px;
+}
+
+.axis-timeline {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex; flex-direction: column;
+}
+.axis-timeline__item {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  padding-bottom: 18px;
+  position: relative;
+}
+.axis-timeline-wrap.is-dense .axis-timeline__item { padding-bottom: 12px; }
+.axis-timeline__item:last-child { padding-bottom: 0; }
+
+.axis-timeline__rail {
+  display: flex; flex-direction: column; align-items: center;
+  position: relative;
+}
+.axis-timeline__dot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--iris-500);
+  color: white;
+  display: grid; place-items: center;
+  box-shadow: 0 0 0 4px var(--surface-1);
+  z-index: 1;
+  flex-shrink: 0;
+}
+.axis-timeline__line {
+  position: absolute;
+  top: 26px;
+  bottom: -10px;
+  width: 2px;
+  background: var(--border-subtle);
+  border-radius: 2px;
+}
+
+.axis-timeline__item--success .axis-timeline__dot { background: var(--success-500); }
+.axis-timeline__item--warning .axis-timeline__dot { background: var(--warning-500); color: oklch(0.20 0.04 75); }
+.axis-timeline__item--danger  .axis-timeline__dot { background: var(--danger-500); }
+.axis-timeline__item--info    .axis-timeline__dot { background: var(--info-500); }
+.axis-timeline__item--neutral .axis-timeline__dot { background: var(--neutral-400); color: white; }
+
+.axis-timeline__item.is-done    .axis-timeline__dot { background: var(--success-500); }
+.axis-timeline__item.is-current .axis-timeline__dot {
+  background: var(--iris-500);
+  box-shadow: 0 0 0 4px var(--surface-1), 0 0 0 8px oklch(0.62 0.21 275 / 0.18);
+}
+.axis-timeline__item.is-pending .axis-timeline__dot {
+  background: var(--surface-1);
+  color: var(--fg-3);
+  border: 2px dashed var(--border-default);
+  box-shadow: none;
+}
+
+.axis-timeline__content { padding-top: 1px; min-width: 0; }
+.axis-timeline__meta {
+  display: flex; align-items: baseline; gap: 10px;
+  margin-bottom: 4px;
+}
+.axis-timeline__time {
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 500;
+  color: var(--fg-1);
+  font-variant-numeric: lining-nums tabular-nums;
+  unicode-bidi: isolate;
+}
+.axis-timeline__duration {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--fg-3);
+  unicode-bidi: isolate;
+}
+.axis-timeline__title { font-size: 14px; font-weight: 600; color: var(--fg-1); }
+.axis-timeline__sub   { font-size: 12px; color: var(--fg-3); margin-top: 2px; }
+.axis-timeline__body  { font-size: 13px; color: var(--fg-2); margin-top: 6px; line-height: 1.55; }
+
+/* =====================================================================
+   DailyAgenda — hours-of-day view
+   ===================================================================== */
+
+.axis-agenda {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 0;
+  font-variant-numeric: lining-nums tabular-nums;
+  position: relative;
+}
+
+/* Hours rail */
+.axis-agenda__rail {
+  position: relative;
+  border-inline-end: 1px solid var(--border-subtle);
+}
+.axis-agenda__hour {
+  position: absolute;
+  inset-inline-start: 0; inset-inline-end: 8px;
+  height: var(--hour-h, 64px);
+  display: flex; align-items: flex-start; justify-content: flex-end;
+}
+.axis-agenda__hour-label {
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 500;
+  color: var(--fg-3);
+  text-transform: uppercase; letter-spacing: 0.04em;
+  margin-top: -7px;
+  background: var(--surface-1);
+  padding-inline: 4px;
+  unicode-bidi: isolate;
+}
+.axis-agenda__hour-line { display: none; }
+
+/* Events column */
+.axis-agenda__events {
+  position: relative;
+  padding-inline-start: 8px;
+  min-height: var(--hour-h, 64px);
+}
+.axis-agenda__gridline {
+  position: absolute;
+  inset-inline-start: 0; inset-inline-end: 0;
+  height: 1px;
+  background: var(--border-subtle);
+  pointer-events: none;
+}
+
+/* "Now" indicator */
+.axis-agenda__now {
+  position: absolute;
+  inset-inline-start: 0; inset-inline-end: 0;
+  height: 1px;
+  z-index: 3;
+  pointer-events: none;
+  display: flex; align-items: center;
+}
+.axis-agenda__now-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--danger-500);
+  flex-shrink: 0;
+  margin-inline-start: -5px;
+  z-index: 4;
+  box-shadow: 0 0 0 4px var(--surface-1);
+}
+.axis-agenda__now-line {
+  flex: 1;
+  height: 1.5px;
+  background: var(--danger-500);
+}
+.axis-agenda__now-label {
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 600;
+  color: var(--danger-500);
+  background: var(--surface-1);
+  padding: 1px 6px;
+  border-radius: var(--radius-xs);
+  margin-inline-end: 4px;
+  unicode-bidi: isolate;
+}
+
+/* Event blocks */
+.axis-agenda__event {
+  position: absolute;
+  border-radius: var(--radius-md);
+  background: var(--iris-50);
+  color: var(--iris-700);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform var(--duration-micro) var(--ease-out), box-shadow var(--duration-micro) var(--ease-out);
+  display: flex;
+}
+.axis-agenda__event:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.axis-agenda__event:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+
+[data-theme="dark"] .axis-agenda__event {
+  background: oklch(0.30 0.10 275 / 0.30);
+  color: var(--iris-200);
+}
+
+.axis-agenda__event-bar {
+  width: 3px;
+  background: var(--iris-500);
+  flex-shrink: 0;
+}
+.axis-agenda__event-body {
+  flex: 1; min-width: 0;
+  padding: 6px 10px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.axis-agenda__event-head {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--iris-600);
+  font-weight: 500;
+  unicode-bidi: isolate;
+}
+[data-theme="dark"] .axis-agenda__event-head { color: var(--iris-300); }
+.axis-agenda__event-time { unicode-bidi: isolate; white-space: nowrap; }
+.axis-agenda__event-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.axis-agenda__event-sub {
+  font-size: 11px;
+  color: var(--fg-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Tones */
+.axis-agenda__event--success { background: var(--feedback-success-bg); }
+.axis-agenda__event--success .axis-agenda__event-bar { background: var(--success-500); }
+.axis-agenda__event--success .axis-agenda__event-head { color: var(--success-600); }
+
+.axis-agenda__event--warning { background: var(--feedback-warning-bg); }
+.axis-agenda__event--warning .axis-agenda__event-bar { background: var(--warning-500); }
+.axis-agenda__event--warning .axis-agenda__event-head { color: var(--warning-600); }
+
+.axis-agenda__event--danger { background: var(--feedback-danger-bg); }
+.axis-agenda__event--danger .axis-agenda__event-bar { background: var(--danger-500); }
+.axis-agenda__event--danger .axis-agenda__event-head { color: var(--danger-600); }
+
+.axis-agenda__event--info { background: var(--feedback-info-bg); }
+.axis-agenda__event--info .axis-agenda__event-bar { background: var(--info-500); }
+.axis-agenda__event--info .axis-agenda__event-head { color: var(--info-600); }
+
+.axis-agenda__event--neutral { background: var(--neutral-100); color: var(--fg-1); }
+.axis-agenda__event--neutral .axis-agenda__event-bar { background: var(--neutral-400); }
+.axis-agenda__event--neutral .axis-agenda__event-head { color: var(--fg-2); }
+[data-theme="dark"] .axis-agenda__event--neutral { background: var(--neutral-800); }
+
+/* States */
+.axis-agenda__event.is-done {
+  opacity: 0.65;
+}
+.axis-agenda__event.is-done .axis-agenda__event-title {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+.axis-agenda__event.is-current {
+  box-shadow: 0 0 0 2px var(--iris-500), var(--shadow-md);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .axis-agenda { grid-template-columns: 56px 1fr; }
+  .axis-agenda__event-sub { display: none; }
+}

@@ -1,0 +1,37 @@
+/* =====================================================================
+   ViewSwitcher
+   ===================================================================== */
+
+.axis-view-switcher {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--neutral-100);
+  border-radius: var(--radius-md);
+  gap: 2px;
+}
+[data-theme="dark"] .axis-view-switcher { background: var(--neutral-900); }
+
+.axis-view-switcher__btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 0; background: transparent;
+  padding: 5px 10px;
+  font: inherit;
+  font-size: 12px; font-weight: 500;
+  color: var(--fg-2);
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: all var(--duration-micro) var(--ease-out);
+}
+.axis-view-switcher__btn:hover { color: var(--fg-1); }
+.axis-view-switcher__btn.is-on {
+  background: var(--surface-1);
+  color: var(--fg-1);
+  box-shadow: var(--shadow-xs);
+}
+[data-theme="dark"] .axis-view-switcher__btn.is-on { background: var(--neutral-800); }
+
+@media (max-width: 640px) {
+  .axis-view-switcher__btn span { display: none; }
+  .axis-view-switcher__btn { padding: 6px 8px; }
+}

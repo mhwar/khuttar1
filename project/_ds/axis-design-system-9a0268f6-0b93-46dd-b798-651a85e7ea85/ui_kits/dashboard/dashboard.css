@@ -1,0 +1,131 @@
+/* =====================================================================
+   Dashboard view styles
+   ===================================================================== */
+
+.dash { display: flex; flex-direction: column; gap: 20px; }
+
+/* ── Hero banner ────────────────────────────────────────────────────── */
+.page-banner {
+  position: relative; overflow: hidden;
+  background: var(--surface-1); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl); padding: 28px 32px;
+}
+.page-banner__bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 80% 60% at 100% 0%, oklch(0.62 0.21 275 / 0.18), transparent 60%);
+}
+[data-theme="dark"] .page-banner__bg { background: radial-gradient(ellipse 80% 60% at 100% 0%, oklch(0.62 0.21 275 / 0.25), transparent 60%); }
+.page-banner__body { position: relative; }
+.page-banner__eyebrow { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--fg-3); margin-bottom: 12px; }
+.page-banner__title { font-size: 36px; line-height: 1.1; font-weight: 600; letter-spacing: -0.03em; color: var(--fg-1); margin: 0 0 6px; }
+.page-banner__sub { font-size: 14px; color: var(--fg-2); margin: 0 0 18px; }
+.page-banner__actions { display: flex; gap: 8px; }
+
+/* ── Metric cards row ───────────────────────────────────────────────── */
+.dash__metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.metric-card { display: flex; flex-direction: column; gap: 6px; }
+.metric-card__head { display: flex; align-items: center; justify-content: space-between; }
+.metric-card__label { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.08em; }
+.metric-card__value { font-family: var(--font-display); font-size: 28px; font-weight: 600; color: var(--fg-1); letter-spacing: -0.025em; font-variant-numeric: tabular-nums; unicode-bidi: isolate; }
+.metric-card__spark { height: 36px; width: 100%; margin-top: 6px; }
+
+/* ── Dashboard split: table + activity ──────────────────────────────── */
+.dash__grid { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; }
+
+/* ── Deployments table ──────────────────────────────────────────────── */
+.deployments-card { overflow: hidden; }
+.deployments-head { display: flex; align-items: flex-start; justify-content: space-between; padding: 18px 18px 12px; }
+.deployments-title { font-size: 15px; font-weight: 600; color: var(--fg-1); }
+.deployments-sub { font-size: 12px; color: var(--fg-3); margin-top: 2px; }
+.deployments-actions { display: flex; align-items: center; gap: 8px; }
+
+.deployments-table { display: flex; flex-direction: column; }
+.deployments-row {
+  display: grid;
+  grid-template-columns: 90px 1.4fr 88px 110px 70px 1fr 80px;
+  gap: 12px; padding: 10px 18px; align-items: center;
+  font-size: 13px; border-top: 1px solid var(--border-subtle);
+}
+.deployments-row--head {
+  background: var(--neutral-50);
+  font-family: var(--font-mono); font-size: 10px;
+  color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.08em;
+  padding-top: 8px; padding-bottom: 8px;
+}
+[data-theme="dark"] .deployments-row--head { background: var(--neutral-900); }
+.deployments-row:not(.deployments-row--head):hover { background: oklch(0.62 0.21 275 / 0.03); }
+[data-theme="dark"] .deployments-row:not(.deployments-row--head):hover { background: oklch(1 0 0 / 0.02); }
+
+.dep-commit { font-family: var(--font-mono); font-size: 12px; color: var(--fg-1); background: var(--neutral-100); padding: 1px 6px; border-radius: var(--radius-xs); unicode-bidi: isolate; }
+[data-theme="dark"] .dep-commit { background: var(--neutral-800); }
+.dep-branch { display: inline-flex; align-items: center; gap: 6px; color: var(--fg-1); font-family: var(--font-mono); font-size: 12px; unicode-bidi: isolate; }
+.dep-branch svg { color: var(--fg-3); }
+.dep-duration { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 12px; color: var(--fg-2); }
+.dep-author { display: inline-flex; align-items: center; gap: 8px; color: var(--fg-1); font-size: 13px; }
+.dep-pulse {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--warning-500);
+  animation: dep-pulse 1.4s var(--ease-out) infinite;
+}
+@keyframes dep-pulse { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.4); } }
+
+/* ── Activity feed ──────────────────────────────────────────────────── */
+.feed-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+.feed-title { font-size: 15px; font-weight: 600; color: var(--fg-1); }
+.feed-sub { font-size: 12px; color: var(--fg-3); margin-top: 2px; }
+.feed-list { display: flex; flex-direction: column; gap: 14px; }
+.feed-item { display: flex; gap: 12px; }
+.feed-text { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+.feed-line { font-size: 13px; line-height: 1.4; }
+.feed-meta { display: flex; align-items: center; gap: 6px; color: var(--fg-3); font-size: 11px; }
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .dash__metrics { grid-template-columns: repeat(2, 1fr); }
+  .dash__grid    { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .dash { gap: 14px; }
+
+  /* Banner */
+  .page-banner { padding: 20px 18px; }
+  .page-banner__title { font-size: 26px; }
+  .page-banner__sub { font-size: 13px; }
+  .page-banner__actions { flex-wrap: wrap; gap: 8px; }
+
+  /* Metrics: 2 columns on mobile */
+  .dash__metrics { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .metric-card__value { font-size: 22px; }
+
+  /* Deployments: simplified table */
+  .deployments-head { padding: 14px 14px 10px; flex-direction: column; gap: 10px; }
+  .deployments-actions { width: 100%; justify-content: flex-start; }
+  .deployments-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 10px;
+    padding: 10px 14px;
+    row-gap: 4px;
+  }
+  .deployments-row--head { display: none; }
+  /* Show only commit + status on mobile row */
+  .deployments-row > :nth-child(2),
+  .deployments-row > :nth-child(3),
+  .deployments-row > :nth-child(5),
+  .deployments-row > :nth-child(6),
+  .deployments-row > :nth-child(7) { display: none; }
+  .deployments-row > :nth-child(1) { font-size: 12px; }
+  .deployments-row > :nth-child(4) { justify-self: end; }
+
+  /* Activity feed */
+  .feed-item { gap: 10px; }
+
+  /* Docs */
+  .docs { gap: 24px; }
+  .docs-header__title { font-size: 26px; }
+  .swatch-grid { grid-template-columns: repeat(5, 1fr) !important; }
+  .radii-grid  { grid-template-columns: repeat(3, 1fr); }
+  .shadow-grid { grid-template-columns: repeat(3, 1fr); }
+  .motion-grid { grid-template-columns: 1fr; }
+  .form-grid   { grid-template-columns: 1fr; }
+  .comp-row    { gap: 8px; }
+}

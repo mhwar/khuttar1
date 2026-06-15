@@ -1,0 +1,179 @@
+/* =====================================================================
+   FilterBar — advanced filter with chips, presets, and a "+ Add filter" menu
+   ===================================================================== */
+
+.axis-filter {
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-1);
+}
+.axis-filter__bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 14px;
+}
+.axis-filter__right {
+  display: flex; align-items: center; gap: 8px;
+  margin-inline-start: auto;
+}
+
+/* ── Chip — active filter ───────────────────────────────────────────── */
+.axis-filter__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 4px 4px 10px;
+  background: var(--iris-50);
+  color: var(--iris-700);
+  border: 1px solid oklch(0.86 0.10 275 / 0.7);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background var(--duration-micro) var(--ease-out);
+}
+[data-theme="dark"] .axis-filter__chip {
+  background: oklch(0.30 0.10 275 / 0.5);
+  color: var(--iris-300);
+  border-color: oklch(0.40 0.13 275);
+}
+.axis-filter__chip:hover { background: oklch(0.93 0.05 275); }
+[data-theme="dark"] .axis-filter__chip:hover { background: oklch(0.34 0.12 275 / 0.6); }
+
+[dir="rtl"] .axis-filter__chip { padding: 4px 10px 4px 4px; }
+
+.axis-filter__chip-key { color: var(--iris-600); font-weight: 500; }
+.axis-filter__chip strong { color: var(--iris-700); font-weight: 600; }
+[data-theme="dark"] .axis-filter__chip-key,
+[data-theme="dark"] .axis-filter__chip strong { color: var(--iris-300); }
+
+.axis-filter__chip-x {
+  width: 18px; height: 18px;
+  border: 0; background: transparent;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--iris-600); cursor: pointer;
+  transition: background var(--duration-micro) var(--ease-out);
+}
+.axis-filter__chip-x:hover { background: oklch(0.86 0.10 275 / 0.5); }
+
+/* ── "+ Add filter" button ──────────────────────────────────────────── */
+.axis-filter__add {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 26px; padding: 0 10px;
+  border: 1px dashed var(--border-default);
+  background: transparent;
+  border-radius: var(--radius-full);
+  font: inherit; font-size: 12px;
+  color: var(--fg-2);
+  cursor: pointer;
+  transition: background var(--duration-micro) var(--ease-out), color var(--duration-micro) var(--ease-out);
+}
+.axis-filter__add:hover { background: var(--neutral-50); color: var(--fg-1); }
+[data-theme="dark"] .axis-filter__add:hover { background: var(--neutral-900); }
+
+/* ── Clear & presets buttons ────────────────────────────────────────── */
+.axis-filter__clear {
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 26px; padding: 0 10px;
+  border: 0; background: transparent;
+  font: inherit; font-size: 12px;
+  color: var(--fg-3); cursor: pointer;
+  border-radius: var(--radius-full);
+}
+.axis-filter__clear:hover { color: var(--danger-600); background: var(--feedback-danger-bg); }
+
+.axis-filter__presets {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 26px; padding: 0 10px;
+  border: 1px solid var(--border-default);
+  background: var(--surface-1);
+  border-radius: var(--radius-md);
+  font: inherit; font-size: 12px; font-weight: 500;
+  color: var(--fg-1);
+  cursor: pointer;
+  transition: background var(--duration-micro) var(--ease-out);
+}
+.axis-filter__presets:hover { background: var(--neutral-50); }
+[data-theme="dark"] .axis-filter__presets:hover { background: var(--neutral-900); }
+.axis-filter__count {
+  display: inline-grid; place-items: center;
+  min-width: 16px; height: 16px;
+  padding: 0 4px;
+  background: var(--iris-500); color: white;
+  border-radius: 999px;
+  font-family: var(--font-mono); font-size: 9px; font-weight: 600;
+}
+
+/* ── Preset row in menu ─────────────────────────────────────────────── */
+.axis-filter__preset-row {
+  display: flex; align-items: center;
+  border-radius: var(--radius-sm);
+}
+.axis-filter__preset-row:hover { background: var(--action-ghost-hover); }
+.axis-filter__preset {
+  flex: 1;
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 10px;
+  border: 0; background: transparent;
+  font: inherit; font-size: 13px; color: var(--fg-1);
+  cursor: pointer; text-align: start;
+}
+.axis-filter__preset svg { color: var(--iris-500); }
+.axis-filter__preset-remove {
+  border: 0; background: transparent;
+  width: 24px; height: 24px;
+  display: grid; place-items: center;
+  color: var(--fg-3); cursor: pointer;
+  border-radius: var(--radius-xs);
+  margin-inline-end: 4px;
+}
+.axis-filter__preset-remove:hover { color: var(--danger-600); }
+
+.axis-filter__save-row {
+  display: flex; gap: 4px;
+  padding: 4px;
+}
+.axis-filter__save-row input {
+  flex: 1;
+  height: 28px; padding: 0 8px;
+  border: 1px solid var(--border-default);
+  background: var(--surface-1);
+  border-radius: var(--radius-sm);
+  font: inherit; font-size: 12px; color: var(--fg-1);
+  outline: none;
+  font-family: var(--font-sans);
+}
+.axis-filter__save-row input:focus { border-color: var(--iris-500); box-shadow: 0 0 0 3px oklch(0.62 0.21 275 / 0.16); }
+.axis-filter__save-row button {
+  border: 0; background: var(--iris-500); color: white;
+  border-radius: var(--radius-sm);
+  font: inherit; font-size: 12px; font-weight: 500;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+/* ── Multi-select rows ──────────────────────────────────────────────── */
+.axis-filter__multi-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  font-size: 13px; color: var(--fg-1);
+}
+.axis-filter__multi-row:hover { background: var(--action-ghost-hover); }
+.axis-filter__multi-row input { position: absolute; opacity: 0; pointer-events: none; }
+.axis-filter__multi-row .axis-check__box { display: inline-grid; place-items: center; }
+
+/* ── Numeric range inputs ───────────────────────────────────────────── */
+.axis-filter__num {
+  width: 70px;
+  height: 28px; padding: 0 8px;
+  border: 1px solid var(--border-default);
+  background: var(--surface-1);
+  border-radius: var(--radius-sm);
+  font: inherit; font-size: 12px; color: var(--fg-1);
+  outline: none;
+  font-family: var(--font-mono);
+}
+.axis-filter__num:focus { border-color: var(--iris-500); box-shadow: 0 0 0 3px oklch(0.62 0.21 275 / 0.16); }

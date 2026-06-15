@@ -1,0 +1,131 @@
+/* =====================================================================
+   Pickers — DatePicker (calendar) + TimePicker (12-hour)
+   ===================================================================== */
+
+/* ── DatePicker ─────────────────────────────────────────────────────── */
+.axis-datepicker {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  width: 280px;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.axis-datepicker__head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 4px 4px 10px;
+}
+.axis-datepicker__title {
+  font-size: 13px; font-weight: 600; color: var(--fg-1);
+  letter-spacing: -0.005em;
+}
+.axis-datepicker__weekrow {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 2px; padding: 2px 0 6px;
+}
+.axis-datepicker__weekday {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--fg-3);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.axis-datepicker__grid {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.axis-datepicker__cell {
+  height: 32px;
+  border: 0; background: transparent;
+  border-radius: var(--radius-sm);
+  font: inherit; font-size: 12px;
+  color: var(--fg-1); cursor: pointer;
+  font-variant-numeric: lining-nums tabular-nums;
+  transition: background var(--duration-micro) var(--ease-out);
+}
+.axis-datepicker__cell:hover { background: var(--action-ghost-hover); }
+.axis-datepicker__cell.is-out { color: var(--fg-4); }
+.axis-datepicker__cell.is-today {
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px var(--border-default);
+}
+.axis-datepicker__cell.is-selected {
+  background: var(--iris-500); color: white;
+  font-weight: 600;
+  box-shadow: none;
+}
+.axis-datepicker__cell.is-selected:hover { background: var(--iris-600); }
+.axis-datepicker__cell.is-disabled { color: var(--fg-4); cursor: not-allowed; }
+.axis-datepicker__cell.is-disabled:hover { background: transparent; }
+
+/* RTL: chevrons in header flip */
+[dir="rtl"] .axis-datepicker__head .axis-iconbtn svg { transform: scaleX(-1); }
+
+/* ── TimePicker ─────────────────────────────────────────────────────── */
+.axis-timepicker {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.axis-timepicker__col {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.axis-timepicker__step {
+  border: 0; background: transparent;
+  width: 24px; height: 18px;
+  display: grid; place-items: center;
+  color: var(--fg-3); cursor: pointer;
+  border-radius: var(--radius-xs);
+  transition: background var(--duration-micro) var(--ease-out), color var(--duration-micro) var(--ease-out);
+}
+.axis-timepicker__step:hover { background: var(--action-ghost-hover); color: var(--fg-1); }
+.axis-timepicker__val {
+  font-family: var(--font-mono);
+  font-size: 18px; font-weight: 500;
+  color: var(--fg-1);
+  min-width: 28px; text-align: center;
+}
+.axis-timepicker__sep {
+  font-family: var(--font-mono);
+  font-size: 18px; font-weight: 500;
+  color: var(--fg-3);
+}
+.axis-timepicker__mer {
+  margin-inline-start: 8px;
+  display: inline-flex; padding: 3px;
+  background: var(--neutral-100);
+  border-radius: var(--radius-sm); gap: 2px;
+}
+[data-theme="dark"] .axis-timepicker__mer { background: var(--neutral-800); }
+.axis-timepicker__mer button {
+  border: 0; background: transparent;
+  padding: 4px 9px;
+  font: inherit; font-size: 11px; font-weight: 600;
+  color: var(--fg-2); cursor: pointer;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+.axis-timepicker__mer button.is-on {
+  background: var(--surface-1); color: var(--fg-1);
+  box-shadow: var(--shadow-xs);
+}
+[data-theme="dark"] .axis-timepicker__mer button.is-on { background: var(--neutral-900); }
+
+/* ── Inline display for date & time chips ────────────────────────────── */
+.axis-datetime-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--neutral-50);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  font-size: 13px; color: var(--fg-1);
+  cursor: pointer;
+  transition: background var(--duration-micro) var(--ease-out), border-color var(--duration-micro) var(--ease-out);
+}
+[data-theme="dark"] .axis-datetime-chip { background: var(--neutral-900); }
+.axis-datetime-chip:hover { background: var(--surface-1); border-color: var(--border-default); }
+.axis-datetime-chip svg { color: var(--fg-3); }
+.axis-datetime-chip__time { font-family: var(--font-mono); }

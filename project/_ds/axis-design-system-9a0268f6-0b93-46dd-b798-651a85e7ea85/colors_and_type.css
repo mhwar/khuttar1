@@ -1,0 +1,394 @@
+/* =====================================================================
+   Axis Design System — Tokens
+   ---------------------------------------------------------------------
+   Single source of truth for colors, type, spacing, radii, shadows,
+   motion. All consumers (React components, raw HTML, Tailwind config)
+   read these variables.
+   ===================================================================== */
+
+/* Webfonts — Google Fonts CDN.
+   Substitution flag: Inter + JetBrains Mono chosen as nearest match to
+   the Linear/Vercel aesthetic since no custom fonts were provided.
+   IBM Plex Sans Arabic chosen as the Arabic counterpart — same metrics
+   family as Plex/Inter, ships full weight range. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ------------------------------------------------------------------
+     COLOR PRIMITIVES — OKLCH
+     ------------------------------------------------------------------ */
+
+  /* Neutral spine (12 steps, faint cool cast — hue ~260, very low chroma) */
+  --neutral-0:   oklch(1.00 0      0);
+  --neutral-50:  oklch(0.985 0.003 260);
+  --neutral-100: oklch(0.97  0.004 260);
+  --neutral-200: oklch(0.93  0.005 260);
+  --neutral-300: oklch(0.88  0.006 260);
+  --neutral-400: oklch(0.74  0.008 260);
+  --neutral-500: oklch(0.60  0.010 260);
+  --neutral-600: oklch(0.48  0.012 260);
+  --neutral-700: oklch(0.38  0.012 260);
+  --neutral-800: oklch(0.27  0.012 260);
+  --neutral-900: oklch(0.20  0.012 260);
+  --neutral-950: oklch(0.14  0.012 260);
+  --neutral-1000: oklch(0.08 0.012 260);
+
+  /* Axis Iris — the one accent */
+  --iris-50:  oklch(0.97 0.025 275);
+  --iris-100: oklch(0.93 0.05  275);
+  --iris-200: oklch(0.86 0.10  275);
+  --iris-300: oklch(0.78 0.15  275);
+  --iris-400: oklch(0.70 0.19  275);
+  --iris-500: oklch(0.62 0.21  275);  /* primary */
+  --iris-600: oklch(0.56 0.21  275);
+  --iris-700: oklch(0.48 0.19  275);
+  --iris-800: oklch(0.40 0.16  275);
+  --iris-900: oklch(0.32 0.13  275);
+
+  /* Semantic hues — all tuned to L≈0.62 so they share a plane with Iris */
+  --success-500: oklch(0.68 0.16 155);
+  --success-600: oklch(0.60 0.16 155);
+  --success-50:  oklch(0.96 0.03 155);
+
+  --warning-500: oklch(0.78 0.16 75);
+  --warning-600: oklch(0.70 0.16 75);
+  --warning-50:  oklch(0.96 0.04 75);
+
+  --danger-500:  oklch(0.62 0.21 25);
+  --danger-600:  oklch(0.55 0.21 25);
+  --danger-50:   oklch(0.96 0.04 25);
+
+  --info-500:    oklch(0.68 0.14 230);
+  --info-600:    oklch(0.60 0.14 230);
+  --info-50:     oklch(0.96 0.03 230);
+
+  /* ------------------------------------------------------------------
+     SEMANTIC COLOR TOKENS — light mode default
+     ------------------------------------------------------------------ */
+
+  /* Surface stack — body → card → modal → tooltip */
+  --surface-0: var(--neutral-50);
+  --surface-1: var(--neutral-0);
+  --surface-2: var(--neutral-0);
+  --surface-3: var(--neutral-0);
+  --surface-inverse: var(--neutral-950);
+
+  /* Foreground */
+  --fg-1: var(--neutral-950);   /* primary text */
+  --fg-2: var(--neutral-700);   /* secondary text */
+  --fg-3: var(--neutral-500);   /* tertiary / placeholder */
+  --fg-4: var(--neutral-400);   /* disabled */
+  --fg-inverse: var(--neutral-0);
+  --fg-on-accent: var(--neutral-0);
+
+  /* Borders */
+  --border-subtle:   var(--neutral-200);
+  --border-default:  var(--neutral-300);
+  --border-strong:   var(--neutral-400);
+  --border-focus:    var(--iris-500);
+
+  /* Action — interactive surfaces */
+  --action-primary:        var(--iris-500);
+  --action-primary-hover:  var(--iris-600);
+  --action-primary-active: var(--iris-700);
+  --action-primary-fg:     var(--neutral-0);
+
+  --action-secondary:        var(--neutral-100);
+  --action-secondary-hover:  var(--neutral-200);
+  --action-secondary-active: var(--neutral-300);
+  --action-secondary-fg:     var(--neutral-900);
+
+  --action-ghost-hover:  var(--neutral-100);
+  --action-ghost-active: var(--neutral-200);
+
+  --action-danger:        var(--danger-500);
+  --action-danger-hover:  var(--danger-600);
+
+  /* Feedback */
+  --feedback-success-bg: var(--success-50);
+  --feedback-success-fg: var(--success-600);
+  --feedback-warning-bg: var(--warning-50);
+  --feedback-warning-fg: var(--warning-600);
+  --feedback-danger-bg:  var(--danger-50);
+  --feedback-danger-fg:  var(--danger-600);
+  --feedback-info-bg:    var(--info-50);
+  --feedback-info-fg:    var(--info-600);
+
+  /* Selection */
+  --selection-bg: oklch(0.86 0.10 275 / 0.5);
+  --selection-fg: var(--neutral-950);
+
+  /* Glass — used by the sidebar + command palette */
+  --glass-bg:     oklch(1 0 0 / 0.70);
+  --glass-stroke: oklch(1 0 0 / 0.50);
+  --glass-blur:   20px;
+
+  /* ------------------------------------------------------------------
+     TYPOGRAPHY
+     ------------------------------------------------------------------ */
+
+  /* Stacks list the Arabic face ahead of Inter so glyphs render in Plex Arabic
+     automatically without needing to set lang="ar" or dir="rtl". */
+  --font-sans:    'Inter', 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Inter', 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'IBM Plex Sans Arabic', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Type scale — modular 1.20 (minor third) from 12 → 60 */
+  --text-xs:    12px;   --text-xs-lh:    16px;
+  --text-sm:    13px;   --text-sm-lh:    18px;
+  --text-base:  14px;   --text-base-lh:  20px;
+  --text-md:    16px;   --text-md-lh:    24px;
+  --text-lg:    18px;   --text-lg-lh:    26px;
+  --text-xl:    20px;   --text-xl-lh:    28px;
+  --text-2xl:   24px;   --text-2xl-lh:   32px;
+  --text-3xl:   30px;   --text-3xl-lh:   36px;
+  --text-4xl:   36px;   --text-4xl-lh:   40px;
+  --text-5xl:   48px;   --text-5xl-lh:   52px;
+  --text-6xl:   60px;   --text-6xl-lh:   62px;
+
+  --tracking-tight: -0.03em;
+  --tracking-snug:  -0.015em;
+  --tracking-normal: 0;
+  --tracking-wide:  0.01em;
+
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* ------------------------------------------------------------------
+     SPACING — 8-pt grid w/ 4-pt half-step
+     ------------------------------------------------------------------ */
+  --space-0:   0;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-32:  128px;
+
+  /* Touch targets */
+  --touch-min: 44px;
+  --touch-min-dense: 32px;
+
+  /* ------------------------------------------------------------------
+     RADII
+     ------------------------------------------------------------------ */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  /* ------------------------------------------------------------------
+     SHADOWS — soft, tinted toward neutral base
+     ------------------------------------------------------------------ */
+  --shadow-xs: 0 1px 2px 0 oklch(0.14 0.012 260 / 0.06);
+  --shadow-sm: 0 1px 3px 0 oklch(0.14 0.012 260 / 0.08), 0 1px 2px -1px oklch(0.14 0.012 260 / 0.04);
+  --shadow-md: 0 4px 8px -2px oklch(0.14 0.012 260 / 0.10), 0 2px 4px -2px oklch(0.14 0.012 260 / 0.06);
+  --shadow-lg: 0 12px 24px -6px oklch(0.14 0.012 260 / 0.12), 0 4px 8px -4px oklch(0.14 0.012 260 / 0.08);
+  --shadow-xl: 0 24px 48px -12px oklch(0.14 0.012 260 / 0.18), 0 8px 16px -8px oklch(0.14 0.012 260 / 0.10);
+  --shadow-focus: 0 0 0 2px var(--surface-0), 0 0 0 4px var(--iris-500);
+  --shadow-inset: inset 0 1px 2px 0 oklch(0.14 0.012 260 / 0.08);
+
+  /* ------------------------------------------------------------------
+     MOTION
+     ------------------------------------------------------------------ */
+  --duration-micro: 120ms;
+  --duration-small: 200ms;
+  --duration-large: 320ms;
+  --ease-out:       cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ------------------------------------------------------------------
+     Z-INDEX
+     ------------------------------------------------------------------ */
+  --z-base:    0;
+  --z-sticky:  10;
+  --z-dropdown: 20;
+  --z-modal:   30;
+  --z-toast:   40;
+  --z-tooltip: 50;
+}
+
+/* =====================================================================
+   DARK MODE
+   ===================================================================== */
+:root[data-theme="dark"],
+.theme-dark {
+  --surface-0: var(--neutral-1000);
+  --surface-1: var(--neutral-950);
+  --surface-2: var(--neutral-900);
+  --surface-3: var(--neutral-800);
+  --surface-inverse: var(--neutral-0);
+
+  --fg-1: var(--neutral-50);
+  --fg-2: var(--neutral-300);
+  --fg-3: var(--neutral-500);
+  --fg-4: var(--neutral-700);
+  --fg-inverse: var(--neutral-950);
+
+  --border-subtle:  var(--neutral-800);
+  --border-default: var(--neutral-700);
+  --border-strong:  var(--neutral-600);
+
+  --action-secondary:        var(--neutral-800);
+  --action-secondary-hover:  var(--neutral-700);
+  --action-secondary-active: var(--neutral-600);
+  --action-secondary-fg:     var(--neutral-50);
+
+  --action-ghost-hover:  var(--neutral-800);
+  --action-ghost-active: var(--neutral-700);
+
+  --feedback-success-bg: oklch(0.30 0.08 155);
+  --feedback-warning-bg: oklch(0.30 0.08 75);
+  --feedback-danger-bg:  oklch(0.30 0.10 25);
+  --feedback-info-bg:    oklch(0.30 0.07 230);
+
+  --glass-bg:     oklch(0.14 0.012 260 / 0.65);
+  --glass-stroke: oklch(1 0 0 / 0.08);
+
+  --shadow-xs: 0 1px 2px 0 oklch(0 0 0 / 0.40);
+  --shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 0.50), 0 1px 2px -1px oklch(0 0 0 / 0.30);
+  --shadow-md: 0 4px 8px -2px oklch(0 0 0 / 0.50), 0 2px 4px -2px oklch(0 0 0 / 0.30);
+  --shadow-lg: 0 12px 24px -6px oklch(0 0 0 / 0.55), 0 4px 8px -4px oklch(0 0 0 / 0.30);
+  --shadow-xl: 0 24px 48px -12px oklch(0 0 0 / 0.65), 0 8px 16px -8px oklch(0 0 0 / 0.35);
+  --shadow-focus: 0 0 0 2px var(--surface-0), 0 0 0 4px var(--iris-400);
+}
+
+/* =====================================================================
+   Arabic — typography tuning
+   ---------------------------------------------------------------------
+   When body.lang-ar is set (or html[dir="rtl"]), Arabic gets:
+   - IBM Plex Sans Arabic as the primary face
+   - Generous line-height
+   - Slight letter-spacing loosening (Arabic doesn't tighten well)
+   - Western digits forced (lnum) — never Arabic-Indic numerals
+   ===================================================================== */
+.lang-ar,
+[dir="rtl"] {
+  --font-sans:    'IBM Plex Sans Arabic', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'IBM Plex Sans Arabic', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'IBM Plex Sans Arabic', ui-monospace, monospace;
+  /* Force lining (Western) numerals globally */
+  font-feature-settings: 'lnum' 1, 'tnum' 0;
+}
+.lang-ar body, [dir="rtl"] body {
+  line-height: 1.7;
+}
+.lang-ar h1, .lang-ar h2, .lang-ar h3, .lang-ar h4, .lang-ar h5, .lang-ar h6,
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
+  letter-spacing: 0; line-height: 1.35;
+}
+/* Put the type defaults below the Arabic block, but make sure they apply too */
+/* =====================================================================
+   ELEMENT DEFAULTS — semantic HTML maps to tokens
+   ===================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--surface-0);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--text-base-lh);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv11', 'ss01';
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  color: var(--fg-1);
+  margin: 0;
+  letter-spacing: var(--tracking-snug);
+}
+
+h1 { font-size: var(--text-5xl); line-height: var(--text-5xl-lh); letter-spacing: var(--tracking-tight); }
+h2 { font-size: var(--text-4xl); line-height: var(--text-4xl-lh); letter-spacing: var(--tracking-tight); }
+h3 { font-size: var(--text-3xl); line-height: var(--text-3xl-lh); }
+h4 { font-size: var(--text-2xl); line-height: var(--text-2xl-lh); }
+h5 { font-size: var(--text-xl);  line-height: var(--text-xl-lh); }
+h6 { font-size: var(--text-md);  line-height: var(--text-md-lh); font-weight: var(--weight-medium); }
+
+p {
+  margin: 0;
+  font-size: var(--text-md);
+  line-height: 1.55;
+  color: var(--fg-2);
+  text-wrap: pretty;
+}
+
+small { font-size: var(--text-sm); color: var(--fg-3); }
+
+code, kbd, pre, samp {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  font-feature-settings: 'liga' 0;
+}
+
+code {
+  background: var(--neutral-100);
+  padding: 1px 6px;
+  border-radius: var(--radius-xs);
+  color: var(--fg-1);
+}
+
+:root[data-theme="dark"] code { background: var(--neutral-800); }
+
+a {
+  color: var(--iris-500);
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+a:hover { text-decoration: underline; }
+
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-sm);
+}
+
+/* =====================================================================
+   RTL / Arabic
+   ---------------------------------------------------------------------
+   Activated by setting `dir="rtl"` on <html> or any ancestor. Components
+   that rely on logical properties (inline-start/end, margin-inline-*)
+   flip automatically. A handful of explicit overrides below catch the
+   cases that still use left/right.
+   ===================================================================== */
+
+[dir="rtl"] {
+  /* Arabic looks slightly heavier than Latin at the same weight, and the
+     glyphs sit on a wider baseline — a touch more line-height + a hair
+     more letter-spacing keeps reading comfortable. */
+  --tracking-tight:  -0.015em;
+  --tracking-snug:   -0.005em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.005em;
+}
+
+[dir="rtl"] body { line-height: 1.65; }
+
+/* Inline directional icons (arrow, chevron) — mirror them by default.
+   Opt out per-icon with class="axis-icon--no-flip". */
+[dir="rtl"] .axis-icon--flip > *,
+[dir="rtl"] [data-flip-rtl] {
+  transform: scaleX(-1);
+}

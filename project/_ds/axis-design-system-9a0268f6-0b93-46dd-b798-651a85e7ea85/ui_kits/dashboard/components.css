@@ -1,0 +1,222 @@
+/* =====================================================================
+   Axis Dashboard UI Kit — component styles
+   ===================================================================== */
+
+/* ── Button ─────────────────────────────────────────────────────────── */
+.axis-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border: 1px solid transparent; border-radius: var(--radius-md);
+  font-family: var(--font-sans); font-weight: 500; cursor: pointer;
+  transition: all var(--duration-micro) var(--ease-out);
+  white-space: nowrap; user-select: none;
+}
+.axis-btn:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+.axis-btn--full { width: 100%; }
+
+.axis-btn--xs { height: 24px; padding: 0 8px; font-size: 12px; border-radius: var(--radius-sm); }
+.axis-btn--sm { height: 28px; padding: 0 10px; font-size: 13px; }
+.axis-btn--md { height: 32px; padding: 0 12px; font-size: 13px; }
+.axis-btn--lg { height: 40px; padding: 0 16px; font-size: 14px; }
+.axis-btn--xl { height: 48px; padding: 0 22px; font-size: 15px; border-radius: var(--radius-lg); }
+
+.axis-btn--primary {
+  background: var(--iris-500); color: white;
+  box-shadow: 0 1px 0 0 oklch(0.40 0.16 275 / 0.4) inset, 0 1px 2px 0 oklch(0.40 0.16 275 / 0.3);
+}
+.axis-btn--primary:hover { background: var(--iris-600); }
+.axis-btn--primary:active { background: var(--iris-700); transform: scale(0.98); }
+
+.axis-btn--secondary {
+  background: var(--surface-1); color: var(--fg-1);
+  border-color: var(--border-default); box-shadow: var(--shadow-xs);
+}
+.axis-btn--secondary:hover { background: var(--neutral-50); }
+.axis-btn--secondary:active { background: var(--neutral-100); transform: scale(0.98); }
+
+.axis-btn--ghost { background: transparent; color: var(--fg-2); }
+.axis-btn--ghost:hover { background: var(--action-ghost-hover); color: var(--fg-1); }
+.axis-btn--ghost:active { background: var(--action-ghost-active); }
+
+.axis-btn--danger {
+  background: var(--danger-500); color: white;
+}
+.axis-btn--danger:hover { background: var(--danger-600); }
+
+.axis-btn--iris-soft { background: var(--iris-50); color: var(--iris-700); }
+.axis-btn--iris-soft:hover { background: oklch(0.93 0.05 275); }
+
+.axis-btn[disabled] { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+.axis-spin {
+  width: 14px; height: 14px;
+  border: 2px solid currentColor; border-top-color: transparent;
+  border-radius: 50%; animation: axis-spin 0.7s linear infinite; opacity: 0.7;
+}
+@keyframes axis-spin { to { transform: rotate(360deg); } }
+
+/* ── Icon button ────────────────────────────────────────────────────── */
+.axis-iconbtn {
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 0; background: transparent; cursor: pointer; color: var(--fg-2);
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-micro) var(--ease-out);
+}
+.axis-iconbtn:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+.axis-iconbtn--sm { width: 28px; height: 28px; }
+.axis-iconbtn--md { width: 32px; height: 32px; }
+.axis-iconbtn--lg { width: 36px; height: 36px; }
+.axis-iconbtn--ghost:hover { background: var(--action-ghost-hover); color: var(--fg-1); }
+.axis-iconbtn--secondary { background: var(--surface-1); border: 1px solid var(--border-default); }
+.axis-iconbtn--secondary:hover { background: var(--neutral-50); }
+
+/* ── Input field (floating label) ───────────────────────────────────── */
+.axis-field {
+  position: relative; height: 48px; background: var(--surface-1);
+  border: 1px solid var(--border-default); border-radius: var(--radius-md);
+  transition: border-color var(--duration-micro) var(--ease-out), box-shadow var(--duration-micro) var(--ease-out);
+}
+.axis-field input {
+  width: 100%; height: 100%;
+  padding-block: 18px 4px;
+  padding-inline: 14px;
+  font: inherit; font-size: 14px; color: var(--fg-1);
+  background: transparent; border: 0; outline: 0; box-sizing: border-box;
+  font-family: var(--font-sans);
+}
+/* Leave room for the trailing icon so placeholder + value never overlap it */
+.axis-field.has-icon input { padding-inline-end: 42px; }
+
+.axis-field label {
+  position: absolute;
+  inset-inline-start: 14px;
+  top: 50%; transform: translateY(-50%);
+  color: var(--fg-3); font-size: 14px; pointer-events: none;
+  transition: all var(--duration-micro) var(--ease-out);
+  /* Keep the label inside the field even when long, by capping width and ellipsizing */
+  max-width: calc(100% - 56px);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.axis-field.is-filled label, .axis-field.is-focused label {
+  top: 8px; transform: none; font-size: 10px; color: var(--fg-2);
+  font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+}
+.axis-field.is-focused {
+  border-color: var(--iris-500);
+  box-shadow: 0 0 0 3px oklch(0.62 0.21 275 / 0.16);
+}
+.axis-field.is-focused label { color: var(--iris-600); }
+.axis-field.is-error { border-color: var(--danger-500); }
+.axis-field.is-error.is-focused { box-shadow: 0 0 0 3px oklch(0.62 0.21 25 / 0.18); }
+.axis-field.is-error label { color: var(--danger-600); }
+.axis-field.is-disabled { opacity: 0.55; background: var(--neutral-50); }
+.axis-field__icon {
+  position: absolute;
+  inset-inline-end: 12px;
+  top: 50%; transform: translateY(-50%);
+  color: var(--fg-3); display: flex; pointer-events: none;
+}
+.axis-field__help { font-size: 12px; color: var(--fg-3); margin-top: 6px; }
+.axis-field__help.is-error { color: var(--danger-600); }
+
+/* ── Pills / tags / badges ──────────────────────────────────────────── */
+.axis-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 9px; border-radius: var(--radius-full);
+  font-size: 12px; font-weight: 500;
+}
+.axis-pill__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.9; }
+.axis-pill--success { background: var(--feedback-success-bg); color: var(--feedback-success-fg); }
+.axis-pill--warning { background: var(--feedback-warning-bg); color: var(--feedback-warning-fg); }
+.axis-pill--danger  { background: var(--feedback-danger-bg);  color: var(--feedback-danger-fg); }
+.axis-pill--info    { background: var(--feedback-info-bg);    color: var(--feedback-info-fg); }
+.axis-pill--neutral { background: var(--neutral-100); color: var(--fg-2); }
+[data-theme="dark"] .axis-pill--neutral { background: var(--neutral-800); }
+
+.axis-tag {
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  padding: 2px 7px; border-radius: var(--radius-xs);
+  unicode-bidi: isolate;
+}
+.axis-tag--iris    { background: var(--iris-50); color: var(--iris-700); }
+.axis-tag--neutral { background: var(--neutral-100); color: var(--fg-1); }
+.axis-tag--success { background: var(--feedback-success-bg); color: var(--success-600); }
+.axis-tag--danger  { background: var(--feedback-danger-bg); color: var(--danger-600); }
+[data-theme="dark"] .axis-tag--neutral { background: var(--neutral-800); }
+
+.axis-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 999px; font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  unicode-bidi: isolate;
+}
+.axis-badge--iris { background: var(--iris-500); color: white; }
+.axis-badge--neutral { background: var(--neutral-200); color: var(--fg-1); }
+[data-theme="dark"] .axis-badge--neutral { background: var(--neutral-700); color: var(--fg-1); }
+
+/* ── Switch / Segmented ─────────────────────────────────────────────── */
+.axis-switch {
+  position: relative; width: 36px; height: 20px;
+  background: var(--neutral-300); border: 0; border-radius: var(--radius-full); cursor: pointer; padding: 0;
+  transition: background var(--duration-micro) var(--ease-out);
+}
+.axis-switch::after {
+  content: ""; position: absolute; top: 2px; left: 2px;
+  width: 16px; height: 16px; background: white; border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--duration-micro) var(--ease-out);
+}
+.axis-switch.is-on { background: var(--iris-500); }
+.axis-switch.is-on::after { transform: translateX(16px); }
+[data-theme="dark"] .axis-switch { background: var(--neutral-700); }
+
+.axis-seg {
+  display: inline-flex; padding: 3px; background: var(--neutral-100);
+  border-radius: var(--radius-md); gap: 2px;
+}
+[data-theme="dark"] .axis-seg { background: var(--neutral-800); }
+.axis-seg button {
+  border: 0; background: transparent; padding: 5px 12px;
+  font: inherit; font-size: 13px; font-weight: 500; color: var(--fg-2);
+  border-radius: 5px; cursor: pointer;
+  transition: all var(--duration-micro) var(--ease-out);
+}
+.axis-seg button.is-on { background: var(--surface-1); color: var(--fg-1); box-shadow: var(--shadow-xs); }
+[data-theme="dark"] .axis-seg button.is-on { background: var(--neutral-900); }
+
+/* ── Card ───────────────────────────────────────────────────────────── */
+.axis-card {
+  background: var(--surface-1); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--duration-micro) var(--ease-out), border-color var(--duration-micro) var(--ease-out);
+}
+
+/* ── Kbd ────────────────────────────────────────────────────────────── */
+.axis-kbd {
+  font-family: var(--font-mono); font-size: 11px; padding: 2px 6px;
+  background: var(--surface-1); border: 1px solid var(--border-subtle);
+  border-bottom-width: 2px; border-radius: 5px; color: var(--fg-2);
+}
+[data-theme="dark"] .axis-kbd { background: var(--neutral-800); color: var(--fg-2); border-color: var(--border-default); }
+
+/* ── Avatar ─────────────────────────────────────────────────────────── */
+.axis-avatar {
+  display: inline-grid; place-items: center;
+  border-radius: 50%; color: white; font-weight: 600; font-family: var(--font-sans);
+  letter-spacing: -0.02em;
+}
+.axis-avatar--iris    { background: var(--iris-500); }
+.axis-avatar--success { background: var(--success-500); }
+.axis-avatar--warning { background: var(--warning-500); color: oklch(0.20 0.04 75); }
+.axis-avatar--danger  { background: var(--danger-500); }
+.axis-avatar--info    { background: var(--info-500); }
+img.axis-avatar { object-fit: cover; }
+
+/* ── Misc ───────────────────────────────────────────────────────────── */
+.axis-divider { height: 1px; background: var(--border-subtle); }
+
+.axis-shimmer {
+  background: linear-gradient(90deg, var(--neutral-100), var(--neutral-200), var(--neutral-100));
+  background-size: 200% 100%;
+  animation: axis-shimmer 1.4s linear infinite;
+}
+@keyframes axis-shimmer { to { background-position: -200% 0; } }
