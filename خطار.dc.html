@@ -2328,38 +2328,51 @@
           <button onClick="{{ doPrint }}" class="kh-cta" style="font-family:inherit; font-size:14.5px; font-weight:600; color:#fff; background:var(--app-accent,#6366F1); border:none; cursor:pointer; padding:11px 20px; border-radius:10px; display:flex; align-items:center; gap:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-5h18v5a1 1 0 0 1-1 1h-2M8 14h8v6H8z"></path></svg>تنزيل / طباعة PDF</button>
           <button onClick="{{ closePrint }}" style="font-family:inherit; font-size:14.5px; font-weight:600; color:#fff; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); cursor:pointer; padding:11px 18px; border-radius:10px;">إغلاق</button>
         </div>
-        <div id="kh-print" dir="rtl" style="background:#fff; border-radius:16px; padding:46px 50px; box-shadow:0 24px 60px -20px rgba(0,0,0,0.4); font-family:'IBM Plex Sans Arabic','Inter',sans-serif;">
-          <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #14141B; padding-bottom:18px; margin-bottom:24px;">
-            <div style="display:flex; align-items:center; gap:11px;">
-              <span style="width:38px; height:38px; border-radius:11px; background:linear-gradient(140deg,#6366F1,#4F46E5); display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.4"></circle></svg></span>
-              <div><div style="font-size:22px; font-weight:700; color:#14141B;">خطار</div><div style="font-size:12px; color:#7A7A88;">جدول الرحلة المخصّص</div></div>
+        <div id="kh-print" dir="rtl" style="background:#fff; border-radius:16px; padding:44px 48px; box-shadow:0 24px 60px -20px rgba(0,0,0,0.4); font-family:'IBM Plex Sans Arabic','Inter',sans-serif; color:#1B1B24;">
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:20px; border-bottom:2px solid #14141B; padding-bottom:20px; margin-bottom:22px;">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <span style="width:42px; height:42px; border-radius:12px; background:linear-gradient(140deg,#6366F1,#4F46E5); display:flex; align-items:center; justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.4"></circle></svg></span>
+              <div><div style="font-size:23px; font-weight:700; color:#14141B; letter-spacing:-0.01em;">خطار</div><div style="font-size:12px; color:#8A8A97;">جدول الرحلة المخصّص</div></div>
             </div>
-            <div style="text-align:end;"><div style="font-size:13px; color:#7A7A88;">العميل</div><div style="font-size:16px; font-weight:700; color:#14141B;">{{ builderClient }}</div></div>
+            <div style="text-align:end; max-width:50%;">
+              <div style="font-size:11px; color:#8A8A97;">أُعدّ خصيصاً لـ</div>
+              <div style="font-size:18px; font-weight:700; color:#14141B;">{{ builderClient }}</div>
+              <div dir="ltr" style="font-size:12px; color:#8A8A97; margin-top:2px;">{{ builderPhone }}</div>
+            </div>
           </div>
-          <div style="display:flex; flex-wrap:wrap; gap:10px 28px; margin-bottom:22px;">
-            <div><div style="font-size:11px; color:#7A7A88;">الوجهة</div><div style="font-size:13.5px; font-weight:600; color:#14141B;">{{ builderCountry }}</div></div>
-            <div><div style="font-size:11px; color:#7A7A88;">المسافرون</div><div style="font-size:13.5px; font-weight:600; color:#14141B;">{{ builderTravelers }}</div></div>
-            <div><div style="font-size:11px; color:#7A7A88;">المدة</div><div style="font-size:13.5px; font-weight:600; color:#14141B;">{{ builderDayCount }} أيام</div></div>
-            <div><div style="font-size:11px; color:#7A7A88;">الجوال</div><div dir="ltr" style="font-size:13.5px; font-weight:600; color:#14141B; text-align:start;">{{ builderPhone }}</div></div>
+          <div style="display:flex; flex-wrap:wrap; gap:1px; background:#ECECF3; border:1px solid #ECECF3; border-radius:12px; overflow:hidden; margin-bottom:26px;">
+            <div style="flex:1; min-width:120px; background:#FAFAFC; padding:12px 16px;"><div style="font-size:10.5px; color:#8A8A97; margin-bottom:3px;">الوجهة</div><div style="font-size:13.5px; font-weight:700; color:#14141B;">{{ builderCountry }}</div></div>
+            <div style="flex:1; min-width:120px; background:#FAFAFC; padding:12px 16px;"><div style="font-size:10.5px; color:#8A8A97; margin-bottom:3px;">المسافرون</div><div style="font-size:13.5px; font-weight:700; color:#14141B;">{{ builderTravelers }}</div></div>
+            <div style="flex:1; min-width:120px; background:#FAFAFC; padding:12px 16px;"><div style="font-size:10.5px; color:#8A8A97; margin-bottom:3px;">المدة</div><div style="font-size:13.5px; font-weight:700; color:#14141B;">{{ builderDayCount }} أيام</div></div>
+            <sc-if value="{{ hasBuilderDates }}" hint-placeholder-val="{{ true }}"><div style="flex:1.6; min-width:160px; background:#FAFAFC; padding:12px 16px;"><div style="font-size:10.5px; color:#8A8A97; margin-bottom:3px;">تواريخ الرحلة</div><div style="font-size:13px; font-weight:700; color:#14141B;">{{ builderTripDates }}</div></div></sc-if>
           </div>
           <sc-for list="{{ builderDays }}" as="d" hint-placeholder-count="1">
-            <div style="margin-bottom:22px;">
-              <div style="display:flex; align-items:center; gap:9px; margin-bottom:4px;"><span style="display:flex; align-items:center; justify-content:center; min-width:28px; height:28px; border-radius:8px; background:#EEF0FF; color:#4F46E5; font-size:13px; font-weight:700; padding:0 8px;">اليوم {{ d.num }}</span><span style="font-size:17px; font-weight:700; color:#14141B;">{{ d.title }}</span></div>
-              <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; padding-inline-start:37px; font-size:12.5px; color:#7A7A88;"><span>{{ d.dateLabel }}</span><span>{{ d.city }}</span><span>{{ d.note }}</span></div>
-              <sc-for list="{{ d.items }}" as="it" hint-placeholder-count="0">
-                <div style="display:flex; align-items:center; gap:14px; padding:9px 0; border-bottom:1px solid #EEE; ">
-                  <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; color:#4F46E5; min-width:48px; direction:ltr; text-align:start;">{{ it.t }}</span>
-                  <span style="font-size:14.5px; color:#2A2A37;">{{ it.title }}</span>
+            <div style="margin-bottom:18px; page-break-inside:avoid; break-inside:avoid;">
+              <div style="display:flex; align-items:center; gap:10px; background:#F4F4FB; border-radius:10px; padding:10px 14px;">
+                <span style="display:flex; align-items:center; justify-content:center; min-width:30px; height:30px; border-radius:8px; background:#4F46E5; color:#fff; font-size:13px; font-weight:700; padding:0 9px;">{{ d.num }}</span>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:15.5px; font-weight:700; color:#14141B;">{{ d.title }}</div>
+                  <div style="font-size:11.5px; color:#8A8A97; margin-top:1px;">{{ d.dateLabel }}<span> · </span>{{ d.city }}</div>
                 </div>
-              </sc-for>
+                <span style="font-size:12px; color:#8A8A97; text-align:end;">{{ d.note }}</span>
+              </div>
+              <div style="padding:6px 6px 0;">
+                <sc-for list="{{ d.items }}" as="it" hint-placeholder-count="0">
+                  <div style="display:flex; align-items:center; gap:12px; padding:8px 8px; border-bottom:1px solid #F0F0F4;">
+                    <span style="font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:700; color:#4F46E5; min-width:46px; direction:ltr; text-align:start;">{{ it.t }}</span>
+                    <span style="width:26px; height:26px; border-radius:7px; background:#EEF0FF; color:#4F46E5; display:flex; align-items:center; justify-content:center; flex-shrink:0;">{{ it.iconEl }}</span>
+                    <span style="flex:1; font-size:14px; font-weight:600; color:#22222E;">{{ it.title }}</span>
+                  </div>
+                </sc-for>
+              </div>
             </div>
           </sc-for>
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:18px; padding:16px 20px; background:#F4F4FB; border:1px solid #E4E4F2; border-radius:12px;">
-            <div><div style="font-size:12px; color:#7A7A88;">السعر الإجمالي للرحلة (شامل الضريبة)</div><div style="font-size:12px; color:#7A7A88; margin-top:2px;">للفرد: {{ perPersonFmt }} ر.س</div></div>
-            <div dir="ltr" style="font-size:26px; font-weight:700; color:#4F46E5;">{{ grandTotalFmt }} <span style="font-size:13px; color:#14141B;">ر.س</span></div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:8px; padding:18px 22px; background:linear-gradient(120deg,#EEF0FF,#F6F4FB); border:1px solid #E0E0F2; border-radius:14px; page-break-inside:avoid; break-inside:avoid;">
+            <div><div style="font-size:12.5px; font-weight:600; color:#44454F;">السعر الإجمالي للرحلة</div><div style="font-size:11px; color:#8A8A97; margin-top:3px;">شامل ضريبة القيمة المضافة · للفرد {{ perPersonFmt }} ر.س</div></div>
+            <div dir="ltr" style="font-size:28px; font-weight:700; color:#4F46E5;">{{ grandTotalFmt }} <span style="font-size:13px; color:#14141B;">ر.س</span></div>
           </div>
-          <div style="margin-top:20px; padding-top:16px; border-top:1px solid #EEE; display:flex; align-items:center; justify-content:space-between; font-size:12px; color:#7A7A88;">
-            <span>خطار · السياحة والدراسة بالخارج</span>
+          <div style="margin-top:22px; padding-top:14px; border-top:1px solid #EEE; display:flex; align-items:center; justify-content:space-between; font-size:11.5px; color:#8A8A97;">
+            <span>خطار · السياحة والدراسة بالخارج — جدول مبدئي قابل للتعديل قبل الاعتماد</span>
             <span dir="ltr">mhwar.sa · +966 56 286 7934</span>
           </div>
         </div>
@@ -2844,7 +2857,7 @@ class Component extends DCLogic {
       { label:'اليوم 1', sub:'الوصول إلى إدنبرة', city:'إدنبرة', entries:[
         { t:'09:30', icon:'flight', tag:'وصول', title:'الوصول إلى مطار إدنبرة', note:'استقبال من فريق خطار عند البوابة' },
         { t:'10:30', icon:'car', tag:'تنقل', title:'مواصلات خاصة إلى الفندق', note:'سائق خاص — فندق ٤ نجوم وسط المدينة' },
-        { t:'12:00', icon:'hotel', tag:'إقامة', title:'تسجيل الدخول والاستراحة', note:'الليلة الأولى من ٦ ليالٍ في إدنبرة' },
+        { t:'12:00', icon:'hotel', tag:'إجراء', title:'تسجيل الوصول للفندق', note:'الليلة الأولى من ٦ ليالٍ في إدنبرة · فندق ٤ نجوم' },
         { t:'16:30', icon:'walk', tag:'نشاط', title:'جولة تعريفية في البلدة القديمة', note:'سيراً مع المرشد للتعرّف على المنطقة' },
         { t:'19:30', icon:'meal', tag:'عشاء', title:'عشاء ترحيبي', note:'مطعم حلال يطل على المدينة' }
       ]},
@@ -2884,12 +2897,13 @@ class Component extends DCLogic {
         { t:'14:00', icon:'walk', tag:'نشاط', title:'جولة المدينة المسائية', note:'أضواء إدنبرة الساحرة' },
         { t:'19:30', icon:'meal', tag:'عشاء', title:'عشاء وداع إدنبرة', note:'ختام الإقامة في المدينة' }
       ]},
-      { label:'اليوم 7', sub:'الانتقال إلى بحيرة لوخ لوموند', city:'لوخ لوموند', entries:[
-        { t:'08:00', icon:'meal', tag:'فطور', title:'فطور وتسجيل الخروج', note:'مغادرة فندق إدنبرة' },
-        { t:'09:00', icon:'car', tag:'تنقل', title:'انطلاق نحو المرتفعات', note:'مواصلات خاصة مع سائق' },
+      { label:'اليوم 7', sub:'الانتقال إلى بحيرة لوخ لوموند', city:'إدنبرة ← لوخ لوموند', entries:[
+        { t:'08:00', icon:'meal', tag:'فطور', title:'فطور في الفندق', note:'' },
+        { t:'09:00', icon:'hotel', tag:'إجراء', title:'تسجيل المغادرة من فندق إدنبرة', note:'إنهاء إقامة إدنبرة (٦ ليالٍ)' },
+        { t:'09:30', icon:'car', tag:'إجراء', title:'السفر بين مدينتين — نحو المرتفعات', note:'مواصلات خاصة مع سائق' },
         { t:'11:30', icon:'boat', tag:'نشاط', title:'جولة الكروز في بحيرة لوخ لوموند', note:'تجربة بحرية لا تُنسى' },
         { t:'13:30', icon:'meal', tag:'غداء', title:'غداء على ضفاف البحيرة', note:'' },
-        { t:'16:00', icon:'hotel', tag:'إقامة', title:'الوصول إلى المنتجع الريفي الفاخر', note:'أولى ٣ ليالٍ في المنتجع' },
+        { t:'16:00', icon:'hotel', tag:'إجراء', title:'تسجيل الوصول للمنتجع الريفي الفاخر', note:'أولى ٣ ليالٍ في المنتجع' },
         { t:'19:30', icon:'meal', tag:'عشاء', title:'عشاء في المنتجع', note:'' }
       ]},
       { label:'اليوم 8', sub:'وادي قلين كو (غلين كو)', city:'غلين كو', entries:[
@@ -2908,10 +2922,11 @@ class Component extends DCLogic {
         { t:'15:30', icon:'free', tag:'وقت حر', title:'وقت حر في الطبيعة', note:'' },
         { t:'19:30', icon:'meal', tag:'عشاء', title:'عشاء الوداع في المنتجع', note:'ختام الرحلة' }
       ]},
-      { label:'اليوم 10', sub:'المغادرة', city:'اسكتلندا', entries:[
-        { t:'08:30', icon:'meal', tag:'فطور', title:'فطور وتسجيل الخروج', note:'مغادرة المنتجع الريفي' },
-        { t:'10:00', icon:'car', tag:'تنقل', title:'مواصلات خاصة إلى المطار', note:'سائق خاص' },
-        { t:'13:00', icon:'flight', tag:'مغادرة', title:'رحلة المغادرة', note:'نتمنى لكم رحلة سعيدة' }
+      { label:'اليوم 10', sub:'المغادرة', city:'لوخ لوموند ← المطار', entries:[
+        { t:'08:30', icon:'meal', tag:'فطور', title:'فطور في المنتجع', note:'' },
+        { t:'09:30', icon:'hotel', tag:'إجراء', title:'تسجيل المغادرة من المنتجع', note:'إنهاء الإقامة الريفية (٣ ليالٍ)' },
+        { t:'10:00', icon:'car', tag:'إجراء', title:'مواصلات خاصة إلى المطار', note:'سائق خاص' },
+        { t:'13:00', icon:'flight', tag:'مغادرة', title:'المغادرة من المطار', note:'رحلة العودة — نتمنى لكم رحلة سعيدة' }
       ]}
     ]
     }
@@ -3257,7 +3272,7 @@ class Component extends DCLogic {
     const provCountries=['all'].concat(providers.filter((p,i,a)=>a.findIndex(x=>x.country===p.country)===i).map(p=>p.country));
     const providerCountrySeg=provCountries.map(v=>({ label:v==='all'?'كل الجهات':v, value:v, active:provC===v, style:{ ...chip(provC===v), whiteSpace:'nowrap', flexShrink:0 }, onClick:()=>this.setState({ providerCountry:v }) }));
     const providersFiltered = providers.filter(p=>(provT==='all'||p.type===provT)&&(provC==='all'||p.country===provC));
-    const dashPrograms = this.destinations.map(d=>({ name:d.name+' · '+d.days+' أيام', dest:d.country, price:fmt(d.price), providers:4, status: d.featured?'منشور':'مسودة', pillStyle:stPill(d.featured?'منشور':'مسودة'), grad:d.grad, edit:()=>this.setState({ dashView:'builder' }) }));
+    const dashPrograms = this.destinations.map(d=>({ name:d.name+' · '+d.days+' أيام', dest:d.country, price:fmt(d.price), providers:4, status: d.featured?'منشور':'مسودة', pillStyle:stPill(d.featured?'منشور':'مسودة'), grad:d.grad, edit: this.programs[d.id] ? ()=>this.builderStartFromProgram(d.id) : ()=>this.setState({ dashView:'builder' }) }));
     const programsStudy = this.studyPrograms.map(s=>({ name:s.title, dest:s.city+' · '+s.country, price:fmt(s.price)+' '+s.unit, providers:s.institute, status:'منشور', pillStyle:stPill('منشور'), grad:s.grad, edit:()=>this.setState({ dashView:'builder' }) }));
     const pf=this.state.programFilter;
     const programFilterSeg=[{label:'سياحة وسفر',value:'tourism'},{label:'دراسة وابتعاث',value:'study'}].map(o=>({ ...o, active:pf===o.value, style:seg(pf===o.value), onClick:()=>this.setState({ programFilter:o.value }) }));
@@ -3333,6 +3348,7 @@ class Component extends DCLogic {
       typeBtns: bTypes.map(t=>({ ...t, iconEl:this.icon(t.type==='action'?'tag':t.type,14), onClick:()=>this.setState({ builderPick:{ di:i, type:t.type } }) })),
       items: d.items.map((it,ii)=>({ ...it, priceFmt: fmt(Number(it.price)||0), iconEl:this.icon(it.icon,15), del:()=>this.builderDelItem(i,ii), up:()=>this.builderMoveItem(i,ii,-1), down:()=>this.builderMoveItem(i,ii,1), onTime:(e)=>this.builderSetItem(i,ii,'t',e.target.value), onTitle:(e)=>this.builderSetItem(i,ii,'title',e.target.value), onPrice:(e)=>this.builderSetItemPrice(i,ii,e.target.value) })) }));
     const builderTotalItems = this.state.builderDays.reduce((a,d)=>a+d.items.length,0);
+    const builderTripDates = bStartDate ? (fmtDate(bStartDate,0)+' – '+fmtDate(bStartDate, Math.max(0,this.state.builderDays.length-1))) : '';
     const bp=this.state.builderPick;
     const pickMap={walk:'activities',hotel:'hotels',car:'drivers',meal:'restaurants'};
     const pickTitleMap={walk:'اختر نشاطاً داخل اسكتلندا',hotel:'اختر فندقاً',car:'اختر نقلاً / سائقاً',meal:'اختر مطعماً',action:'اختر إجراءً'};
@@ -3527,7 +3543,7 @@ class Component extends DCLogic {
       driverArStyle:swStyle(this.state.bDriverAr), driverArDot:swDot(this.state.bDriverAr), guideStyle:swStyle(this.state.bGuide), guideDot:swDot(this.state.bGuide), simStyle:swStyle(this.state.bSim), simDot:swDot(this.state.bSim),
       addOnRows, builderIncluded, builderInterests, hasInterests:builderInterests.length>0,
       builderPalCats, builderPalette, builderTargetOptions, builderTargetDay:String(this.state.builderTargetDay), onBuilderTarget:(e)=>this.setState({builderTargetDay:Number(e.target.value)||0}),
-      builderStartDate:this.state.builderStartDate, onBuilderStartDate:(e)=>this.setState({builderStartDate:e.target.value}),
+      builderStartDate:this.state.builderStartDate, onBuilderStartDate:(e)=>this.setState({builderStartDate:e.target.value}), builderTripDates, hasBuilderDates:!!bStartDate,
       priceBreakdown, baseCostFmt:fmt(baseCost), grandTotalFmt:fmt(grandTotal), perPersonFmt:fmt(perPerson),
       bMarginPct:this.state.bMarginPct, onBuilderMargin:(e)=>this.builderSetNum('bMarginPct',e.target.value), bMarketerPct:this.state.bMarketerPct, onBuilderMarketer:(e)=>this.builderSetNum('bMarketerPct',e.target.value),
       bVatOn:this.state.bVatOn, toggleVat:()=>this.builderToggle('bVatOn'), vatStyle:swStyle(this.state.bVatOn), vatDot:swDot(this.state.bVatOn), bVatPct:this.state.bVatPct, onBuilderVat:(e)=>this.builderSetNum('bVatPct',e.target.value),
