@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="خطار — منصة سعودية رقمية متكاملة تجمع بين السياحة والدراسة بالخارج. برامج سياحية بجدول يومي ساعةً بساعة، ودراسة لغة وقبولات جامعية وابتعاث.">
+<meta name="theme-color" content="#6366F1">
+<title>خطار — السياحة والدراسة بالخارج</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236366F1'/><path d='M16 26s9-8.1 9-14a9 9 0 1 0-18 0c0 5.9 9 14 9 14Z' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/><circle cx='16' cy='12' r='3' fill='none' stroke='%23fff' stroke-width='2.2'/></svg>">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -2245,7 +2249,7 @@
           </sc-for>
           <div style="margin-top:26px; padding-top:16px; border-top:1px solid #EEE; display:flex; align-items:center; justify-content:space-between; font-size:12px; color:#7A7A88;">
             <span>خطار · السياحة والدراسة بالخارج</span>
-            <span dir="ltr">khattar.sa · +966 50 000 0000</span>
+            <span dir="ltr">mhwar.sa · +966 56 286 7934</span>
           </div>
         </div>
       </div>
@@ -2522,6 +2526,7 @@ class Component extends DCLogic {
   state = {
     screen: 'home',
     theme: null,
+    programId: 'edi',
     tripType: 'all',
     sort: 'rec',
     activeDay: 0,
@@ -2549,6 +2554,7 @@ class Component extends DCLogic {
 
   destinations = [
     { id:'edi', name:'أدنبرة', country:'اسكتلندا', type:'خارجي', days:7, nights:6, price:8900, rating:4.9, reviews:128, tags:['قلعة تاريخية','مرتفعات','بحيرة لوخ نِس'], grad:'linear-gradient(150deg,#243240 0%,#3C5A63 52%,#7BA081 100%)', featured:true },
+    { id:'sct', name:'اسكتلندا الفاخرة', country:'اسكتلندا', type:'خارجي', days:10, nights:9, price:16800, rating:4.9, reviews:64, tags:['جوبتر آرتلاند','قلعة ستيرلنغ','لوخ لوموند','قلين كو','فورت ويليام'], grad:'linear-gradient(150deg,#1E2B36 0%,#37545E 50%,#6E9079 100%)', featured:false },
     { id:'ula', name:'العُلا', country:'السعودية', type:'داخلي', days:4, nights:3, price:3200, rating:4.8, reviews:96, tags:['الحِجر','مرايا','مناطيد'], grad:'linear-gradient(150deg,#5A2E22 0%,#A65B3A 50%,#E0A267 100%)', featured:true },
     { id:'tok', name:'طوكيو', country:'اليابان', type:'خارجي', days:9, nights:8, price:13500, rating:4.9, reviews:74, tags:['شيبويا','جبل فوجي','معابد'], grad:'linear-gradient(150deg,#1B1E3B 0%,#3B3A7A 50%,#C24D78 100%)', featured:true },
     { id:'ryd', name:'الرياض', country:'السعودية', type:'داخلي', days:3, nights:2, price:1950, rating:4.7, reviews:142, tags:['الدرعية','بوليفارد','إطلالة المملكة'], grad:'linear-gradient(150deg,#3A2C1B 0%,#7A5A33 50%,#D8B36A 100%)', featured:true },
@@ -2624,7 +2630,8 @@ class Component extends DCLogic {
     { icon:'users', title:'شبكة وكلاء معتمدين', sub:'وكلاء يبنون برامجهم ويشاركونها مع عملائهم بكل احترافية.' }
   ];
 
-  program = {
+  programs = {
+    edi: {
     id:'edi', name:'أدنبرة الساحرة', country:'اسكتلندا · المملكة المتحدة', type:'رحلة خارجية',
     price:8900, rating:4.9, reviews:128, days:7, nights:6, group:'من شخص واحد',
     grad:'linear-gradient(135deg,#1E2B36 0%,#37545E 48%,#6E9079 100%)',
@@ -2686,7 +2693,93 @@ class Component extends DCLogic {
         { t:'13:30', icon:'flight', tag:'مغادرة', title:'رحلة المغادرة', note:'نتمنى لكم رحلة سعيدة' }
       ]}
     ]
+    },
+    sct: {
+    id:'sct', name:'10 أيام في اسكتلندا', country:'اسكتلندا · المملكة المتحدة', type:'رحلة فاخرة',
+    price:16800, rating:4.9, reviews:64, days:10, nights:9, group:'لشخصين',
+    grad:'linear-gradient(135deg,#1E2B36 0%,#37545E 48%,#6E9079 100%)',
+    summary:'رحلة فاخرة بين الطبيعة والتاريخ — عشرة أيام تجمع بين أناقة إدنبرة وسحر المرتفعات الاسكتلندية: ست ليالٍ في فندق ٤ نجوم وسط إدنبرة، وثلاث ليالٍ في منتجع ريفي فاخر، مع مواصلات خاصة وسائق ومرشد طوال الرحلة. السعر شامل الضرائب ورسوم الحجز (الطيران غير مشمول).',
+    highlights:['جولة إدنبرة','جوبتر آرتلاند','قلعة ستيرلنغ','بحيرة لوخ لوموند','جولة الكروز','وادي قلين كو (غلين كو)','فورت ويليام'],
+    includes:['إقامة ٦ ليالٍ بفندق ٤ نجوم وسط إدنبرة','إقامة ٣ ليالٍ في منتجع ريفي فاخر','مواصلات خاصة وسائق خاص طوال الرحلة','إرشاد سياحي ودعم طوال فترة الرحلة','فطور يومي + وجبات عشاء مختارة','تذاكر دخول جميع المعالم المذكورة','السعر شامل الضرائب ورسوم الحجز'],
+    excludes:['تذاكر الطيران (غير مشمولة)','رسوم التأشيرة','وجبات الغداء غير المذكورة','المصاريف الشخصية والتسوق'],
+    daysList:[
+      { label:'اليوم 1', sub:'الوصول إلى إدنبرة', city:'إدنبرة', entries:[
+        { t:'09:30', icon:'flight', tag:'وصول', title:'الوصول إلى مطار إدنبرة', note:'استقبال من فريق خطار عند البوابة' },
+        { t:'10:30', icon:'car', tag:'تنقل', title:'مواصلات خاصة إلى الفندق', note:'سائق خاص — فندق ٤ نجوم وسط المدينة' },
+        { t:'12:00', icon:'hotel', tag:'إقامة', title:'تسجيل الدخول والاستراحة', note:'الليلة الأولى من ٦ ليالٍ في إدنبرة' },
+        { t:'16:30', icon:'walk', tag:'نشاط', title:'جولة تعريفية في البلدة القديمة', note:'سيراً مع المرشد للتعرّف على المنطقة' },
+        { t:'19:30', icon:'meal', tag:'عشاء', title:'عشاء ترحيبي', note:'مطعم حلال يطل على المدينة' }
+      ]},
+      { label:'اليوم 2', sub:'جولة إدنبرة والقلعة', city:'إدنبرة', entries:[
+        { t:'08:00', icon:'meal', tag:'فطور', title:'فطور في الفندق', note:'' },
+        { t:'09:30', icon:'castle', tag:'نشاط', title:'زيارة قلعة إدنبرة', note:'جولة مع مرشد عربي داخل القلعة' },
+        { t:'12:00', icon:'walk', tag:'نشاط', title:'جولة إدنبرة وشارع الميل الملكي', note:'الكاتدرائية والمعالم التاريخية' },
+        { t:'13:30', icon:'free', tag:'وقت حر', title:'غداء حر في شارع الميل', note:'خيارات متعددة من المطاعم' },
+        { t:'15:30', icon:'museum', tag:'نشاط', title:'متحف اسكتلندا الوطني', note:'دخول مجاني' },
+        { t:'20:00', icon:'meal', tag:'عشاء', title:'عشاء في مطعم شرق أوسطي', note:'' }
+      ]},
+      { label:'اليوم 3', sub:'جوبتر آرتلاند والحدائق', city:'إدنبرة', entries:[
+        { t:'08:30', icon:'meal', tag:'فطور', title:'فطور في الفندق', note:'' },
+        { t:'10:00', icon:'walk', tag:'نشاط', title:'حديقة جوبتر آرتلاند الفنية', note:'متنزه منحوتات فنية في الهواء الطلق' },
+        { t:'13:00', icon:'meal', tag:'غداء', title:'غداء في الحديقة', note:'' },
+        { t:'15:00', icon:'walk', tag:'نشاط', title:'حدائق الأمير وتلة كالتون', note:'إطلالات بانورامية على المدينة' },
+        { t:'18:00', icon:'free', tag:'وقت حر', title:'وقت حر للراحة', note:'' }
+      ]},
+      { label:'اليوم 4', sub:'رحلة إلى قلعة ستيرلنغ', city:'ستيرلنغ', entries:[
+        { t:'08:00', icon:'meal', tag:'فطور', title:'فطور في الفندق', note:'' },
+        { t:'09:00', icon:'car', tag:'تنقل', title:'مواصلات خاصة إلى ستيرلنغ', note:'سائق خاص' },
+        { t:'10:30', icon:'castle', tag:'نشاط', title:'قلعة ستيرلنغ التاريخية', note:'من أهم قلاع اسكتلندا' },
+        { t:'13:00', icon:'meal', tag:'غداء', title:'غداء في البلدة القديمة', note:'' },
+        { t:'15:00', icon:'walk', tag:'نشاط', title:'نصب والاس الوطني', note:'' },
+        { t:'18:00', icon:'car', tag:'تنقل', title:'العودة إلى إدنبرة', note:'' }
+      ]},
+      { label:'اليوم 5', sub:'يوم حر في إدنبرة', city:'إدنبرة', entries:[
+        { t:'09:00', icon:'meal', tag:'فطور', title:'فطور في الفندق', note:'' },
+        { t:'10:30', icon:'walk', tag:'نشاط', title:'تلة آرثرز سيت', note:'صعود سهل وإطلالة على المدينة' },
+        { t:'13:00', icon:'free', tag:'وقت حر', title:'غداء ووقت حر', note:'' },
+        { t:'15:00', icon:'free', tag:'وقت حر', title:'تسوق في سانت جيمس كوارتر', note:'' },
+        { t:'20:00', icon:'meal', tag:'عشاء', title:'عشاء في مطعم مميز', note:'' }
+      ]},
+      { label:'اليوم 6', sub:'تجربة محلية ووداع إدنبرة', city:'إدنبرة', entries:[
+        { t:'09:00', icon:'meal', tag:'فطور', title:'فطور في الفندق', note:'' },
+        { t:'10:30', icon:'taste', tag:'نشاط', title:'ورشة تذوّق محلية', note:'تجربة عائلية حلال' },
+        { t:'14:00', icon:'walk', tag:'نشاط', title:'جولة المدينة المسائية', note:'أضواء إدنبرة الساحرة' },
+        { t:'19:30', icon:'meal', tag:'عشاء', title:'عشاء وداع إدنبرة', note:'ختام الإقامة في المدينة' }
+      ]},
+      { label:'اليوم 7', sub:'الانتقال إلى بحيرة لوخ لوموند', city:'لوخ لوموند', entries:[
+        { t:'08:00', icon:'meal', tag:'فطور', title:'فطور وتسجيل الخروج', note:'مغادرة فندق إدنبرة' },
+        { t:'09:00', icon:'car', tag:'تنقل', title:'انطلاق نحو المرتفعات', note:'مواصلات خاصة مع سائق' },
+        { t:'11:30', icon:'boat', tag:'نشاط', title:'جولة الكروز في بحيرة لوخ لوموند', note:'تجربة بحرية لا تُنسى' },
+        { t:'13:30', icon:'meal', tag:'غداء', title:'غداء على ضفاف البحيرة', note:'' },
+        { t:'16:00', icon:'hotel', tag:'إقامة', title:'الوصول إلى المنتجع الريفي الفاخر', note:'أولى ٣ ليالٍ في المنتجع' },
+        { t:'19:30', icon:'meal', tag:'عشاء', title:'عشاء في المنتجع', note:'' }
+      ]},
+      { label:'اليوم 8', sub:'وادي قلين كو (غلين كو)', city:'غلين كو', entries:[
+        { t:'08:30', icon:'meal', tag:'فطور', title:'فطور في المنتجع', note:'' },
+        { t:'09:30', icon:'bus', tag:'تنقل', title:'انطلاق نحو وادي غلين كو', note:'حافلة خاصة مريحة' },
+        { t:'11:00', icon:'photo', tag:'تصوير', title:'توقف عند إطلالات الوادي', note:'أجمل مناظر المرتفعات' },
+        { t:'13:00', icon:'meal', tag:'غداء', title:'غداء وسط الطبيعة', note:'' },
+        { t:'15:00', icon:'walk', tag:'نشاط', title:'تجوّل في مسارات الوادي', note:'مشي خفيف بين الجبال' },
+        { t:'18:00', icon:'bus', tag:'تنقل', title:'العودة إلى المنتجع', note:'' }
+      ]},
+      { label:'اليوم 9', sub:'فورت ويليام والطبيعة', city:'فورت ويليام', entries:[
+        { t:'08:30', icon:'meal', tag:'فطور', title:'فطور في المنتجع', note:'' },
+        { t:'10:00', icon:'car', tag:'تنقل', title:'زيارة بلدة فورت ويليام', note:'سائق خاص' },
+        { t:'11:30', icon:'photo', tag:'نشاط', title:'إطلالة بن نيفيس', note:'أعلى قمة في بريطانيا' },
+        { t:'13:30', icon:'meal', tag:'غداء', title:'غداء في البلدة', note:'' },
+        { t:'15:30', icon:'free', tag:'وقت حر', title:'وقت حر في الطبيعة', note:'' },
+        { t:'19:30', icon:'meal', tag:'عشاء', title:'عشاء الوداع في المنتجع', note:'ختام الرحلة' }
+      ]},
+      { label:'اليوم 10', sub:'المغادرة', city:'اسكتلندا', entries:[
+        { t:'08:30', icon:'meal', tag:'فطور', title:'فطور وتسجيل الخروج', note:'مغادرة المنتجع الريفي' },
+        { t:'10:00', icon:'car', tag:'تنقل', title:'مواصلات خاصة إلى المطار', note:'سائق خاص' },
+        { t:'13:00', icon:'flight', tag:'مغادرة', title:'رحلة المغادرة', note:'نتمنى لكم رحلة سعيدة' }
+      ]}
+    ]
+    }
   };
+
+  get program(){ return this.programs[this.state.programId] || this.programs.edi; }
 
   themes = {
     warm: {
@@ -2737,7 +2830,7 @@ class Component extends DCLogic {
   }
 
   go = (screen) => { this.setState({ screen }); try{ window.scrollTo(0,0); }catch(e){} };
-  openProgram = (id) => { this.setState({ screen:'program', activeDay:0, purchased:false }); try{ window.scrollTo(0,0); }catch(e){} };
+  openProgram = (id) => { this.setState({ screen:'program', programId:(typeof id==='string'&&this.programs[id])?id:'edi', activeDay:0, purchased:false, tripTab:'overview' }); try{ window.scrollTo(0,0); }catch(e){} };
   goExplore = () => { this.setState({ screen:'explore' }); try{ window.scrollTo(0,0); }catch(e){} };
   openStudyProgram = (id) => { this.setState({ screen:'studyDetail', studyProgramId:id, purchased:false }); try{ window.scrollTo(0,0); }catch(e){} };
   goDashboard = (role) => { this.setState({ screen:'dashboard', role: role||'admin', dashView:'overview' }); try{ window.scrollTo(0,0); }catch(e){} };
@@ -2761,7 +2854,7 @@ class Component extends DCLogic {
   publishDest = (id) => this.setState(st=>({ destStatuses:{ ...st.destStatuses, [id]: (st.destStatuses[id]||'مسودة')==='منشور'?'مسودة':'منشور' } }));
   openProgramBuilder = (type) => this.setState({ screen:'dashboard', dashView:'programBuilder', pbType:(type==='study'||type==='tourism')?type:this.state.pbType });
   savePbProgram = () => { if(!this.state.pbName) return; const s=this.state; const p={ id:'pp'+Date.now(), type:s.pbType, name:s.pbName, dest:s.pbDest, duration:s.pbDuration, price:s.pbPrice, desc:s.pbDesc, includes:(s.pbIncludes||'').split('،').map(x=>x.trim()).filter(Boolean), status:'مسودة' }; this.setState(st=>({ programDrafts:[p,...st.programDrafts], pbName:'',pbPrice:'',pbDesc:'',pbIncludes:'' })); };
-  submitBooking = () => { if(!this.state.bName || !this.state.bPhone) return; const id='BK-'+Math.floor(2900+Math.random()*99); const subj=this.state.bSubject||this.program.name; this.setState(s=>({ bStep:'done', submittedOrders:[{ id, customer:s.bName, program:subj, dest:'—', date:s.bDate||'قيد التحديد', pax:s.bTravelers, value:8900, status:'جديد', agent:'مباشر' }, ...s.submittedOrders] })); };
+  submitBooking = () => { if(!this.state.bName || !this.state.bPhone) return; const id='BK-'+Math.floor(2900+Math.random()*99); const subj=this.state.bSubject||this.program.name; this.setState(s=>({ bStep:'done', submittedOrders:[{ id, customer:s.bName, program:subj, dest:'—', date:s.bDate||'قيد التحديد', pax:s.bTravelers, value:this.program.price, status:'جديد', agent:'مباشر' }, ...s.submittedOrders] })); };
 
   icon(name, size=20){
     const P = {
@@ -3215,7 +3308,7 @@ class Component extends DCLogic {
       trust: this.whyKhattar.slice(0,4).map(w=>({ ...w, iconEl:this.icon(w.icon,20) })),
       how: this.how,
       tripFilters, sorted, sortOptions, resultCount: sorted.length,
-      program: { ...p, grad:"#1c1c28 url('images/edi.jpg') center/cover", priceFmt: fmt(p.price) },
+      program: { ...p, grad:"#1c1c28 url('images/"+p.id+".jpg') center/cover", priceFmt: fmt(p.price) },
       daysList, activeDayObj,
       itin, itinTimeline: itin==='timeline', itinAgenda: itin==='agenda', itinSeg,
       showTimeline: itin==='timeline' && !activeLocked, showAgenda: itin==='agenda' && !activeLocked, notPurchased: !purchased,
@@ -3230,7 +3323,7 @@ class Component extends DCLogic {
       tripExpenses, tripChats,
       tripCountdown:'29 يوم',
       tripQuick:[
-        { label:'المدة', value:'7 أيام · 6 ليالٍ', icon:'clock' },
+        { label:'المدة', value:p.days+' أيام · '+p.nights+' ليالٍ', icon:'clock' },
         { label:'المسافرون', value:'2 + دعوة', icon:'users' },
         { label:'الفندق', value:'راديسون بلو', icon:'hotel' },
         { label:'مرشدك', value:'خالد · عربي', icon:'walk' }
@@ -3248,7 +3341,7 @@ class Component extends DCLogic {
       incTrav:()=>this.setState(s=>({bTravelers:Math.min(20,s.bTravelers+1)})),
       decTrav:()=>this.setState(s=>({bTravelers:Math.max(1,s.bTravelers-1)})),
       bookingValid: !!(this.state.bName && this.state.bPhone),
-      waLink: 'https://wa.me/966500000000'
+      waLink: 'https://wa.me/966562867934'
     };
   }
 }
