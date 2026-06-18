@@ -1761,9 +1761,18 @@
             </div>
             <sc-for list="{{ builderDays }}" as="d" hint-placeholder-count="1">
               <div style="background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:16px; padding:18px 20px; box-shadow:var(--app-shadow); margin-bottom:14px;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                  <div style="display:flex; align-items:center; gap:10px;"><span style="display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:9px; background:var(--app-accent-weak,#EEF0FF); color:var(--app-accent,#6366F1); font-size:13px; font-weight:700;">{{ d.num }}</span><span style="font-size:16px; font-weight:700; color:var(--app-ink,#14141B);">{{ d.title }}</span></div>
-                  <button onClick="{{ d.delDay }}" class="kh-ghost" style="background:none; border:none; cursor:pointer; color:#D64545; font-family:inherit; font-size:13px; font-weight:600;">حذف اليوم</button>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                  <span style="flex-shrink:0; display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:9px; background:var(--app-accent-weak,#EEF0FF); color:var(--app-accent,#6366F1); font-size:13px; font-weight:700;">{{ d.num }}</span>
+                  <input value="{{ d.title }}" onInput="{{ d.onTitle }}" placeholder="عنوان اليوم" style="flex:1; min-width:0; font-family:inherit; font-size:16px; font-weight:700; color:var(--app-ink,#14141B); background:transparent; border:none; outline:none;">
+                  <sc-if value="{{ d.hasDate }}" hint-placeholder-val="{{ true }}"><span style="flex-shrink:0; display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--app-accent-2,#4F46E5); background:var(--app-accent-weak,#EEF0FF); padding:5px 11px; border-radius:9999px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"></rect><path d="M3 9h18M8 2.5v4M16 2.5v4"></path></svg>{{ d.dateLabel }}</span></sc-if>
+                  <button onClick="{{ d.delDay }}" class="kh-ghost" style="flex-shrink:0; background:none; border:none; cursor:pointer; color:#D64545; font-family:inherit; font-size:13px; font-weight:600;">حذف اليوم</button>
+                </div>
+                <div style="display:flex; gap:9px; margin-bottom:14px;">
+                  <div style="flex:0 0 38%; display:flex; align-items:center; gap:7px; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:9px; padding:7px 11px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--app-muted,#7A7A88)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.4"></circle></svg>
+                    <input value="{{ d.city }}" onInput="{{ d.onCity }}" placeholder="المدينة / المنطقة" style="flex:1; min-width:0; font-family:inherit; font-size:13px; font-weight:600; color:var(--app-ink,#14141B); background:transparent; border:none; outline:none;">
+                  </div>
+                  <input value="{{ d.note }}" onInput="{{ d.onNote }}" placeholder="ملاحظات اليوم — مثل: يوم الوصول" style="flex:1; min-width:0; font-family:inherit; font-size:13px; color:var(--app-text,#44454F); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:9px; padding:7px 11px; outline:none;">
                 </div>
                 <sc-for list="{{ d.items }}" as="it" hint-placeholder-count="0">
                   <div style="display:flex; align-items:center; gap:10px; padding:9px 12px; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:11px; margin-bottom:8px;">
@@ -1824,6 +1833,10 @@
             <input value="{{ builderClient }}" onInput="{{ onBuilderClient }}" placeholder="اسم العميل" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:14px; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:10px 12px; margin-bottom:8px; outline:none;">
             <input value="{{ builderPhone }}" onInput="{{ onBuilderPhone }}" placeholder="رقم الجوال" inputmode="tel" dir="ltr" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:14px; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:10px 12px; margin-bottom:8px; outline:none; text-align:start;">
             <input value="{{ builderEmail }}" onInput="{{ onBuilderEmail }}" placeholder="البريد الإلكتروني" inputmode="email" dir="ltr" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:14px; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:10px 12px; margin-bottom:12px; outline:none; text-align:start;">
+            <div style="margin-bottom:12px;">
+              <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">تاريخ السفر (يحدّد تواريخ الأيام)</div>
+              <input type="date" value="{{ builderStartDate }}" onChange="{{ onBuilderStartDate }}" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:9px 12px; outline:none; cursor:pointer;">
+            </div>
             <div style="display:flex; gap:10px; margin-bottom:18px;">
               <div style="flex:1;">
                 <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">المسافرون</div>
@@ -1843,9 +1856,9 @@
 
             <div style="font-size:12px; font-weight:700; color:var(--app-accent-2,#4F46E5); margin-bottom:10px;">الخدمات والإضافات</div>
             <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:6px;">الطيران</div>
-            <div style="display:flex; gap:3px; background:var(--app-sand,#F2EEE4); padding:3px; border-radius:9px; margin-bottom:10px;"><sc-for list="{{ builderFlightSeg }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.onClick }}" style="{{ o.style }}; flex:1;">{{ o.label }}</button></sc-for></div>
+            <div style="display:flex; gap:3px; background:var(--app-sand,#F2EEE4); padding:3px; border-radius:9px; margin-bottom:10px;"><sc-for list="{{ builderFlightSeg }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</button></sc-for></div>
             <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:6px;">التنقل</div>
-            <div style="display:flex; gap:3px; background:var(--app-sand,#F2EEE4); padding:3px; border-radius:9px; margin-bottom:12px;"><sc-for list="{{ builderTransSeg }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.onClick }}" style="{{ o.style }}; flex:1;">{{ o.label }}</button></sc-for></div>
+            <div style="display:flex; gap:3px; background:var(--app-sand,#F2EEE4); padding:3px; border-radius:9px; margin-bottom:12px;"><sc-for list="{{ builderTransSeg }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</button></sc-for></div>
             <div style="display:flex; align-items:center; justify-content:space-between; padding:9px 0;"><span style="font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B);">سائق يتحدث العربية</span><button onClick="{{ toggleDriverAr }}" style="{{ driverArStyle }}"><span style="{{ driverArDot }}"></span></button></div>
             <div style="display:flex; align-items:center; justify-content:space-between; padding:9px 0;"><span style="font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B);">مرشد سياحي خاص</span><button onClick="{{ toggleGuide }}" style="{{ guideStyle }}"><span style="{{ guideDot }}"></span></button></div>
             <div style="display:flex; align-items:center; justify-content:space-between; padding:9px 0; margin-bottom:6px;"><span style="font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B);">شريحة إنترنت للمسافرين</span><button onClick="{{ toggleSim }}" style="{{ simStyle }}"><span style="{{ simDot }}"></span></button></div>
@@ -2331,7 +2344,8 @@
           </div>
           <sc-for list="{{ builderDays }}" as="d" hint-placeholder-count="1">
             <div style="margin-bottom:22px;">
-              <div style="display:flex; align-items:center; gap:9px; margin-bottom:12px;"><span style="display:flex; align-items:center; justify-content:center; min-width:28px; height:28px; border-radius:8px; background:#EEF0FF; color:#4F46E5; font-size:13px; font-weight:700; padding:0 8px;">اليوم {{ d.num }}</span><span style="font-size:17px; font-weight:700; color:#14141B;">{{ d.title }}</span></div>
+              <div style="display:flex; align-items:center; gap:9px; margin-bottom:4px;"><span style="display:flex; align-items:center; justify-content:center; min-width:28px; height:28px; border-radius:8px; background:#EEF0FF; color:#4F46E5; font-size:13px; font-weight:700; padding:0 8px;">اليوم {{ d.num }}</span><span style="font-size:17px; font-weight:700; color:#14141B;">{{ d.title }}</span></div>
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; padding-inline-start:37px; font-size:12.5px; color:#7A7A88;"><span>{{ d.dateLabel }}</span><span>{{ d.city }}</span><span>{{ d.note }}</span></div>
               <sc-for list="{{ d.items }}" as="it" hint-placeholder-count="0">
                 <div style="display:flex; align-items:center; gap:14px; padding:9px 0; border-bottom:1px solid #EEE; ">
                   <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; color:#4F46E5; min-width:48px; direction:ltr; text-align:start;">{{ it.t }}</span>
@@ -2665,7 +2679,7 @@ class Component extends DCLogic {
     bFlight:'us', bTransport:'car', bDriverAr:true, bGuide:true, bSim:false, bLuxury:'comfort', bTripType:'leisure', bInterests:[],
     pFlight:2500, pCar:1800, pDriver:900, pGuide:1200, pSim:120, pLux:1500,
     bMarginPct:15, bVatOn:true, bVatPct:15, bMarketerPct:5,
-    builderTargetDay:0, builderProgPickOpen:false, palCat:'activities',
+    builderTargetDay:0, builderProgPickOpen:false, palCat:'activities', builderStartDate:'',
     orderFilter: 'all', printOpen: false, tripTab: 'overview',
     programFilter: 'tourism', agentOpen: false, selectedAgentName: null, clientOpen: false, selectedClientName: null,
     providerType: 'all', submittedOrders: [], builderPick: null, provOpen: false, selectedProviderName: null, catModal: null,
@@ -2961,16 +2975,17 @@ class Component extends DCLogic {
   setOrderStatus = (id, status) => this.setState(st=>({ orderStatuses:{ ...st.orderStatuses, [id]:status } }));
   sendItinUpdate = () => this.setState(s=>({ itinApproval:{ ...s.itinApproval, [s.selectedOrderId]:'بانتظار اعتماد العميل' } }));
   editItinerary = () => this.setState(s=>({ screen:'dashboard', dashView:'builder', orderOpen:false }));
-  builderAddDay = () => this.setState(s=>({ builderDays:[ ...s.builderDays, { title:'اليوم '+(s.builderDays.length+1), items:[] } ] }));
+  builderAddDay = () => this.setState(s=>({ builderDays:[ ...s.builderDays, { title:'اليوم '+(s.builderDays.length+1), city:'', note:'', items:[] } ] }));
   builderDelDay = (i) => this.setState(s=>({ builderDays: s.builderDays.length>1 ? s.builderDays.filter((_,x)=>x!==i) : s.builderDays }));
+  builderSetDay = (di, f, v) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=> x===di ? { ...d, [f]:v } : d) }));
   builderAddItem = (i, item) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=> x===i ? { ...d, items:[ ...d.items, item ] } : d) }));
   builderDelItem = (di, ii) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=> x===di ? { ...d, items:d.items.filter((_,y)=>y!==ii) } : d) }));
   builderSetItem = (di, ii, f, v) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=> x===di ? { ...d, items:d.items.map((it,y)=> y===ii ? { ...it, [f]:v } : it) } : d) }));
   builderSetItemPrice = (di, ii, v) => this.builderSetItem(di, ii, 'price', Number(String(v).replace(/[^\d.]/g,''))||0);
   builderMoveItem = (di, ii, dir) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=>{ if(x!==di) return d; const j=ii+dir; if(j<0||j>=d.items.length) return d; const items=d.items.slice(); const t=items[ii]; items[ii]=items[j]; items[j]=t; return { ...d, items }; }) }));
   builderAddFromPalette = (name, icon, defPrice) => { const di=Math.min(this.state.builderTargetDay, this.state.builderDays.length-1); const day=this.state.builderDays[di]||{items:[]}; const times=['09:00','11:00','13:00','15:00','17:00','19:00','21:00']; const t = icon==='hotel'?'15:00':(icon==='car'?'08:00':(icon==='meal'?'13:00':times[Math.min(day.items.length,times.length-1)])); this.builderAddItem(di, { t, title:name, icon, price:defPrice||0 }); };
-  builderStartFromProgram = (id) => { const p=this.programs[id]; if(!p) return; const days=p.daysList.map(d=>({ title:d.sub||d.label, items:(d.entries||[]).map(e=>({ t:e.t, title:e.title, icon:e.icon, price:0 })) })); const country=(p.country||'').split('·')[0].trim(); this.setState({ screen:'dashboard', dashView:'builder', builderProgPickOpen:false, builderDays:days, builderClient:'', builderPhone:'', builderEmail:'', builderTargetDay:0, builderCountry: this.destinations.some(x=>x.country===country)?country:this.state.builderCountry }); try{ window.scrollTo(0,0); }catch(e){} };
-  builderNewBlank = () => this.setState({ builderDays:[{ title:'اليوم 1', items:[] }], builderClient:'', builderPhone:'', builderEmail:'', builderTargetDay:0, bInterests:[] });
+  builderStartFromProgram = (id) => { const p=this.programs[id]; if(!p) return; const days=p.daysList.map(d=>({ title:d.sub||d.label, city:d.city||'', note:'', items:(d.entries||[]).map(e=>({ t:e.t, title:e.title, icon:e.icon, price:0 })) })); const country=(p.country||'').split('·')[0].trim(); this.setState({ screen:'dashboard', dashView:'builder', builderProgPickOpen:false, builderDays:days, builderClient:'', builderPhone:'', builderEmail:'', builderTargetDay:0, builderCountry: this.destinations.some(x=>x.country===country)?country:this.state.builderCountry }); try{ window.scrollTo(0,0); }catch(e){} };
+  builderNewBlank = () => this.setState({ builderDays:[{ title:'اليوم 1', city:'', note:'', items:[] }], builderClient:'', builderPhone:'', builderEmail:'', builderTargetDay:0, bInterests:[] });
   builderToggle = (f) => this.setState(s=>({ [f]: !s[f] }));
   builderSetOpt = (f, v) => this.setState({ [f]: v });
   builderSetNum = (f, v) => this.setState({ [f]: Math.max(0, Number(String(v).replace(/[^\d.]/g,''))||0) });
@@ -3309,20 +3324,35 @@ class Component extends DCLogic {
 
     // Custom itinerary builder
     const bTimes=['09:00','11:00','13:00','15:00','17:00','19:00','21:00'];
-    const bTypes=[{type:'walk',label:'نشاط',title:'نشاط سياحي'},{type:'hotel',label:'فندق',title:'إقامة / فندق'},{type:'car',label:'تنقل',title:'تنقل خاص'},{type:'meal',label:'وجبة',title:'وجبة'}];
-    const builderDays = this.state.builderDays.map((d,i)=>({ ...d, num:i+1, delDay:()=>this.builderDelDay(i),
-      typeBtns: bTypes.map(t=>({ ...t, iconEl:this.icon(t.type,14), onClick:()=>this.setState({ builderPick:{ di:i, type:t.type } }) })),
+    const arMonths=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+    const arWeekdays=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+    const fmtDate=(iso, off)=>{ if(!iso) return ''; const d=new Date(iso+'T00:00:00'); if(isNaN(d.getTime())) return ''; d.setDate(d.getDate()+(off||0)); return arWeekdays[d.getDay()]+' '+d.getDate()+' '+arMonths[d.getMonth()]; };
+    const bStartDate=this.state.builderStartDate;
+    const bTypes=[{type:'walk',label:'نشاط',title:'نشاط سياحي'},{type:'hotel',label:'فندق',title:'إقامة / فندق'},{type:'car',label:'تنقل',title:'تنقل خاص'},{type:'meal',label:'وجبة',title:'وجبة'},{type:'action',label:'إجراء',title:'إجراء'}];
+    const builderDays = this.state.builderDays.map((d,i)=>({ ...d, num:i+1, dateLabel:fmtDate(bStartDate,i), hasDate:!!bStartDate, delDay:()=>this.builderDelDay(i), onTitle:(e)=>this.builderSetDay(i,'title',e.target.value), onCity:(e)=>this.builderSetDay(i,'city',e.target.value), onNote:(e)=>this.builderSetDay(i,'note',e.target.value),
+      typeBtns: bTypes.map(t=>({ ...t, iconEl:this.icon(t.type==='action'?'tag':t.type,14), onClick:()=>this.setState({ builderPick:{ di:i, type:t.type } }) })),
       items: d.items.map((it,ii)=>({ ...it, priceFmt: fmt(Number(it.price)||0), iconEl:this.icon(it.icon,15), del:()=>this.builderDelItem(i,ii), up:()=>this.builderMoveItem(i,ii,-1), down:()=>this.builderMoveItem(i,ii,1), onTime:(e)=>this.builderSetItem(i,ii,'t',e.target.value), onTitle:(e)=>this.builderSetItem(i,ii,'title',e.target.value), onPrice:(e)=>this.builderSetItemPrice(i,ii,e.target.value) })) }));
     const builderTotalItems = this.state.builderDays.reduce((a,d)=>a+d.items.length,0);
     const bp=this.state.builderPick;
     const pickMap={walk:'activities',hotel:'hotels',car:'drivers',meal:'restaurants'};
-    const pickTitleMap={walk:'اختر نشاطاً داخل اسكتلندا',hotel:'اختر فندقاً',car:'اختر نقلاً / سائقاً',meal:'اختر مطعماً'};
+    const pickTitleMap={walk:'اختر نشاطاً داخل اسكتلندا',hotel:'اختر فندقاً',car:'اختر نقلاً / سائقاً',meal:'اختر مطعماً',action:'اختر إجراءً'};
+    const procedures=[
+      {name:'تسجيل الوصول للفندق', icon:'hotel', sub:'Check-in', t:'15:00'},
+      {name:'تسجيل المغادرة من الفندق', icon:'hotel', sub:'Check-out', t:'11:00'},
+      {name:'السفر بين مدينتين', icon:'car', sub:'انتقال بري بين المدن', t:'09:00'},
+      {name:'رحلة طيران داخلي', icon:'flight', sub:'انتقال جوي', t:'10:00'},
+      {name:'الانتقال بالقطار / الحافلة', icon:'bus', sub:'نقل عام', t:'09:30'},
+      {name:'الوصول إلى المطار', icon:'flight', sub:'بداية الرحلة', t:'08:00'},
+      {name:'المغادرة من المطار', icon:'flight', sub:'نهاية الرحلة', t:'13:00'},
+      {name:'نقطة لقاء المرشد', icon:'users', sub:'تجمّع المجموعة', t:'09:00'}
+    ];
     const bc=this.state.builderCountry;
     const provFor=(cat)=> bc==='اسكتلندا' ? (this.scotland[cat]||[]) : [{name:'فندق شريك · '+bc,sub:'يُربط لاحقاً'},{name:'خدمة · '+bc,sub:'ضمن الوجهة'}];
     const pkTime=(ty,day)=> ty==='hotel'?'15:00':(ty==='car'?'08:00':(ty==='meal'?'13:00':bTimes[Math.min(day.items.length,bTimes.length-1)]));
     const catDefPrice={hotels:600,activities:250,restaurants:120,drivers:400,landmarks:180};
     const catIcon={hotels:'hotel',activities:'walk',restaurants:'meal',drivers:'car',landmarks:'castle'};
-    const builderPickList = bp ? provFor(pickMap[bp.type]).map(o=>({ ...o, iconEl:this.icon(bp.type,16), onPick:()=>{ const day=this.state.builderDays[bp.di]; this.builderAddItem(bp.di,{ t:pkTime(bp.type,day), title:o.name, icon:bp.type, price:catDefPrice[pickMap[bp.type]]||0 }); this.setState({ builderPick:null }); } })) : [];
+    const pickSrc = bp ? (bp.type==='action' ? procedures : provFor(pickMap[bp.type])) : [];
+    const builderPickList = bp ? pickSrc.map(o=>({ ...o, iconEl:this.icon(bp.type==='action'?o.icon:bp.type,16), onPick:()=>{ const day=this.state.builderDays[bp.di]; const ic=bp.type==='action'?o.icon:bp.type; const t=bp.type==='action'?(o.t||'12:00'):pkTime(bp.type,day); const price=bp.type==='action'?0:(catDefPrice[pickMap[bp.type]]||0); this.builderAddItem(bp.di,{ t, title:o.name, icon:ic, price }); this.setState({ builderPick:null }); } })) : [];
 
     // ===== Builder: client, options, palette, pricing engine =====
     const st=this.state;
@@ -3354,8 +3384,9 @@ class Component extends DCLogic {
       { label:'عمولة المسوّق ('+(Number(st.bMarketerPct)||0)+'%)', value:fmt(marketerAmt) },
       { label: st.bVatOn?('ضريبة القيمة المضافة ('+(Number(st.bVatPct)||0)+'%)'):'الضريبة (معطّلة)', value:fmt(vatAmt) }
     ];
-    const builderFlightSeg=[{label:'نحن نحجز',value:'us'},{label:'العميل',value:'client'},{label:'بدون',value:'none'}].map(o=>({ ...o, active:st.bFlight===o.value, style:seg(st.bFlight===o.value), onClick:()=>this.builderSetOpt('bFlight',o.value) }));
-    const builderTransSeg=[{label:'سيارة خاصة',value:'car'},{label:'نقل عام',value:'public'},{label:'بدون',value:'none'}].map(o=>({ ...o, active:st.bTransport===o.value, style:seg(st.bTransport===o.value), onClick:()=>this.builderSetOpt('bTransport',o.value) }));
+    const segWide=(a)=>({ ...seg(a), flex:1, textAlign:'center' });
+    const builderFlightSeg=[{label:'نحن نحجز',value:'us'},{label:'العميل',value:'client'},{label:'بدون',value:'none'}].map(o=>({ ...o, active:st.bFlight===o.value, style:segWide(st.bFlight===o.value), onClick:()=>this.builderSetOpt('bFlight',o.value) }));
+    const builderTransSeg=[{label:'سيارة خاصة',value:'car'},{label:'نقل عام',value:'public'},{label:'بدون',value:'none'}].map(o=>({ ...o, active:st.bTransport===o.value, style:segWide(st.bTransport===o.value), onClick:()=>this.builderSetOpt('bTransport',o.value) }));
     const builderLuxOptions=['economy','comfort','luxury'].map(v=>({ value:v, label:luxLabels[v] }));
     const builderTripOptions=['leisure','business','honeymoon','family'].map(v=>({ value:v, label:tripLabels[v] }));
     const builderIncluded=[
@@ -3496,6 +3527,7 @@ class Component extends DCLogic {
       driverArStyle:swStyle(this.state.bDriverAr), driverArDot:swDot(this.state.bDriverAr), guideStyle:swStyle(this.state.bGuide), guideDot:swDot(this.state.bGuide), simStyle:swStyle(this.state.bSim), simDot:swDot(this.state.bSim),
       addOnRows, builderIncluded, builderInterests, hasInterests:builderInterests.length>0,
       builderPalCats, builderPalette, builderTargetOptions, builderTargetDay:String(this.state.builderTargetDay), onBuilderTarget:(e)=>this.setState({builderTargetDay:Number(e.target.value)||0}),
+      builderStartDate:this.state.builderStartDate, onBuilderStartDate:(e)=>this.setState({builderStartDate:e.target.value}),
       priceBreakdown, baseCostFmt:fmt(baseCost), grandTotalFmt:fmt(grandTotal), perPersonFmt:fmt(perPerson),
       bMarginPct:this.state.bMarginPct, onBuilderMargin:(e)=>this.builderSetNum('bMarginPct',e.target.value), bMarketerPct:this.state.bMarketerPct, onBuilderMarketer:(e)=>this.builderSetNum('bMarketerPct',e.target.value),
       bVatOn:this.state.bVatOn, toggleVat:()=>this.builderToggle('bVatOn'), vatStyle:swStyle(this.state.bVatOn), vatDot:swDot(this.state.bVatOn), bVatPct:this.state.bVatPct, onBuilderVat:(e)=>this.builderSetNum('bVatPct',e.target.value),
