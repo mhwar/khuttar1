@@ -1744,8 +1744,21 @@
 
         <!-- BUILDER -->
         <sc-if value="{{ dvBuilder }}" hint-placeholder-val="{{ false }}">
-        <div style="display:grid; grid-template-columns:1.7fr 0.9fr; gap:18px; align-items:start;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+          <p style="font-size:14px; color:var(--app-muted,#7A7A88); margin:0; max-width:520px;">صمّم جدولاً مخصّصاً لعميل من الصفر أو انطلق من برنامج جاهز وعدّله. فعّل الخدمات من اللوحة فيتغيّر السعر تلقائياً، ثم أضف المعالم للجدول من مكتبة الوجهة.</p>
+          <div style="display:flex; gap:9px;">
+            <button onClick="{{ builderNewBlank }}" class="kh-ghost" style="font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-text,#44454F); background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); cursor:pointer; padding:10px 16px; border-radius:10px; display:flex; align-items:center; gap:7px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>جدول جديد فارغ</button>
+            <button onClick="{{ openBuilderProgPick }}" class="kh-cta" style="font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-on-accent,#fff); background:var(--app-accent,#6366F1); border:none; cursor:pointer; padding:10px 16px; border-radius:10px; display:flex; align-items:center; gap:7px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 13 9 5 9-5"></path></svg>ابدأ من برنامج جاهز</button>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1.7fr 0.95fr; gap:18px; align-items:start;">
           <div>
+            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px; background:var(--app-sand,#F2EEE4); border:1px solid var(--app-border-2,#F0ECE3); border-radius:14px; padding:13px 16px; margin-bottom:14px;">
+              <span style="font-size:12.5px; font-weight:700; color:var(--app-ink,#14141B); margin-inline-end:4px;">خدمات مُضمّنة:</span>
+              <sc-for list="{{ builderIncluded }}" as="b" hint-placeholder-count="4">
+                <span style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--app-accent-2,#4F46E5); background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); padding:5px 11px; border-radius:9999px;">{{ b.iconEl }}{{ b.label }}</span>
+              </sc-for>
+            </div>
             <sc-for list="{{ builderDays }}" as="d" hint-placeholder-count="1">
               <div style="background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:16px; padding:18px 20px; box-shadow:var(--app-shadow); margin-bottom:14px;">
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
@@ -1753,10 +1766,18 @@
                   <button onClick="{{ d.delDay }}" class="kh-ghost" style="background:none; border:none; cursor:pointer; color:#D64545; font-family:inherit; font-size:13px; font-weight:600;">حذف اليوم</button>
                 </div>
                 <sc-for list="{{ d.items }}" as="it" hint-placeholder-count="0">
-                  <div style="display:flex; align-items:center; gap:11px; padding:9px 12px; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:11px; margin-bottom:8px;">
-                    <input type="time" value="{{ it.t }}" onInput="{{ it.onTime }}" style="width:78px; box-sizing:border-box; font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:600; color:var(--app-accent-2,#4F46E5); direction:ltr; text-align:center; background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:7px; padding:6px 4px; outline:none;">
+                  <div style="display:flex; align-items:center; gap:10px; padding:9px 12px; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:11px; margin-bottom:8px;">
+                    <div style="display:flex; flex-direction:column; gap:1px;">
+                      <button onClick="{{ it.up }}" class="kh-ghost" style="background:none; border:none; cursor:pointer; color:var(--app-muted,#7A7A88); display:flex; padding:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"></path></svg></button>
+                      <button onClick="{{ it.down }}" class="kh-ghost" style="background:none; border:none; cursor:pointer; color:var(--app-muted,#7A7A88); display:flex; padding:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
+                    </div>
+                    <input type="time" value="{{ it.t }}" onInput="{{ it.onTime }}" style="width:74px; box-sizing:border-box; font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:600; color:var(--app-accent-2,#4F46E5); direction:ltr; text-align:center; background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:7px; padding:6px 4px; outline:none;">
                     <span style="width:30px; height:30px; border-radius:8px; background:var(--app-accent-weak,#EEF0FF); color:var(--app-accent,#6366F1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">{{ it.iconEl }}</span>
                     <input value="{{ it.title }}" onInput="{{ it.onTitle }}" style="flex:1; min-width:0; font-family:inherit; font-size:14px; font-weight:600; color:var(--app-ink,#14141B); background:transparent; border:none; outline:none;">
+                    <div style="display:flex; align-items:center; gap:3px; background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:7px; padding:4px 8px;">
+                      <input value="{{ it.price }}" onInput="{{ it.onPrice }}" inputmode="numeric" style="width:54px; box-sizing:border-box; font-family:inherit; font-size:13px; font-weight:700; color:var(--app-ink,#14141B); background:transparent; border:none; outline:none; text-align:center; direction:ltr;">
+                      <span style="font-size:11px; color:var(--app-muted,#7A7A88);">ر.س</span>
+                    </div>
                     <button onClick="{{ it.del }}" class="kh-ghost" style="background:none; border:none; cursor:pointer; color:var(--app-muted,#7A7A88); display:flex; padding:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
                   </div>
                 </sc-for>
@@ -1767,44 +1788,110 @@
                 </div>
               </div>
             </sc-for>
-            <button onClick="{{ builderAddDay }}" class="kh-ghost" style="width:100%; display:flex; align-items:center; justify-content:center; gap:9px; font-family:inherit; font-size:15px; font-weight:600; color:var(--app-text,#44454F); background:var(--app-surface,#fff); border:1.5px dashed var(--app-border,#E9E5DC); cursor:pointer; padding:14px; border-radius:14px;">
+            <button onClick="{{ builderAddDay }}" class="kh-ghost" style="width:100%; display:flex; align-items:center; justify-content:center; gap:9px; font-family:inherit; font-size:15px; font-weight:600; color:var(--app-text,#44454F); background:var(--app-surface,#fff); border:1.5px dashed var(--app-border,#E9E5DC); cursor:pointer; padding:14px; border-radius:14px; margin-bottom:16px;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>
               إضافة يوم جديد
             </button>
+            <div style="background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:16px; padding:18px 20px; box-shadow:var(--app-shadow);">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px;">
+                <div style="font-size:15px; font-weight:700; color:var(--app-ink,#14141B);">مكتبة الوجهة — أضِف للجدول</div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:12.5px; color:var(--app-muted,#7A7A88);">إضافة إلى</span>
+                  <select value="{{ builderTargetDay }}" onChange="{{ onBuilderTarget }}" style="font-family:inherit; font-size:13px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:9px; padding:8px 10px; outline:none; cursor:pointer; max-width:200px;">
+                    <sc-for list="{{ builderTargetOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o.value }}">{{ o.label }}</option></sc-for>
+                  </select>
+                </div>
+              </div>
+              <div style="display:flex; gap:7px; flex-wrap:wrap; margin-bottom:14px;">
+                <sc-for list="{{ builderPalCats }}" as="c" hint-placeholder-count="5"><button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button></sc-for>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:9px;">
+                <sc-for list="{{ builderPalette }}" as="o" hint-placeholder-count="4">
+                  <button onClick="{{ o.onAdd }}" class="kh-row" style="display:flex; align-items:center; gap:10px; text-align:start; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:11px; padding:10px 12px; cursor:pointer; font-family:inherit;">
+                    <span style="width:32px; height:32px; border-radius:9px; background:var(--app-accent-weak,#EEF0FF); color:var(--app-accent,#6366F1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">{{ o.iconEl }}</span>
+                    <span style="flex:1; min-width:0;"><span style="display:block; font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B);">{{ o.name }}</span><span style="display:block; font-size:11.5px; color:var(--app-muted,#7A7A88);">{{ o.sub }}</span></span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--app-accent,#6366F1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
           </div>
-          <aside style="position:sticky; top:90px; background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:18px; padding:22px; box-shadow:var(--app-shadow-lg);">
-            <div style="font-size:17px; font-weight:700; color:var(--app-ink,#14141B); margin-bottom:16px;">جدول مخصّص جديد</div>
-            <label style="display:block; font-size:12.5px; font-weight:600; color:var(--app-muted,#7A7A88); margin-bottom:6px;">العميل</label>
-            <input value="{{ builderClient }}" onInput="{{ onBuilderClient }}" placeholder="اسم العميل" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:14.5px; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:11px 13px; margin-bottom:18px; outline:none;">
-            <div style="display:flex; gap:1px; background:var(--app-border,#E9E5DC); border:1px solid var(--app-border,#E9E5DC); border-radius:12px; overflow:hidden; margin-bottom:18px;">
-              <div style="flex:1; background:var(--app-surface,#fff); padding:14px; text-align:center;"><div style="font-size:24px; font-weight:700; color:var(--app-ink,#14141B);">{{ builderDayCount }}</div><div style="font-size:12px; color:var(--app-muted,#7A7A88);">أيام</div></div>
-              <div style="flex:1; background:var(--app-surface,#fff); padding:14px; text-align:center;"><div style="font-size:24px; font-weight:700; color:var(--app-ink,#14141B);">{{ builderTotalItems }}</div><div style="font-size:12px; color:var(--app-muted,#7A7A88);">عنصر</div></div>
-            </div>
-            <div style="margin-bottom:14px;">
-              <div style="font-size:12.5px; font-weight:600; color:var(--app-muted,#7A7A88); margin-bottom:6px;">الوجهة المرتبطة</div>
-              <select value="{{ builderCountry }}" onChange="{{ onBuilderCountry }}" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:14px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:11px 12px; outline:none; cursor:pointer;">
-                <sc-for list="{{ builderCountries }}" as="c" hint-placeholder-count="3"><option value="{{ c }}">{{ c }}</option></sc-for>
-              </select>
-            </div>
-            <div style="margin-bottom:14px;">
-              <div style="font-size:12.5px; font-weight:600; color:var(--app-muted,#7A7A88); margin-bottom:6px;">عدد المسافرين</div>
-              <div style="display:flex; align-items:center; gap:12px; padding:6px 10px; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px;">
-                <button onClick="{{ builderTravDec }}" class="kh-ghost" style="width:32px; height:32px; border-radius:8px; border:1px solid var(--app-border,#E9E5DC); background:var(--app-surface,#fff); cursor:pointer; font-size:17px; color:var(--app-ink,#14141B); display:flex; align-items:center; justify-content:center;">−</button>
-                <span style="flex:1; text-align:center; font-size:16px; font-weight:700; color:var(--app-ink,#14141B);">{{ builderTravelers }}</span>
-                <button onClick="{{ builderTravInc }}" class="kh-ghost" style="width:32px; height:32px; border-radius:8px; border:1px solid var(--app-border,#E9E5DC); background:var(--app-surface,#fff); cursor:pointer; font-size:17px; color:var(--app-ink,#14141B); display:flex; align-items:center; justify-content:center;">+</button>
+          <aside style="position:sticky; top:90px; max-height:calc(100vh - 110px); overflow-y:auto; background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:18px; padding:20px; box-shadow:var(--app-shadow-lg);">
+            <div style="font-size:17px; font-weight:700; color:var(--app-ink,#14141B); margin-bottom:4px;">إعدادات الجدول</div>
+            <div style="font-size:12.5px; color:var(--app-muted,#7A7A88); margin-bottom:16px;">{{ builderDayCount }} أيام · {{ builderTotalItems }} عنصر</div>
+
+            <div style="font-size:12px; font-weight:700; color:var(--app-accent-2,#4F46E5); margin-bottom:10px;">بيانات العميل</div>
+            <input value="{{ builderClient }}" onInput="{{ onBuilderClient }}" placeholder="اسم العميل" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:14px; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:10px 12px; margin-bottom:8px; outline:none;">
+            <input value="{{ builderPhone }}" onInput="{{ onBuilderPhone }}" placeholder="رقم الجوال" inputmode="tel" dir="ltr" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:14px; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:10px 12px; margin-bottom:8px; outline:none; text-align:start;">
+            <input value="{{ builderEmail }}" onInput="{{ onBuilderEmail }}" placeholder="البريد الإلكتروني" inputmode="email" dir="ltr" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:14px; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:10px 12px; margin-bottom:12px; outline:none; text-align:start;">
+            <div style="display:flex; gap:10px; margin-bottom:18px;">
+              <div style="flex:1;">
+                <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">المسافرون</div>
+                <div style="display:flex; align-items:center; gap:8px; padding:5px 8px; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px;">
+                  <button onClick="{{ builderTravDec }}" class="kh-ghost" style="width:28px; height:28px; border-radius:7px; border:1px solid var(--app-border,#E9E5DC); background:var(--app-surface,#fff); cursor:pointer; font-size:16px; color:var(--app-ink,#14141B); display:flex; align-items:center; justify-content:center;">−</button>
+                  <span style="flex:1; text-align:center; font-size:15px; font-weight:700; color:var(--app-ink,#14141B);">{{ builderTravelers }}</span>
+                  <button onClick="{{ builderTravInc }}" class="kh-ghost" style="width:28px; height:28px; border-radius:7px; border:1px solid var(--app-border,#E9E5DC); background:var(--app-surface,#fff); cursor:pointer; font-size:16px; color:var(--app-ink,#14141B); display:flex; align-items:center; justify-content:center;">+</button>
+                </div>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">الوجهة</div>
+                <select value="{{ builderCountry }}" onChange="{{ onBuilderCountry }}" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:10px; outline:none; cursor:pointer;">
+                  <sc-for list="{{ builderCountries }}" as="c" hint-placeholder-count="3"><option value="{{ c }}">{{ c }}</option></sc-for>
+                </select>
               </div>
             </div>
-            <div style="margin-bottom:16px;">
-              <div style="font-size:12.5px; font-weight:600; color:var(--app-muted,#7A7A88); margin-bottom:8px;">مزوّدون مرتبطون</div>
-              <div style="display:flex; flex-wrap:wrap; gap:7px;">
-                <span style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--app-accent-2,#4F46E5); background:var(--app-accent-weak,#EEF0FF); padding:5px 10px; border-radius:9999px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12V7M2 19v-2h20v2M2 17v-5h13a5 5 0 0 1 5 5"></path><circle cx="6.5" cy="9.5" r="1.6"></circle></svg>راديسون بلو</span>
-                <span style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--app-accent-2,#4F46E5); background:var(--app-accent-weak,#EEF0FF); padding:5px 10px; border-radius:9999px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="6" rx="2"></rect><path d="M6 10l1.5-3.5A2 2 0 0 1 9.4 5h5.2a2 2 0 0 1 1.9 1.5L18 10"></path></svg>النقل الملكي</span>
-                <span style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--app-text,#44454F); background:var(--app-bg,#FAF8F3); border:1px dashed var(--app-border,#E9E5DC); padding:5px 10px; border-radius:9999px; cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>ربط مزوّد</span>
-              </div>
+
+            <div style="font-size:12px; font-weight:700; color:var(--app-accent-2,#4F46E5); margin-bottom:10px;">الخدمات والإضافات</div>
+            <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:6px;">الطيران</div>
+            <div style="display:flex; gap:3px; background:var(--app-sand,#F2EEE4); padding:3px; border-radius:9px; margin-bottom:10px;"><sc-for list="{{ builderFlightSeg }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.onClick }}" style="{{ o.style }}; flex:1;">{{ o.label }}</button></sc-for></div>
+            <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:6px;">التنقل</div>
+            <div style="display:flex; gap:3px; background:var(--app-sand,#F2EEE4); padding:3px; border-radius:9px; margin-bottom:12px;"><sc-for list="{{ builderTransSeg }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.onClick }}" style="{{ o.style }}; flex:1;">{{ o.label }}</button></sc-for></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:9px 0;"><span style="font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B);">سائق يتحدث العربية</span><button onClick="{{ toggleDriverAr }}" style="{{ driverArStyle }}"><span style="{{ driverArDot }}"></span></button></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:9px 0;"><span style="font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B);">مرشد سياحي خاص</span><button onClick="{{ toggleGuide }}" style="{{ guideStyle }}"><span style="{{ guideDot }}"></span></button></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:9px 0; margin-bottom:6px;"><span style="font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B);">شريحة إنترنت للمسافرين</span><button onClick="{{ toggleSim }}" style="{{ simStyle }}"><span style="{{ simDot }}"></span></button></div>
+            <div style="display:flex; gap:10px; margin-bottom:14px;">
+              <div style="flex:1;"><div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">مستوى الرفاهية</div><select value="{{ bLuxury }}" onChange="{{ onBuilderLux }}" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:10px; outline:none; cursor:pointer;"><sc-for list="{{ builderLuxOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select></div>
+              <div style="flex:1;"><div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">نوع الرحلة</div><select value="{{ bTripType }}" onChange="{{ onBuilderTrip }}" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:10px; outline:none; cursor:pointer;"><sc-for list="{{ builderTripOptions }}" as="o" hint-placeholder-count="4"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select></div>
+            </div>
+            <div style="background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:12px; padding:6px 12px; margin-bottom:18px;">
+              <sc-for list="{{ addOnRows }}" as="r" hint-placeholder-count="6">
+                <div style="display:flex; align-items:center; gap:9px; padding:8px 0; border-bottom:1px solid color-mix(in srgb, var(--app-border,#E9E5DC) 55%, transparent);">
+                  <span style="width:26px; height:26px; border-radius:7px; background:var(--app-accent-weak,#EEF0FF); color:var(--app-accent,#6366F1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">{{ r.iconEl }}</span>
+                  <span style="flex:1; min-width:0;"><span style="display:block; font-size:12.5px; font-weight:600; color:var(--app-ink,#14141B);">{{ r.label }}</span><span style="display:block; font-size:11px; color:var(--app-muted,#7A7A88);">{{ r.per }}</span></span>
+                  <div style="display:flex; align-items:center; gap:2px; background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:7px; padding:3px 7px;"><input value="{{ r.unit }}" onInput="{{ r.onPrice }}" inputmode="numeric" style="width:46px; box-sizing:border-box; font-family:inherit; font-size:12.5px; font-weight:700; color:var(--app-ink,#14141B); background:transparent; border:none; outline:none; text-align:center; direction:ltr;"><span style="font-size:10px; color:var(--app-muted,#7A7A88);">ر.س</span></div>
+                </div>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{ hasInterests }}" hint-placeholder-val="{{ true }}">
+            <div style="font-size:12px; font-weight:700; color:var(--app-accent-2,#4F46E5); margin-bottom:10px;">معالم وفعاليات تهمّ العميل</div>
+            <div style="display:flex; gap:7px; flex-wrap:wrap; margin-bottom:18px;">
+              <sc-for list="{{ builderInterests }}" as="i" hint-placeholder-count="5">
+                <button onClick="{{ i.onClick }}" class="kh-pill" style="{{ i.chipStyle }}">{{ i.name }}</button>
+              </sc-for>
+            </div>
+            </sc-if>
+
+            <div style="font-size:12px; font-weight:700; color:var(--app-accent-2,#4F46E5); margin-bottom:4px;">التسعير</div>
+            <div style="font-size:11px; color:var(--app-muted,#7A7A88); margin-bottom:12px;">داخلي — لا يظهر للعميل في الجدول المُرسل.</div>
+            <div style="display:flex; gap:10px; margin-bottom:12px;">
+              <div style="flex:1;"><div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">هامش الربح %</div><input value="{{ bMarginPct }}" onInput="{{ onBuilderMargin }}" inputmode="numeric" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:14px; font-weight:700; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:9px 12px; outline:none; text-align:center; direction:ltr;"></div>
+              <div style="flex:1;"><div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">عمولة المسوّق %</div><input value="{{ bMarketerPct }}" onInput="{{ onBuilderMarketer }}" inputmode="numeric" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:14px; font-weight:700; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:9px 12px; outline:none; text-align:center; direction:ltr;"></div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px;">
+              <div style="display:flex; align-items:center; gap:9px;"><span style="font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B);">ضريبة القيمة المضافة</span><button onClick="{{ toggleVat }}" style="{{ vatStyle }}"><span style="{{ vatDot }}"></span></button></div>
+              <div style="display:flex; align-items:center; gap:2px; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:8px; padding:5px 9px;"><input value="{{ bVatPct }}" onInput="{{ onBuilderVat }}" inputmode="numeric" style="width:36px; box-sizing:border-box; font-family:inherit; font-size:13px; font-weight:700; color:var(--app-ink,#14141B); background:transparent; border:none; outline:none; text-align:center; direction:ltr;"><span style="font-size:11px; color:var(--app-muted,#7A7A88);">%</span></div>
+            </div>
+            <div style="background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:12px; padding:12px 14px; margin-bottom:14px;">
+              <sc-for list="{{ priceBreakdown }}" as="b" hint-placeholder-count="5">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:4px 0; font-size:12.5px; color:var(--app-text,#44454F);"><span>{{ b.label }}</span><span dir="ltr" style="font-weight:600; color:var(--app-ink,#14141B);">{{ b.value }}</span></div>
+              </sc-for>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:10px; margin-top:6px; border-top:1px solid var(--app-border,#E9E5DC);"><span style="font-size:14px; font-weight:700; color:var(--app-ink,#14141B);">الإجمالي</span><span dir="ltr" style="font-size:18px; font-weight:700; color:var(--app-accent,#6366F1);">{{ grandTotalFmt }} <span style="font-size:12px; color:var(--app-text,#44454F);">ر.س</span></span></div>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:4px;"><span style="font-size:12px; color:var(--app-muted,#7A7A88);">للفرد</span><span dir="ltr" style="font-size:13px; font-weight:600; color:var(--app-text,#44454F);">{{ perPersonFmt }} ر.س</span></div>
             </div>
             <button class="kh-cta" style="width:100%; font-family:inherit; font-size:15px; font-weight:600; color:var(--app-on-accent,#fff); background:var(--app-accent,#6366F1); border:none; cursor:pointer; padding:13px; border-radius:12px; margin-bottom:9px;">إرسال الجدول للعميل</button>
             <button onClick="{{ openPrint }}" class="kh-ghost" style="width:100%; font-family:inherit; font-size:14.5px; font-weight:600; color:var(--app-text,#44454F); background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); cursor:pointer; padding:12px; border-radius:12px; margin-bottom:12px; display:flex; align-items:center; justify-content:center; gap:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5 5 5-5M5 20h14"></path></svg>معاينة وتنزيل الجدول</button>
-            <p style="font-size:12.5px; line-height:1.55; color:var(--app-muted,#7A7A88); margin:0; text-align:center;">يُرسل الجدول للعميل لاعتماده، ويمكنك تحديثه لاحقاً قبل الاعتماد النهائي.</p>
+            <p style="font-size:12px; line-height:1.55; color:var(--app-muted,#7A7A88); margin:0; text-align:center;">السعر النهائي فقط يظهر للعميل في الجدول المُرسل.</p>
           </aside>
         </div>
         </sc-if>
@@ -2236,6 +2323,12 @@
             </div>
             <div style="text-align:end;"><div style="font-size:13px; color:#7A7A88;">العميل</div><div style="font-size:16px; font-weight:700; color:#14141B;">{{ builderClient }}</div></div>
           </div>
+          <div style="display:flex; flex-wrap:wrap; gap:10px 28px; margin-bottom:22px;">
+            <div><div style="font-size:11px; color:#7A7A88;">الوجهة</div><div style="font-size:13.5px; font-weight:600; color:#14141B;">{{ builderCountry }}</div></div>
+            <div><div style="font-size:11px; color:#7A7A88;">المسافرون</div><div style="font-size:13.5px; font-weight:600; color:#14141B;">{{ builderTravelers }}</div></div>
+            <div><div style="font-size:11px; color:#7A7A88;">المدة</div><div style="font-size:13.5px; font-weight:600; color:#14141B;">{{ builderDayCount }} أيام</div></div>
+            <div><div style="font-size:11px; color:#7A7A88;">الجوال</div><div dir="ltr" style="font-size:13.5px; font-weight:600; color:#14141B; text-align:start;">{{ builderPhone }}</div></div>
+          </div>
           <sc-for list="{{ builderDays }}" as="d" hint-placeholder-count="1">
             <div style="margin-bottom:22px;">
               <div style="display:flex; align-items:center; gap:9px; margin-bottom:12px;"><span style="display:flex; align-items:center; justify-content:center; min-width:28px; height:28px; border-radius:8px; background:#EEF0FF; color:#4F46E5; font-size:13px; font-weight:700; padding:0 8px;">اليوم {{ d.num }}</span><span style="font-size:17px; font-weight:700; color:#14141B;">{{ d.title }}</span></div>
@@ -2247,7 +2340,11 @@
               </sc-for>
             </div>
           </sc-for>
-          <div style="margin-top:26px; padding-top:16px; border-top:1px solid #EEE; display:flex; align-items:center; justify-content:space-between; font-size:12px; color:#7A7A88;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:18px; padding:16px 20px; background:#F4F4FB; border:1px solid #E4E4F2; border-radius:12px;">
+            <div><div style="font-size:12px; color:#7A7A88;">السعر الإجمالي للرحلة (شامل الضريبة)</div><div style="font-size:12px; color:#7A7A88; margin-top:2px;">للفرد: {{ perPersonFmt }} ر.س</div></div>
+            <div dir="ltr" style="font-size:26px; font-weight:700; color:#4F46E5;">{{ grandTotalFmt }} <span style="font-size:13px; color:#14141B;">ر.س</span></div>
+          </div>
+          <div style="margin-top:20px; padding-top:16px; border-top:1px solid #EEE; display:flex; align-items:center; justify-content:space-between; font-size:12px; color:#7A7A88;">
             <span>خطار · السياحة والدراسة بالخارج</span>
             <span dir="ltr">mhwar.sa · +966 56 286 7934</span>
           </div>
@@ -2332,6 +2429,28 @@
               <span style="flex-shrink:0; width:40px; height:40px; border-radius:11px; background:var(--app-accent-weak,#EEF0FF); color:var(--app-accent,#6366F1); display:flex; align-items:center; justify-content:center;">{{ o.iconEl }}</span>
               <span style="flex:1; min-width:0;"><span style="display:block; font-size:14.5px; font-weight:600; color:var(--app-ink,#14141B);">{{ o.name }}</span><span style="display:block; font-size:12.5px; color:var(--app-muted,#7A7A88);">{{ o.sub }}</span></span>
               <span style="display:flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; color:var(--app-accent,#6366F1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>ربط</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ BUILDER: START FROM PROGRAM ============ -->
+  <sc-if value="{{ builderProgPickOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeBuilderProgPick }}" style="position:fixed; inset:0; z-index:64; background:var(--app-overlay,rgba(20,20,28,0.42)); backdrop-filter:blur(3px); animation:khFade .2s ease; display:flex; align-items:center; justify-content:center; padding:24px;">
+      <div onClick="{{ closeBuilderProgPick }}" style="position:absolute; inset:0;"></div>
+      <div style="position:relative; width:480px; max-width:94vw; max-height:80vh; overflow-y:auto; background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:18px; box-shadow:var(--app-shadow-lg); animation:khScale .28s cubic-bezier(.2,.8,.2,1);">
+        <div style="padding:18px 22px; border-bottom:1px solid var(--app-border,#E9E5DC); display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; background:var(--app-surface,#fff);">
+          <div><div style="font-size:17px; font-weight:700; color:var(--app-ink,#14141B);">ابدأ من برنامج جاهز</div><div style="font-size:12.5px; color:var(--app-muted,#7A7A88); margin-top:2px;">يُنسخ جدول البرنامج كمسودة قابلة للتعديل لعميل جديد.</div></div>
+          <button onClick="{{ closeBuilderProgPick }}" class="kh-ghost" style="width:34px; height:34px; border-radius:9px; border:1px solid var(--app-border,#E9E5DC); background:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--app-text,#44454F);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+        </div>
+        <div style="padding:12px;">
+          <sc-for list="{{ builderProgList }}" as="o" hint-placeholder-count="2">
+            <button onClick="{{ o.onPick }}" class="kh-row" style="width:100%; display:flex; align-items:center; gap:12px; padding:13px 14px; background:none; border:none; border-radius:12px; cursor:pointer; font-family:inherit; text-align:start;">
+              <span style="flex-shrink:0; width:40px; height:40px; border-radius:11px; background:var(--app-accent-weak,#EEF0FF); color:var(--app-accent,#6366F1); display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 13 9 5 9-5"></path></svg></span>
+              <span style="flex:1; min-width:0;"><span style="display:block; font-size:14.5px; font-weight:600; color:var(--app-ink,#14141B);">{{ o.name }}</span><span style="display:block; font-size:12.5px; color:var(--app-muted,#7A7A88);">{{ o.sub }}</span></span>
+              <span style="display:flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; color:var(--app-accent,#6366F1);">نسخ وتعديل<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-flip-rtl><path d="m15 18-6-6 6-6"></path></svg></span>
             </button>
           </sc-for>
         </div>
@@ -2542,6 +2661,11 @@ class Component extends DCLogic {
     df_name:'', df_region:'', df_desc:'', df_lang:'', df_visa:'', df_currency:'', df_best:'', df_cities:'', df_landmarks:'',
     pbType:'tourism', pbName:'', pbDest:'اسكتلندا', pbDuration:'7', pbPrice:'', pbDesc:'', pbIncludes:'', programDrafts:[],
     itinApproval: {}, builderClient: '', builderDays: [{ title:'اليوم 1', items:[] }],
+    builderPhone:'', builderEmail:'',
+    bFlight:'us', bTransport:'car', bDriverAr:true, bGuide:true, bSim:false, bLuxury:'comfort', bTripType:'leisure', bInterests:[],
+    pFlight:2500, pCar:1800, pDriver:900, pGuide:1200, pSim:120, pLux:1500,
+    bMarginPct:15, bVatOn:true, bVatPct:15, bMarketerPct:5,
+    builderTargetDay:0, builderProgPickOpen:false, palCat:'activities',
     orderFilter: 'all', printOpen: false, tripTab: 'overview',
     programFilter: 'tourism', agentOpen: false, selectedAgentName: null, clientOpen: false, selectedClientName: null,
     providerType: 'all', submittedOrders: [], builderPick: null, provOpen: false, selectedProviderName: null, catModal: null,
@@ -2842,6 +2966,15 @@ class Component extends DCLogic {
   builderAddItem = (i, item) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=> x===i ? { ...d, items:[ ...d.items, item ] } : d) }));
   builderDelItem = (di, ii) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=> x===di ? { ...d, items:d.items.filter((_,y)=>y!==ii) } : d) }));
   builderSetItem = (di, ii, f, v) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=> x===di ? { ...d, items:d.items.map((it,y)=> y===ii ? { ...it, [f]:v } : it) } : d) }));
+  builderSetItemPrice = (di, ii, v) => this.builderSetItem(di, ii, 'price', Number(String(v).replace(/[^\d.]/g,''))||0);
+  builderMoveItem = (di, ii, dir) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=>{ if(x!==di) return d; const j=ii+dir; if(j<0||j>=d.items.length) return d; const items=d.items.slice(); const t=items[ii]; items[ii]=items[j]; items[j]=t; return { ...d, items }; }) }));
+  builderAddFromPalette = (name, icon, defPrice) => { const di=Math.min(this.state.builderTargetDay, this.state.builderDays.length-1); const day=this.state.builderDays[di]||{items:[]}; const times=['09:00','11:00','13:00','15:00','17:00','19:00','21:00']; const t = icon==='hotel'?'15:00':(icon==='car'?'08:00':(icon==='meal'?'13:00':times[Math.min(day.items.length,times.length-1)])); this.builderAddItem(di, { t, title:name, icon, price:defPrice||0 }); };
+  builderStartFromProgram = (id) => { const p=this.programs[id]; if(!p) return; const days=p.daysList.map(d=>({ title:d.sub||d.label, items:(d.entries||[]).map(e=>({ t:e.t, title:e.title, icon:e.icon, price:0 })) })); const country=(p.country||'').split('·')[0].trim(); this.setState({ screen:'dashboard', dashView:'builder', builderProgPickOpen:false, builderDays:days, builderClient:'', builderPhone:'', builderEmail:'', builderTargetDay:0, builderCountry: this.destinations.some(x=>x.country===country)?country:this.state.builderCountry }); try{ window.scrollTo(0,0); }catch(e){} };
+  builderNewBlank = () => this.setState({ builderDays:[{ title:'اليوم 1', items:[] }], builderClient:'', builderPhone:'', builderEmail:'', builderTargetDay:0, bInterests:[] });
+  builderToggle = (f) => this.setState(s=>({ [f]: !s[f] }));
+  builderSetOpt = (f, v) => this.setState({ [f]: v });
+  builderSetNum = (f, v) => this.setState({ [f]: Math.max(0, Number(String(v).replace(/[^\d.]/g,''))||0) });
+  builderToggleInterest = (name) => this.setState(s=>({ bInterests: s.bInterests.includes(name) ? s.bInterests.filter(x=>x!==name) : [...s.bInterests, name] }));
   toggleTheme = () => this.setState(s => ({ theme: s.theme === 'night' ? 'warm' : 'night' }));
   openBooking = (subject) => this.setState({ bookingOpen:true, bStep:'form', bSubject:(typeof subject==='string' && subject) ? subject : this.program.name });
   closeBooking = () => this.setState({ bookingOpen:false });
@@ -2891,7 +3024,13 @@ class Component extends DCLogic {
       search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/>',
       plus:'<path d="M12 5v14M5 12h14"/>',
       home:'<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/>',
-      chart:'<path d="M3 3v18h18"/><path d="M7 14l3.5-4 3 2.5L21 7"/>'
+      chart:'<path d="M3 3v18h18"/><path d="M7 14l3.5-4 3 2.5L21 7"/>',
+      wifi:'<path d="M2 8.5a16 16 0 0 1 20 0M5 12a11 11 0 0 1 14 0M8.5 15.5a6 6 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/>',
+      heart:'<path d="M12 20s-7-4.6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.4-7 10-7 10Z"/>',
+      gem:'<path d="m6 3 12 0 3 5-9 13L3 8Z"/><path d="M3 8h18M9 3 7 8l5 13M15 3l2 5-5 13"/>',
+      phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L19 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 6a2 2 0 0 1 2-2Z"/>',
+      tag:'<path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9Z"/><circle cx="7.5" cy="7.5" r="1.4"/>',
+      briefcase2:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/>'
     };
     return React.createElement('svg',{width:size,height:size,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.7,strokeLinecap:'round',strokeLinejoin:'round',dangerouslySetInnerHTML:{__html:P[name]||P.pin}});
   }
@@ -2921,6 +3060,8 @@ class Component extends DCLogic {
     const fmt = (n) => n.toLocaleString('en-US');
     const chip = (active)=>({ fontFamily:'inherit', fontSize:'14px', fontWeight:600, cursor:'pointer', padding:'9px 18px', borderRadius:'9999px', border:'1px solid '+(active?'transparent':'var(--app-border)'), background:active?'var(--app-accent)':'var(--app-surface)', color:active?'var(--app-on-accent)':'var(--app-text)' });
     const seg = (active)=>({ fontFamily:'inherit', fontSize:'13.5px', fontWeight:600, cursor:'pointer', padding:'7px 15px', borderRadius:'8px', border:'none', background:active?'var(--app-surface)':'transparent', color:active?'var(--app-ink)':'var(--app-muted)', boxShadow:active?'var(--app-shadow)':'none' });
+    const swStyle = (on)=>({ position:'relative', width:'42px', height:'24px', borderRadius:'9999px', border:'none', cursor:'pointer', flexShrink:0, padding:0, background: on?'var(--app-accent)':'var(--app-border)', transition:'background .15s' });
+    const swDot = (on)=>({ position:'absolute', top:'3px', insetInlineStart: on?'21px':'3px', width:'18px', height:'18px', borderRadius:'9999px', background:'#fff', transition:'inset-inline-start .15s', boxShadow:'0 1px 3px rgba(0,0,0,0.25)' });
 
     const enrichDest = (d) => ({ ...d, priceFmt: fmt(d.price), grad:"#1c1c28 url('images/"+d.id+".jpg') center/cover", gradStyle:{ background:d.grad }, open:()=>this.openProgram(d.id) });
     const destinations = this.destinations.map(enrichDest);
@@ -3162,16 +3303,16 @@ class Component extends DCLogic {
     const orderFilterSeg=[{label:'الكل',value:'all'},{label:'سفر وسياحة',value:'tourism'},{label:'دراسة وابتعاث',value:'study'}].map(o=>({ ...o, active:ordF===o.value, style:seg(ordF===o.value), onClick:()=>this.setState({ orderFilter:o.value }) }));
     const ordersFiltered = orders.filter(o=> ordF==='all' || o.kind===ordF);
     const itinForBuilder = selectedOrder ? (selectedOrder.isStudy
-      ? studyWeekData.map(w=>({ title:w.title, items:w.items.map(t=>({ t:'—', title:t, icon:'cap' })) }))
-      : p.daysList.map(d=>({ title:d.sub, items:d.entries.map(e=>({ t:e.t, title:e.title, icon:e.icon })) }))) : [];
-    const editItinerary = ()=>this.setState({ screen:'dashboard', dashView:'builder', orderOpen:false, builderDays:itinForBuilder, builderClient: selectedOrder?selectedOrder.customer:'' });
+      ? studyWeekData.map(w=>({ title:w.title, items:w.items.map(t=>({ t:'—', title:t, icon:'cap', price:0 })) }))
+      : p.daysList.map(d=>({ title:d.sub, items:d.entries.map(e=>({ t:e.t, title:e.title, icon:e.icon, price:0 })) }))) : [];
+    const editItinerary = ()=>this.setState({ screen:'dashboard', dashView:'builder', orderOpen:false, builderDays:itinForBuilder, builderClient: selectedOrder?selectedOrder.customer:'', builderTargetDay:0 });
 
     // Custom itinerary builder
     const bTimes=['09:00','11:00','13:00','15:00','17:00','19:00','21:00'];
     const bTypes=[{type:'walk',label:'نشاط',title:'نشاط سياحي'},{type:'hotel',label:'فندق',title:'إقامة / فندق'},{type:'car',label:'تنقل',title:'تنقل خاص'},{type:'meal',label:'وجبة',title:'وجبة'}];
     const builderDays = this.state.builderDays.map((d,i)=>({ ...d, num:i+1, delDay:()=>this.builderDelDay(i),
       typeBtns: bTypes.map(t=>({ ...t, iconEl:this.icon(t.type,14), onClick:()=>this.setState({ builderPick:{ di:i, type:t.type } }) })),
-      items: d.items.map((it,ii)=>({ ...it, iconEl:this.icon(it.icon,15), del:()=>this.builderDelItem(i,ii), onTime:(e)=>this.builderSetItem(i,ii,'t',e.target.value), onTitle:(e)=>this.builderSetItem(i,ii,'title',e.target.value) })) }));
+      items: d.items.map((it,ii)=>({ ...it, priceFmt: fmt(Number(it.price)||0), iconEl:this.icon(it.icon,15), del:()=>this.builderDelItem(i,ii), up:()=>this.builderMoveItem(i,ii,-1), down:()=>this.builderMoveItem(i,ii,1), onTime:(e)=>this.builderSetItem(i,ii,'t',e.target.value), onTitle:(e)=>this.builderSetItem(i,ii,'title',e.target.value), onPrice:(e)=>this.builderSetItemPrice(i,ii,e.target.value) })) }));
     const builderTotalItems = this.state.builderDays.reduce((a,d)=>a+d.items.length,0);
     const bp=this.state.builderPick;
     const pickMap={walk:'activities',hotel:'hotels',car:'drivers',meal:'restaurants'};
@@ -3179,7 +3320,63 @@ class Component extends DCLogic {
     const bc=this.state.builderCountry;
     const provFor=(cat)=> bc==='اسكتلندا' ? (this.scotland[cat]||[]) : [{name:'فندق شريك · '+bc,sub:'يُربط لاحقاً'},{name:'خدمة · '+bc,sub:'ضمن الوجهة'}];
     const pkTime=(ty,day)=> ty==='hotel'?'15:00':(ty==='car'?'08:00':(ty==='meal'?'13:00':bTimes[Math.min(day.items.length,bTimes.length-1)]));
-    const builderPickList = bp ? provFor(pickMap[bp.type]).map(o=>({ ...o, iconEl:this.icon(bp.type,16), onPick:()=>{ const day=this.state.builderDays[bp.di]; this.builderAddItem(bp.di,{ t:pkTime(bp.type,day), title:o.name, icon:bp.type }); this.setState({ builderPick:null }); } })) : [];
+    const catDefPrice={hotels:600,activities:250,restaurants:120,drivers:400,landmarks:180};
+    const catIcon={hotels:'hotel',activities:'walk',restaurants:'meal',drivers:'car',landmarks:'castle'};
+    const builderPickList = bp ? provFor(pickMap[bp.type]).map(o=>({ ...o, iconEl:this.icon(bp.type,16), onPick:()=>{ const day=this.state.builderDays[bp.di]; this.builderAddItem(bp.di,{ t:pkTime(bp.type,day), title:o.name, icon:bp.type, price:catDefPrice[pickMap[bp.type]]||0 }); this.setState({ builderPick:null }); } })) : [];
+
+    // ===== Builder: client, options, palette, pricing engine =====
+    const st=this.state;
+    const trav=Math.max(1, st.builderTravelers);
+    const luxLabels={economy:'اقتصادي',comfort:'مريح',luxury:'فاخر'};
+    const tripLabels={leisure:'سياحة وترفيه',business:'عمل',honeymoon:'شهر عسل',family:'عائلية'};
+    const luxSurcharge = st.bLuxury==='luxury' ? Number(st.pLux)||0 : (st.bLuxury==='economy' ? -Math.round((Number(st.pLux)||0)/2) : 0);
+    const addOnRows=[
+      { key:'flight', on: st.bFlight==='us', icon:'flight', label:'الطيران (نحن نحجز)', per:'لكل مسافر', unit:Number(st.pFlight)||0, amount:(st.bFlight==='us'?(Number(st.pFlight)||0)*trav:0), priceField:'pFlight', editable:true },
+      { key:'car', on: st.bTransport==='car', icon:'car', label:'سيارة خاصة بسائق', per:'للرحلة', unit:Number(st.pCar)||0, amount:(st.bTransport==='car'?(Number(st.pCar)||0):0), priceField:'pCar', editable:true },
+      { key:'driver', on: !!st.bDriverAr, icon:'users', label:'سائق يتحدث العربية', per:'للرحلة', unit:Number(st.pDriver)||0, amount:(st.bDriverAr?(Number(st.pDriver)||0):0), priceField:'pDriver', editable:true },
+      { key:'guide', on: !!st.bGuide, icon:'walk', label:'مرشد سياحي خاص', per:'للرحلة', unit:Number(st.pGuide)||0, amount:(st.bGuide?(Number(st.pGuide)||0):0), priceField:'pGuide', editable:true },
+      { key:'sim', on: !!st.bSim, icon:'wifi', label:'شريحة إنترنت', per:'لكل مسافر', unit:Number(st.pSim)||0, amount:(st.bSim?(Number(st.pSim)||0)*trav:0), priceField:'pSim', editable:true },
+      { key:'lux', on: st.bLuxury==='luxury', icon:'gem', label:'ترقية مستوى الرفاهية', per:luxLabels[st.bLuxury], unit:Number(st.pLux)||0, amount:luxSurcharge, priceField:'pLux', editable:true }
+    ].map(r=>({ ...r, iconEl:this.icon(r.icon,15), unitFmt:fmt(r.unit), amountFmt:fmt(r.amount), onPrice:(e)=>this.builderSetNum(r.priceField,e.target.value) }));
+    const itemsCost = this.state.builderDays.reduce((a,d)=>a+d.items.reduce((x,it)=>x+(Number(it.price)||0),0),0);
+    const addOnsCost = addOnRows.reduce((a,r)=>a+r.amount,0);
+    const baseCost = itemsCost + addOnsCost;
+    const marginAmt = Math.round(baseCost*(Number(st.bMarginPct)||0)/100);
+    const marketerAmt = Math.round((baseCost+marginAmt)*(Number(st.bMarketerPct)||0)/100);
+    const preTax = baseCost + marginAmt + marketerAmt;
+    const vatAmt = st.bVatOn ? Math.round(preTax*(Number(st.bVatPct)||0)/100) : 0;
+    const grandTotal = preTax + vatAmt;
+    const perPerson = Math.round(grandTotal/trav);
+    const priceBreakdown=[
+      { label:'تكلفة بنود الجدول', value:fmt(itemsCost) },
+      { label:'الخدمات والإضافات', value:fmt(addOnsCost) },
+      { label:'هامش الربح ('+(Number(st.bMarginPct)||0)+'%)', value:fmt(marginAmt) },
+      { label:'عمولة المسوّق ('+(Number(st.bMarketerPct)||0)+'%)', value:fmt(marketerAmt) },
+      { label: st.bVatOn?('ضريبة القيمة المضافة ('+(Number(st.bVatPct)||0)+'%)'):'الضريبة (معطّلة)', value:fmt(vatAmt) }
+    ];
+    const builderFlightSeg=[{label:'نحن نحجز',value:'us'},{label:'العميل',value:'client'},{label:'بدون',value:'none'}].map(o=>({ ...o, active:st.bFlight===o.value, style:seg(st.bFlight===o.value), onClick:()=>this.builderSetOpt('bFlight',o.value) }));
+    const builderTransSeg=[{label:'سيارة خاصة',value:'car'},{label:'نقل عام',value:'public'},{label:'بدون',value:'none'}].map(o=>({ ...o, active:st.bTransport===o.value, style:seg(st.bTransport===o.value), onClick:()=>this.builderSetOpt('bTransport',o.value) }));
+    const builderLuxOptions=['economy','comfort','luxury'].map(v=>({ value:v, label:luxLabels[v] }));
+    const builderTripOptions=['leisure','business','honeymoon','family'].map(v=>({ value:v, label:tripLabels[v] }));
+    const builderIncluded=[
+      st.bFlight==='us' && {icon:'flight',label:'طيران ذهاب وعودة'},
+      st.bTransport==='car' && {icon:'car',label:'سيارة خاصة'},
+      st.bTransport==='public' && {icon:'bus',label:'نقل عام'},
+      st.bDriverAr && {icon:'users',label:'سائق عربي'},
+      st.bGuide && {icon:'walk',label:'مرشد خاص'},
+      st.bSim && {icon:'wifi',label:'شريحة إنترنت'},
+      {icon:'gem',label:'رفاهية: '+luxLabels[st.bLuxury]},
+      {icon:'heart',label:tripLabels[st.bTripType]}
+    ].filter(Boolean).map(x=>({ ...x, iconEl:this.icon(x.icon,14) }));
+    const interestPool = bc==='اسكتلندا' ? (this.scotland.landmarks||[]).concat((this.scotland.activities||[]).map(a=>a.name)).filter((v,i,a)=>a.indexOf(v)===i) : [];
+    const builderInterests = interestPool.map(name=>{ const on=st.bInterests.includes(name); return { name, active:on, onClick:()=>this.builderToggleInterest(name), chipStyle:{ fontFamily:'inherit', fontSize:'12.5px', fontWeight:600, cursor:'pointer', padding:'7px 13px', borderRadius:'9999px', border:'1px solid '+(on?'transparent':'var(--app-border)'), background:on?'var(--app-accent)':'var(--app-surface)', color:on?'var(--app-on-accent)':'var(--app-text)' } }; });
+    const palCats=[{cat:'activities',label:'الأنشطة'},{cat:'landmarks',label:'المعالم'},{cat:'hotels',label:'الفنادق'},{cat:'restaurants',label:'المطاعم'},{cat:'drivers',label:'النقل'}];
+    const palCat=st.palCat;
+    const palItemsRaw = palCat==='landmarks' ? ((bc==='اسكتلندا'?this.scotland.landmarks:[]).map(n=>({name:n,sub:'معلم بارز'}))) : provFor(palCat);
+    const builderPalCats = palCats.map(c=>({ ...c, active:palCat===c.cat, style:chip(palCat===c.cat), onClick:()=>this.setState({ palCat:c.cat }) }));
+    const builderPalette = palItemsRaw.map(o=>({ ...o, iconEl:this.icon(catIcon[palCat]||'walk',16), onAdd:()=>this.builderAddFromPalette(o.name, catIcon[palCat]||'walk', catDefPrice[palCat]||0) }));
+    const builderTargetOptions = this.state.builderDays.map((d,i)=>({ value:String(i), label:'اليوم '+(i+1)+(d.title?(' · '+d.title):'') }));
+    const builderProgList = Object.keys(this.programs).map(k=>({ id:k, name:this.programs[k].name, sub:(this.programs[k].days)+' أيام · '+(this.programs[k].country||''), onPick:()=>this.builderStartFromProgram(k) }));
     const orderDocs = [
       { name:'جواز السفر', by:'العميل', status:'مرفوع' },
       { name:'الشهادة الدراسية', by:'العميل', status:'مرفوع' },
@@ -3291,6 +3488,17 @@ class Component extends DCLogic {
       onDfName:(e)=>this.setState({df_name:e.target.value}), onDfRegion:(e)=>this.setState({df_region:e.target.value}), onDfDesc:(e)=>this.setState({df_desc:e.target.value}), onDfLang:(e)=>this.setState({df_lang:e.target.value}), onDfVisa:(e)=>this.setState({df_visa:e.target.value}), onDfCurrency:(e)=>this.setState({df_currency:e.target.value}), onDfBest:(e)=>this.setState({df_best:e.target.value}), onDfCities:(e)=>this.setState({df_cities:e.target.value}), onDfLandmarks:(e)=>this.setState({df_landmarks:e.target.value}),
       orderOpen:this.state.orderOpen, selectedOrder, orderStatusBtns,
       dvBuilder:dashView==='builder', openBuilder:()=>this.setState({ screen:'dashboard', dashView:'builder' }), builderDays, builderAddDay:this.builderAddDay, builderClient:this.state.builderClient,
+      builderNewBlank:this.builderNewBlank,
+      builderProgPickOpen:this.state.builderProgPickOpen, openBuilderProgPick:()=>this.setState({builderProgPickOpen:true}), closeBuilderProgPick:()=>this.setState({builderProgPickOpen:false}), builderProgList,
+      builderPhone:this.state.builderPhone, onBuilderPhone:(e)=>this.setState({builderPhone:e.target.value}), builderEmail:this.state.builderEmail, onBuilderEmail:(e)=>this.setState({builderEmail:e.target.value}),
+      builderFlightSeg, builderTransSeg, builderLuxOptions, builderTripOptions, bLuxury:this.state.bLuxury, onBuilderLux:(e)=>this.builderSetOpt('bLuxury',e.target.value), bTripType:this.state.bTripType, onBuilderTrip:(e)=>this.builderSetOpt('bTripType',e.target.value),
+      bDriverAr:this.state.bDriverAr, toggleDriverAr:()=>this.builderToggle('bDriverAr'), bGuide:this.state.bGuide, toggleGuide:()=>this.builderToggle('bGuide'), bSim:this.state.bSim, toggleSim:()=>this.builderToggle('bSim'),
+      driverArStyle:swStyle(this.state.bDriverAr), driverArDot:swDot(this.state.bDriverAr), guideStyle:swStyle(this.state.bGuide), guideDot:swDot(this.state.bGuide), simStyle:swStyle(this.state.bSim), simDot:swDot(this.state.bSim),
+      addOnRows, builderIncluded, builderInterests, hasInterests:builderInterests.length>0,
+      builderPalCats, builderPalette, builderTargetOptions, builderTargetDay:String(this.state.builderTargetDay), onBuilderTarget:(e)=>this.setState({builderTargetDay:Number(e.target.value)||0}),
+      priceBreakdown, baseCostFmt:fmt(baseCost), grandTotalFmt:fmt(grandTotal), perPersonFmt:fmt(perPerson),
+      bMarginPct:this.state.bMarginPct, onBuilderMargin:(e)=>this.builderSetNum('bMarginPct',e.target.value), bMarketerPct:this.state.bMarketerPct, onBuilderMarketer:(e)=>this.builderSetNum('bMarketerPct',e.target.value),
+      bVatOn:this.state.bVatOn, toggleVat:()=>this.builderToggle('bVatOn'), vatStyle:swStyle(this.state.bVatOn), vatDot:swDot(this.state.bVatOn), bVatPct:this.state.bVatPct, onBuilderVat:(e)=>this.builderSetNum('bVatPct',e.target.value),
       dvProgramBuilder:dashView==='programBuilder', openProgramBuilder:()=>this.openProgramBuilder(), openTourismProgram:()=>this.openProgramBuilder('tourism'), openStudyProgramBuilder:()=>this.openProgramBuilder('study'),
       pbTypeSeg:[{label:'برنامج سياحي',value:'tourism'},{label:'دراسة وابتعاث',value:'study'}].map(o=>({ ...o, active:this.state.pbType===o.value, onClick:()=>this.setState({pbType:o.value}), style:{ flex:'1', fontFamily:'inherit', fontSize:'14px', fontWeight:600, cursor:'pointer', padding:'11px', borderRadius:'10px', border:'1px solid '+(this.state.pbType===o.value?'transparent':'var(--app-border)'), background:this.state.pbType===o.value?'var(--app-accent)':'var(--app-surface)', color:this.state.pbType===o.value?'var(--app-on-accent)':'var(--app-text)' } })),
       pbIsStudy:this.state.pbType==='study', pbName:this.state.pbName, pbDest:this.state.pbDest, pbDuration:this.state.pbDuration, pbPrice:this.state.pbPrice, pbDesc:this.state.pbDesc, pbIncludes:this.state.pbIncludes,
