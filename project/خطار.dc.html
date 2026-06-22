@@ -1745,7 +1745,7 @@
         <!-- BUILDER -->
         <sc-if value="{{ dvBuilder }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
-          <div style="display:flex; gap:3px; background:var(--app-sand,#F2EEE4); padding:4px; border-radius:11px; flex:0 0 auto;"><sc-for list="{{ builderModeSeg }}" as="o" hint-placeholder-count="2"><button onClick="{{ o.onClick }}" style="{{ o.style }}; padding:9px 18px;">{{ o.label }}</button></sc-for></div>
+          <div style="display:flex; gap:3px; background:var(--app-sand,#F2EEE4); padding:4px; border-radius:11px; flex:0 0 auto;"><sc-for list="{{ builderModeSeg }}" as="o" hint-placeholder-count="2"><button onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</button></sc-for></div>
           <sc-if value="{{ isSaleMode }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px; color:var(--app-muted,#7A7A88);">صمّم برنامجاً للكتالوج ثم انشره ليظهر في «استكشف» و«التصفّح».</span></sc-if>
           <sc-if value="{{ isClientMode }}" hint-placeholder-val="{{ true }}"><span style="font-size:12.5px; color:var(--app-muted,#7A7A88);">جدول خاص بعميل — يُرسل له لاعتماده.</span></sc-if>
         </div>
@@ -1828,10 +1828,8 @@
                   </div>
                 </sc-for>
                 <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
-                  <sc-for list="{{ d.typeBtns }}" as="t" hint-placeholder-count="4">
-                    <button onClick="{{ t.onClick }}" class="kh-pill" style="display:flex; align-items:center; gap:6px; font-family:inherit; font-size:13px; font-weight:600; color:var(--app-accent,#6366F1); background:var(--app-accent-weak,#EEF0FF); border:none; cursor:pointer; padding:8px 13px; border-radius:9px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>{{ t.label }}</button>
-                  </sc-for>
-                  <button onClick="{{ d.openLibForDay }}" class="kh-pill" style="display:flex; align-items:center; gap:6px; font-family:inherit; font-size:13px; font-weight:600; color:var(--app-accent-2,#4F46E5); background:var(--app-surface,#fff); border:1px dashed var(--app-accent,#6366F1); cursor:pointer; padding:8px 13px; border-radius:9px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 13 9 5 9-5"></path></svg>من المكتبة</button>
+                  <button onClick="{{ d.openLibForDay }}" class="kh-pill" style="display:flex; align-items:center; gap:7px; font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-accent,#6366F1); background:var(--app-accent-weak,#EEF0FF); border:none; cursor:pointer; padding:9px 16px; border-radius:9px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>أضِف عنصراً لليوم</button>
+                  <span style="display:flex; align-items:center; font-size:11.5px; color:var(--app-muted,#7A7A88);">أنشطة · معالم · فنادق · مطاعم · نقل · إجراءات · مخصّص</span>
                 </div>
               </div>
             </sc-for>
@@ -1867,8 +1865,12 @@
             </div>
             </sc-if>
             <div style="margin-bottom:12px;">
-              <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">تاريخ السفر (يحدّد تواريخ الأيام)</div>
-              <input type="date" value="{{ builderStartDate }}" onChange="{{ onBuilderStartDate }}" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:9px 12px; outline:none; cursor:pointer;">
+              <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">مدة الرحلة (من – إلى) — تُحدّد الأيام تلقائياً</div>
+              <div style="display:flex; gap:8px;">
+                <div style="flex:1;"><div style="font-size:11px; color:var(--app-muted,#7A7A88); margin-bottom:3px;">من</div><input type="date" value="{{ builderStartDate }}" onChange="{{ onBuilderStartDate }}" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:13px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:9px 10px; outline:none; cursor:pointer;"></div>
+                <div style="flex:1;"><div style="font-size:11px; color:var(--app-muted,#7A7A88); margin-bottom:3px;">إلى</div><input type="date" value="{{ builderEndDate }}" onChange="{{ onBuilderEndDate }}" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:13px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:9px 10px; outline:none; cursor:pointer;"></div>
+              </div>
+              <sc-if value="{{ hasRange }}" hint-placeholder-val="{{ false }}"><div style="display:flex; align-items:center; gap:7px; margin-top:8px; font-size:12.5px; font-weight:600; color:var(--app-accent-2,#4F46E5); background:var(--app-accent-weak,#EEF0FF); padding:7px 11px; border-radius:9px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"></rect><path d="M3 9h18M8 2.5v4M16 2.5v4"></path></svg>المدة: {{ rangeDays }} أيام · {{ rangeNights }} ليالٍ</div></sc-if>
             </div>
             <div style="display:flex; gap:10px; margin-bottom:18px;">
               <div style="flex:1;">
@@ -2534,15 +2536,18 @@
             <div><div style="font-size:17px; font-weight:700; color:var(--app-ink,#14141B);">مكتبة الوجهة</div><div style="font-size:12.5px; color:var(--app-muted,#7A7A88); margin-top:2px;">إضافة إلى {{ libDayLabel }}</div></div>
             <button onClick="{{ closeLib }}" class="kh-ghost" style="width:34px; height:34px; border-radius:9px; border:1px solid var(--app-border,#E9E5DC); background:none; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--app-text,#44454F);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
           </div>
+          <sc-if value="{{ libBrowse }}" hint-placeholder-val="{{ true }}">
           <div style="display:flex; align-items:center; gap:8px; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:8px 12px; margin-bottom:12px;">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--app-muted,#7A7A88)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg>
             <input value="{{ libQuery }}" onInput="{{ onLibQuery }}" placeholder="ابحث…" style="flex:1; min-width:0; font-family:inherit; font-size:13.5px; color:var(--app-ink,#14141B); background:transparent; border:none; outline:none;">
           </div>
+          </sc-if>
           <div style="display:flex; gap:7px; flex-wrap:wrap;">
-            <sc-for list="{{ libCatChips }}" as="c" hint-placeholder-count="5"><button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }} · {{ c.count }}</button></sc-for>
+            <sc-for list="{{ libCatChips }}" as="c" hint-placeholder-count="6"><button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.chipLabel }}</button></sc-for>
           </div>
         </div>
         <div style="padding:12px;">
+          <sc-if value="{{ libBrowse }}" hint-placeholder-val="{{ true }}">
           <sc-for list="{{ libList }}" as="o" hint-placeholder-count="4">
             <button onClick="{{ o.onAdd }}" class="kh-row" style="width:100%; display:flex; align-items:center; gap:12px; padding:12px 14px; background:none; border:none; border-radius:12px; cursor:pointer; font-family:inherit; text-align:start;">
               <span style="flex-shrink:0; width:38px; height:38px; border-radius:10px; background:var(--app-accent-weak,#EEF0FF); color:var(--app-accent,#6366F1); display:flex; align-items:center; justify-content:center;">{{ o.iconEl }}</span>
@@ -2550,6 +2555,18 @@
               <span style="display:flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; color:var(--app-accent,#6366F1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>أضِف</span>
             </button>
           </sc-for>
+          </sc-if>
+          <sc-if value="{{ isLibCustom }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:4px 2px;">
+            <div style="font-size:12.5px; color:var(--app-muted,#7A7A88); margin-bottom:8px;">اكتب بنداً غير موجود في القائمة، اختر نوعه، ثم أضِفه.</div>
+            <input value="{{ libCustomName }}" onInput="{{ onLibCustomName }}" placeholder="اسم البند — مثل: زيارة خاصة لمصنع الويسكي" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:14px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:11px 13px; margin-bottom:12px; outline:none;">
+            <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:8px;">نوع البند</div>
+            <div style="display:flex; gap:7px; flex-wrap:wrap; margin-bottom:16px;">
+              <sc-for list="{{ libTypeChips }}" as="t" hint-placeholder-count="8"><button onClick="{{ t.onClick }}" style="{{ t.chipStyle }}">{{ t.iconEl }}{{ t.label }}</button></sc-for>
+            </div>
+            <button onClick="{{ addLibCustom }}" class="kh-cta" style="width:100%; font-family:inherit; font-size:14.5px; font-weight:600; color:var(--app-on-accent,#fff); background:var(--app-accent,#6366F1); border:none; cursor:pointer; padding:12px; border-radius:11px; display:flex; align-items:center; justify-content:center; gap:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>أضِف للجدول</button>
+          </div>
+          </sc-if>
         </div>
       </div>
     </div>
@@ -2762,7 +2779,8 @@ class Component extends DCLogic {
     bFlight:'us', bTransport:'car', bDriverAr:true, bGuide:true, bSim:false, bLuxury:'comfort', bTripType:'leisure', bInterests:[],
     pFlight:2500, pCar:1800, pDriver:900, pGuide:1200, pSim:120, pLux:1500,
     bMarginPct:15, bVatOn:true, bVatPct:15, bMarketerPct:5,
-    builderTargetDay:0, builderProgPickOpen:false, palCat:'activities', builderStartDate:'',
+    builderTargetDay:0, builderProgPickOpen:false, palCat:'activities', builderStartDate:'', builderEndDate:'',
+    libCustomName:'', libCustomType:'walk',
     builderMode:'client', saleName:'', saleSummary:'', saleHighlights:'', saleIncludes:'', saleExcludes:'', saleCoverId:'edi', saleSeason:'', saleMinPax:1, salePrice:'', publishedPrograms:[],
     libOpen:false, libDay:0, libCat:'activities', libQuery:'', libExpanded:true,
     orderFilter: 'all', printOpen: false, tripTab: 'overview',
@@ -3072,7 +3090,10 @@ class Component extends DCLogic {
   builderMoveItem = (di, ii, dir) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=>{ if(x!==di) return d; const j=ii+dir; if(j<0||j>=d.items.length) return d; const items=d.items.slice(); const t=items[ii]; items[ii]=items[j]; items[j]=t; return { ...d, items }; }) }));
   builderAddFromPalette = (name, icon, defPrice) => { const di=Math.min(this.state.builderTargetDay, this.state.builderDays.length-1); const day=this.state.builderDays[di]||{items:[]}; const times=['09:00','11:00','13:00','15:00','17:00','19:00','21:00']; const t = icon==='hotel'?'15:00':(icon==='car'?'08:00':(icon==='meal'?'13:00':times[Math.min(day.items.length,times.length-1)])); this.builderAddItem(di, { t, title:name, icon, price:defPrice||0 }); };
   builderStartFromProgram = (id) => { const p=this.programs[id]; if(!p) return; const days=p.daysList.map(d=>({ title:d.sub||d.label, city:d.city||'', note:'', items:(d.entries||[]).map(e=>({ t:e.t, title:e.title, icon:e.icon, price:0 })) })); const country=(p.country||'').split('·')[0].trim(); this.setState({ screen:'dashboard', dashView:'builder', builderProgPickOpen:false, builderDays:days, builderClient:'', builderPhone:'', builderEmail:'', builderTargetDay:0, builderCountry: this.destinations.some(x=>x.country===country)?country:this.state.builderCountry }); try{ window.scrollTo(0,0); }catch(e){} };
-  builderNewBlank = () => this.setState({ builderDays:[{ title:'اليوم 1', city:'', note:'', items:[] }], builderClient:'', builderPhone:'', builderEmail:'', builderTargetDay:0, bInterests:[] });
+  builderNewBlank = () => this.setState({ builderDays:[{ title:'اليوم 1', city:'', note:'', items:[] }], builderClient:'', builderPhone:'', builderEmail:'', builderTargetDay:0, bInterests:[], builderStartDate:'', builderEndDate:'' });
+  syncDaysToCount = (n) => { n=Math.max(1,Math.min(60,n)); this.setState(s=>{ const cur=s.builderDays; const days=[]; for(let i=0;i<n;i++){ days.push(cur[i] || { title:'اليوم '+(i+1), city:'', note:'', items:[] }); } return { builderDays:days, builderTargetDay:Math.min(s.builderTargetDay,n-1), libDay:Math.min(s.libDay,n-1) }; }); };
+  setBuilderDate = (which, val) => { this.setState(which==='from'?{builderStartDate:val}:{builderEndDate:val}); const from=which==='from'?val:this.state.builderStartDate; const to=which==='to'?val:this.state.builderEndDate; if(from&&to){ const a=new Date(from+'T00:00:00'), b=new Date(to+'T00:00:00'); if(!isNaN(a.getTime())&&!isNaN(b.getTime())&&b>=a){ const n=Math.round((b-a)/86400000)+1; this.syncDaysToCount(n); } } };
+  addLibCustom = () => { const name=(this.state.libCustomName||'').trim(); if(!name) return; const di=Math.min(this.state.libDay, this.state.builderDays.length-1); const day=this.state.builderDays[di]||{items:[]}; const times=['09:00','11:00','13:00','15:00','17:00','19:00','21:00']; const ic=this.state.libCustomType; const t= ic==='hotel'?'15:00':(ic==='car'?'08:00':(ic==='meal'?'13:00':times[Math.min(day.items.length,times.length-1)])); this.builderAddItem(di,{ t, title:name, icon:ic, price:0 }); this.setState({ libCustomName:'' }); };
   builderToggle = (f) => this.setState(s=>({ [f]: !s[f] }));
   builderSetOpt = (f, v) => this.setState({ [f]: v });
   builderSetNum = (f, v) => this.setState({ [f]: Math.max(0, Number(String(v).replace(/[^\d.]/g,''))||0) });
@@ -3507,23 +3528,28 @@ class Component extends DCLogic {
     ].filter(Boolean).map(x=>({ ...x, iconEl:this.icon(x.icon,14) }));
     const interestPool = bc==='اسكتلندا' ? (this.scotland.landmarks||[]).concat((this.scotland.activities||[]).map(a=>a.name)).filter((v,i,a)=>a.indexOf(v)===i) : [];
     const builderInterests = interestPool.map(name=>{ const on=st.bInterests.includes(name); return { name, active:on, onClick:()=>this.builderToggleInterest(name), chipStyle:{ fontFamily:'inherit', fontSize:'12.5px', fontWeight:600, cursor:'pointer', padding:'7px 13px', borderRadius:'9999px', border:'1px solid '+(on?'transparent':'var(--app-border)'), background:on?'var(--app-accent)':'var(--app-surface)', color:on?'var(--app-on-accent)':'var(--app-text)' } }; });
-    const palCats=[{cat:'activities',label:'الأنشطة'},{cat:'landmarks',label:'المعالم'},{cat:'hotels',label:'الفنادق'},{cat:'restaurants',label:'المطاعم'},{cat:'drivers',label:'النقل'}];
+    const palCats=[{cat:'activities',label:'الأنشطة'},{cat:'landmarks',label:'المعالم'},{cat:'hotels',label:'الفنادق'},{cat:'restaurants',label:'المطاعم'},{cat:'drivers',label:'النقل'},{cat:'action',label:'إجراءات'}];
     const palCat=st.palCat;
     const libQ=(st.libQuery||'').trim();
-    const rawFor=(cat)=> cat==='landmarks' ? ((bc==='اسكتلندا'?this.scotland.landmarks:[]).map(n=>({name:n,sub:'معلم بارز'}))) : provFor(cat);
+    const rawFor=(cat)=> cat==='action' ? procedures : (cat==='landmarks' ? ((bc==='اسكتلندا'?this.scotland.landmarks:[]).map(n=>({name:n,sub:'معلم بارز'}))) : provFor(cat));
+    const itemIconFor=(cat,o)=> cat==='action' ? (o.icon||'check') : (catIcon[cat]||'walk');
+    const itemPriceFor=(cat)=> cat==='action' ? 0 : (catDefPrice[cat]||0);
     const matchQ=(o)=>!libQ || (o.name||'').indexOf(libQ)>-1 || (o.sub||'').indexOf(libQ)>-1;
     const palItemsRaw = rawFor(palCat).filter(matchQ);
     const builderPalCats = palCats.map(c=>({ ...c, count:rawFor(c.cat).length, active:palCat===c.cat, style:chip(palCat===c.cat), onClick:()=>this.setState({ palCat:c.cat }) }));
-    const builderPalette = palItemsRaw.map(o=>({ ...o, iconEl:this.icon(catIcon[palCat]||'walk',16), onAdd:()=>this.builderAddFromPalette(o.name, catIcon[palCat]||'walk', catDefPrice[palCat]||0) }));
-    const addToDay=(di,cat,name)=>{ const day=this.state.builderDays[di]||{items:[]}; const times=['09:00','11:00','13:00','15:00','17:00','19:00','21:00']; const ic=catIcon[cat]||'walk'; const t= ic==='hotel'?'15:00':(ic==='car'?'08:00':(ic==='meal'?'13:00':times[Math.min(day.items.length,times.length-1)])); this.builderAddItem(di,{ t, title:name, icon:ic, price:catDefPrice[cat]||0 }); };
+    const builderPalette = palItemsRaw.map(o=>({ ...o, iconEl:this.icon(itemIconFor(palCat,o),16), onAdd:()=>this.builderAddFromPalette(o.name, itemIconFor(palCat,o), itemPriceFor(palCat)) }));
+    const addToDay=(di,cat,o)=>{ const day=this.state.builderDays[di]||{items:[]}; const times=['09:00','11:00','13:00','15:00','17:00','19:00','21:00']; const ic=itemIconFor(cat,o); const t= (cat==='action'&&o.t)?o.t:(ic==='hotel'?'15:00':(ic==='car'?'08:00':(ic==='meal'?'13:00':times[Math.min(day.items.length,times.length-1)]))); this.builderAddItem(di,{ t, title:o.name, icon:ic, price:itemPriceFor(cat) }); };
     const libCat=st.libCat;
-    const libCatChips = palCats.map(c=>({ ...c, count:rawFor(c.cat).length, active:libCat===c.cat, style:chip(libCat===c.cat), onClick:()=>this.setState({ libCat:c.cat }) }));
+    const libCats=palCats.concat([{cat:'custom',label:'✎ مخصّص'}]);
+    const libCatChips = libCats.map(c=>({ ...c, chipLabel: c.cat==='custom'? c.label : (c.label+' · '+rawFor(c.cat).length), active:libCat===c.cat, style:chip(libCat===c.cat), onClick:()=>this.setState({ libCat:c.cat }) }));
     const libDayIdx=Math.min(st.libDay, this.state.builderDays.length-1);
-    const libList = rawFor(libCat).filter(matchQ).map(o=>({ ...o, iconEl:this.icon(catIcon[libCat]||'walk',16), onAdd:()=>addToDay(libDayIdx, libCat, o.name) }));
+    const isLibCustom = libCat==='custom';
+    const libList = isLibCustom ? [] : rawFor(libCat).filter(matchQ).map(o=>({ ...o, iconEl:this.icon(itemIconFor(libCat,o),16), onAdd:()=>addToDay(libDayIdx, libCat, o) }));
+    const libTypeChips=[{label:'نشاط',icon:'walk'},{label:'معلم',icon:'castle'},{label:'فندق',icon:'hotel'},{label:'تنقل',icon:'car'},{label:'طيران',icon:'flight'},{label:'وجبة',icon:'meal'},{label:'إجراء',icon:'check'},{label:'وقت حر',icon:'free'}].map(t=>({ ...t, active:st.libCustomType===t.icon, iconEl:this.icon(t.icon,15), onClick:()=>this.setState({ libCustomType:t.icon }), chipStyle:{ display:'flex', alignItems:'center', gap:'6px', fontFamily:'inherit', fontSize:'12.5px', fontWeight:600, cursor:'pointer', padding:'7px 12px', borderRadius:'9999px', border:'1px solid '+(st.libCustomType===t.icon?'transparent':'var(--app-border)'), background:st.libCustomType===t.icon?'var(--app-accent)':'var(--app-surface)', color:st.libCustomType===t.icon?'var(--app-on-accent)':'var(--app-text)' } }));
     const _libDayT=this.state.builderDays[libDayIdx]&&this.state.builderDays[libDayIdx].title; const libDayLabel = 'اليوم '+(libDayIdx+1)+((_libDayT && _libDayT!==('اليوم '+(libDayIdx+1)))?(' · '+_libDayT):'');
     const builderTargetOptions = this.state.builderDays.map((d,i)=>({ value:String(i), label:'اليوم '+(i+1)+(d.title?(' · '+d.title):'') }));
     const builderProgList = Object.keys(this.programs).map(k=>({ id:k, name:this.programs[k].name, sub:(this.programs[k].days)+' أيام · '+(this.programs[k].country||''), onPick:()=>this.builderStartFromProgram(k) }));
-    const builderModeSeg=[{label:'جدول لعميل',value:'client'},{label:'برنامج للعرض والبيع',value:'sale'}].map(o=>({ ...o, active:st.builderMode===o.value, style:segWide(st.builderMode===o.value), onClick:()=>this.setState({ builderMode:o.value }) }));
+    const builderModeSeg=[{label:'جدول لعميل',value:'client'},{label:'برنامج للعرض والبيع',value:'sale'}].map(o=>({ ...o, active:st.builderMode===o.value, style:{ ...segWide(st.builderMode===o.value), padding:'9px 18px' }, onClick:()=>this.setState({ builderMode:o.value }) }));
     const isSaleMode=st.builderMode==='sale';
     const saleCoverOptions=this.destinations.map(d=>({ value:d.id, label:d.name }));
     const orderDocs = [
@@ -3647,13 +3673,15 @@ class Component extends DCLogic {
       builderPalCats, builderPalette, builderTargetOptions, builderTargetDay:String(this.state.builderTargetDay), onBuilderTarget:(e)=>this.setState({builderTargetDay:Number(e.target.value)||0}),
       libExpanded:this.state.libExpanded, toggleLib:()=>this.setState(s=>({libExpanded:!s.libExpanded})), libQuery:this.state.libQuery, onLibQuery:(e)=>this.setState({libQuery:e.target.value}),
       libOpen:this.state.libOpen, openLib:this.openLib, closeLib:this.closeLib, libCatChips, libList, libDayLabel,
+      isLibCustom, libBrowse:!isLibCustom, libTypeChips, libCustomName:this.state.libCustomName, onLibCustomName:(e)=>this.setState({libCustomName:e.target.value}), addLibCustom:this.addLibCustom,
       builderModeSeg, isSaleMode, isClientMode:!isSaleMode,
       saleName:this.state.saleName, onSaleName:(e)=>this.setState({saleName:e.target.value}), saleSummary:this.state.saleSummary, onSaleSummary:(e)=>this.setState({saleSummary:e.target.value}),
       saleHighlights:this.state.saleHighlights, onSaleHighlights:(e)=>this.setState({saleHighlights:e.target.value}), saleIncludes:this.state.saleIncludes, onSaleIncludes:(e)=>this.setState({saleIncludes:e.target.value}), saleExcludes:this.state.saleExcludes, onSaleExcludes:(e)=>this.setState({saleExcludes:e.target.value}),
       saleSeason:this.state.saleSeason, onSaleSeason:(e)=>this.setState({saleSeason:e.target.value}), saleCoverId:this.state.saleCoverId, onSaleCover:(e)=>this.setState({saleCoverId:e.target.value}), saleCoverOptions,
       saleMinPax:this.state.saleMinPax, saleMinInc:()=>this.setState(s=>({saleMinPax:Math.min(40,s.saleMinPax+1)})), saleMinDec:()=>this.setState(s=>({saleMinPax:Math.max(1,s.saleMinPax-1)})),
       salePrice:this.state.salePrice, onSalePrice:(e)=>this.setState({salePrice:String(e.target.value).replace(/[^\d.]/g,'')}), salePricePlaceholder:fmt(perPerson), publishProgram:this.publishProgram,
-      builderStartDate:this.state.builderStartDate, onBuilderStartDate:(e)=>this.setState({builderStartDate:e.target.value}), builderTripDates, hasBuilderDates:!!bStartDate,
+      builderStartDate:this.state.builderStartDate, onBuilderStartDate:(e)=>this.setBuilderDate('from',e.target.value), builderEndDate:this.state.builderEndDate, onBuilderEndDate:(e)=>this.setBuilderDate('to',e.target.value), builderTripDates, hasBuilderDates:!!bStartDate,
+      rangeDays:this.state.builderDays.length, rangeNights:Math.max(0,this.state.builderDays.length-1), hasRange:!!(this.state.builderStartDate&&this.state.builderEndDate),
       priceBreakdown, baseCostFmt:fmt(baseCost), grandTotalFmt:fmt(grandTotal), perPersonFmt:fmt(perPerson),
       bMarginPct:this.state.bMarginPct, onBuilderMargin:(e)=>this.builderSetNum('bMarginPct',e.target.value), bMarketerPct:this.state.bMarketerPct, onBuilderMarketer:(e)=>this.builderSetNum('bMarketerPct',e.target.value),
       bVatOn:this.state.bVatOn, toggleVat:()=>this.builderToggle('bVatOn'), vatStyle:swStyle(this.state.bVatOn), vatDot:swDot(this.state.bVatOn), bVatPct:this.state.bVatPct, onBuilderVat:(e)=>this.builderSetNum('bVatPct',e.target.value),
