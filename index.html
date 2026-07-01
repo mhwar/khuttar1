@@ -20,6 +20,8 @@
   @keyframes khScale { from { opacity:0; transform: translateY(18px) scale(.98); } to { opacity:1; transform:none; } }
   @media (max-width: 860px) {
     .kh-prog-grid { grid-template-columns: 1fr !important; }
+    .kh-builder-grid { grid-template-columns: 1fr !important; }
+    .kh-builder-grid > aside { position: static !important; max-height: none !important; }
     .kh-prog-grid > aside { position: static !important; }
     .kh-2col { grid-template-columns: 1fr !important; }
     .kh-nav-hide { display: none !important; }
@@ -1756,7 +1758,18 @@
             <button onClick="{{ openBuilderProgPick }}" class="kh-cta" style="font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-on-accent,#fff); background:var(--app-accent,#6366F1); border:none; cursor:pointer; padding:10px 16px; border-radius:10px; display:flex; align-items:center; gap:7px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 13 9 5 9-5"></path></svg>ابدأ من برنامج جاهز</button>
           </div>
         </div>
-        <div style="display:grid; grid-template-columns:1.7fr 0.95fr; gap:18px; align-items:start;">
+        <sc-if value="{{ hasSavedSchedules }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:12px; padding:10px 14px; margin-bottom:16px;">
+          <span style="font-size:12.5px; font-weight:700; color:var(--app-ink,#14141B); margin-inline-end:2px;">مسوّداتي:</span>
+          <sc-for list="{{ savedSchedulesView }}" as="r" hint-placeholder-count="2">
+            <span style="display:flex; align-items:center; gap:6px; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:9999px; padding:5px 6px 5px 12px;">
+              <button onClick="{{ r.onLoad }}" class="kh-ghost" style="background:none; border:none; cursor:pointer; font-family:inherit; font-size:12.5px; font-weight:600; color:var(--app-accent-2,#4F46E5); padding:0;">{{ r.name }} · {{ r.days }}ي</button>
+              <button onClick="{{ r.onDelete }}" class="kh-ghost" style="width:18px; height:18px; border-radius:9999px; border:none; background:var(--app-border,#E9E5DC); cursor:pointer; color:var(--app-text,#44454F); display:flex; align-items:center; justify-content:center; padding:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+            </span>
+          </sc-for>
+        </div>
+        </sc-if>
+        <div class="kh-builder-grid" style="display:grid; grid-template-columns:1.7fr 0.95fr; gap:18px; align-items:start;">
           <div>
             <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px; background:var(--app-sand,#F2EEE4); border:1px solid var(--app-border-2,#F0ECE3); border-radius:14px; padding:13px 16px; margin-bottom:14px;">
               <span style="font-size:12.5px; font-weight:700; color:var(--app-ink,#14141B); margin-inline-end:4px;">خدمات مُضمّنة:</span>
@@ -1812,7 +1825,8 @@
                   <input value="{{ d.note }}" onInput="{{ d.onNote }}" placeholder="ملاحظات اليوم — مثل: يوم الوصول" style="flex:1; min-width:0; font-family:inherit; font-size:13px; color:var(--app-text,#44454F); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:9px; padding:7px 11px; outline:none;">
                 </div>
                 <sc-for list="{{ d.items }}" as="it" hint-placeholder-count="0">
-                  <div style="display:flex; align-items:center; gap:10px; padding:9px 12px; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:11px; margin-bottom:8px;">
+                  <div style="background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:11px; margin-bottom:8px; padding:8px 12px;">
+                   <div style="display:flex; align-items:center; gap:10px;">
                     <div style="display:flex; flex-direction:column; gap:1px;">
                       <button onClick="{{ it.up }}" class="kh-ghost" style="background:none; border:none; cursor:pointer; color:var(--app-muted,#7A7A88); display:flex; padding:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"></path></svg></button>
                       <button onClick="{{ it.down }}" class="kh-ghost" style="background:none; border:none; cursor:pointer; color:var(--app-muted,#7A7A88); display:flex; padding:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
@@ -1822,14 +1836,23 @@
                     <input value="{{ it.title }}" onInput="{{ it.onTitle }}" style="flex:1; min-width:0; font-family:inherit; font-size:14px; font-weight:600; color:var(--app-ink,#14141B); background:transparent; border:none; outline:none;">
                     <div style="display:flex; align-items:center; gap:3px; background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:7px; padding:4px 8px;">
                       <input value="{{ it.price }}" onInput="{{ it.onPrice }}" inputmode="numeric" style="width:54px; box-sizing:border-box; font-family:inherit; font-size:13px; font-weight:700; color:var(--app-ink,#14141B); background:transparent; border:none; outline:none; text-align:center; direction:ltr;">
-                      <span style="font-size:11px; color:var(--app-muted,#7A7A88);">ر.س</span>
+                      <span style="font-size:11px; color:var(--app-muted,#7A7A88);">{{ cur }}</span>
                     </div>
                     <button onClick="{{ it.del }}" class="kh-ghost" style="background:none; border:none; cursor:pointer; color:var(--app-muted,#7A7A88); display:flex; padding:4px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+                   </div>
+                   <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-top:7px; padding-top:7px; border-top:1px solid color-mix(in srgb, var(--app-border,#E9E5DC) 55%, transparent);">
+                     <label style="display:flex; align-items:center; gap:5px; font-size:11.5px; color:var(--app-muted,#7A7A88);">الكمية/الليالي<input value="{{ it.qty }}" onInput="{{ it.onQty }}" inputmode="numeric" style="width:40px; box-sizing:border-box; font-family:inherit; font-size:12px; font-weight:700; color:var(--app-ink,#14141B); background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:6px; padding:4px; outline:none; text-align:center; direction:ltr;"></label>
+                     <label style="display:flex; align-items:center; gap:5px; font-size:11.5px; color:var(--app-muted,#7A7A88);">المدة (د)<input value="{{ it.dur }}" onInput="{{ it.onDur }}" inputmode="numeric" placeholder="—" style="width:44px; box-sizing:border-box; font-family:inherit; font-size:12px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:6px; padding:4px; outline:none; text-align:center; direction:ltr;"></label>
+                     <label style="display:flex; align-items:center; gap:5px; font-size:11.5px; color:var(--app-muted,#7A7A88);">نقل لليوم<select value="{{ it.dayVal }}" onChange="{{ it.onMove }}" style="font-family:inherit; font-size:12px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:6px; padding:4px 6px; outline:none; cursor:pointer;"><sc-for list="{{ d.moveOpts }}" as="m" hint-placeholder-count="2"><option value="{{ m.value }}">{{ m.label }}</option></sc-for></select></label>
+                     <span style="margin-inline-start:auto; font-size:11.5px; font-weight:700; color:var(--app-accent-2,#4F46E5);">{{ it.lineFmt }} {{ cur }}</span>
+                     <sc-if value="{{ it.conflict }}" hint-placeholder-val="{{ false }}"><span style="display:flex; align-items:center; gap:4px; font-size:11px; font-weight:600; color:#A9700C; background:rgba(245,158,11,0.16); padding:3px 8px; border-radius:9999px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"></path></svg>تعارض وقت</span></sc-if>
+                   </div>
                   </div>
                 </sc-for>
+                <sc-if value="{{ d.empty }}" hint-placeholder-val="{{ false }}"><div style="text-align:center; font-size:12.5px; color:var(--app-muted,#7A7A88); background:var(--app-bg,#FAF8F3); border:1px dashed var(--app-border,#E9E5DC); border-radius:10px; padding:14px; margin-bottom:8px;">لا عناصر بعد — أضِف من المكتبة أو بنداً مخصّصاً.</div></sc-if>
                 <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
                   <button onClick="{{ d.openLibForDay }}" class="kh-pill" style="display:flex; align-items:center; gap:7px; font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-accent,#6366F1); background:var(--app-accent-weak,#EEF0FF); border:none; cursor:pointer; padding:9px 16px; border-radius:9px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>أضِف عنصراً لليوم</button>
-                  <span style="display:flex; align-items:center; font-size:11.5px; color:var(--app-muted,#7A7A88);">أنشطة · معالم · فنادق · مطاعم · نقل · إجراءات · مخصّص</span>
+                  <button onClick="{{ d.sortDay }}" class="kh-pill" style="display:flex; align-items:center; gap:6px; font-family:inherit; font-size:12.5px; font-weight:600; color:var(--app-text,#44454F); background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); cursor:pointer; padding:9px 13px; border-radius:9px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5h10M11 9h7M11 15h10M11 19h7M3 8l3-3 3 3M6 5v14"></path></svg>رتّب بالوقت</button>
                 </div>
               </div>
             </sc-for>
@@ -1871,6 +1894,7 @@
                 <div style="flex:1;"><div style="font-size:11px; color:var(--app-muted,#7A7A88); margin-bottom:3px;">إلى</div><input type="date" value="{{ builderEndDate }}" onChange="{{ onBuilderEndDate }}" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:13px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:9px 10px; outline:none; cursor:pointer;"></div>
               </div>
               <sc-if value="{{ hasRange }}" hint-placeholder-val="{{ false }}"><div style="display:flex; align-items:center; gap:7px; margin-top:8px; font-size:12.5px; font-weight:600; color:var(--app-accent-2,#4F46E5); background:var(--app-accent-weak,#EEF0FF); padding:7px 11px; border-radius:9px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"></rect><path d="M3 9h18M8 2.5v4M16 2.5v4"></path></svg>المدة: {{ rangeDays }} أيام · {{ rangeNights }} ليالٍ</div></sc-if>
+              <sc-if value="{{ rangeWarn }}" hint-placeholder-val="{{ false }}"><div style="font-size:11.5px; color:#A9700C; margin-top:6px;">النطاق أقصر من عدد الأيام التي تحتوي بنوداً — أبقينا الأيام ذات المحتوى لتفادي فقدها.</div></sc-if>
             </div>
             <div style="display:flex; gap:10px; margin-bottom:18px;">
               <div style="flex:1;">
@@ -1885,6 +1909,22 @@
                 <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">الوجهة</div>
                 <select value="{{ builderCountry }}" onChange="{{ onBuilderCountry }}" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:10px; outline:none; cursor:pointer;">
                   <sc-for list="{{ builderCountries }}" as="c" hint-placeholder-count="3"><option value="{{ c }}">{{ c }}</option></sc-for>
+                </select>
+              </div>
+            </div>
+            <div style="display:flex; gap:10px; margin-bottom:18px;">
+              <div style="flex:1;">
+                <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">الأطفال</div>
+                <div style="display:flex; align-items:center; gap:8px; padding:5px 8px; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px;">
+                  <button onClick="{{ childrenDec }}" class="kh-ghost" style="width:28px; height:28px; border-radius:7px; border:1px solid var(--app-border,#E9E5DC); background:var(--app-surface,#fff); cursor:pointer; font-size:16px; color:var(--app-ink,#14141B); display:flex; align-items:center; justify-content:center;">−</button>
+                  <span style="flex:1; text-align:center; font-size:15px; font-weight:700; color:var(--app-ink,#14141B);">{{ builderChildren }}</span>
+                  <button onClick="{{ childrenInc }}" class="kh-ghost" style="width:28px; height:28px; border-radius:7px; border:1px solid var(--app-border,#E9E5DC); background:var(--app-surface,#fff); cursor:pointer; font-size:16px; color:var(--app-ink,#14141B); display:flex; align-items:center; justify-content:center;">+</button>
+                </div>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:12px; color:var(--app-muted,#7A7A88); margin-bottom:5px;">العملة</div>
+                <select value="{{ builderCurrency }}" onChange="{{ onBuilderCurrency }}" style="width:100%; box-sizing:border-box; font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-ink,#14141B); background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:10px; outline:none; cursor:pointer;">
+                  <sc-for list="{{ currencyOptions }}" as="c" hint-placeholder-count="4"><option value="{{ c }}">{{ c }}</option></sc-for>
                 </select>
               </div>
             </div>
@@ -1934,11 +1974,17 @@
               <sc-for list="{{ priceBreakdown }}" as="b" hint-placeholder-count="5">
                 <div style="display:flex; align-items:center; justify-content:space-between; padding:4px 0; font-size:12.5px; color:var(--app-text,#44454F);"><span>{{ b.label }}</span><span dir="ltr" style="font-weight:600; color:var(--app-ink,#14141B);">{{ b.value }}</span></div>
               </sc-for>
-              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:10px; margin-top:6px; border-top:1px solid var(--app-border,#E9E5DC);"><span style="font-size:14px; font-weight:700; color:var(--app-ink,#14141B);">الإجمالي</span><span dir="ltr" style="font-size:18px; font-weight:700; color:var(--app-accent,#6366F1);">{{ grandTotalFmt }} <span style="font-size:12px; color:var(--app-text,#44454F);">ر.س</span></span></div>
-              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:4px;"><span style="font-size:12px; color:var(--app-muted,#7A7A88);">للفرد</span><span dir="ltr" style="font-size:13px; font-weight:600; color:var(--app-text,#44454F);">{{ perPersonFmt }} ر.س</span></div>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:10px; margin-top:6px; border-top:1px solid var(--app-border,#E9E5DC);"><span style="font-size:14px; font-weight:700; color:var(--app-ink,#14141B);">الإجمالي</span><span dir="ltr" style="font-size:18px; font-weight:700; color:var(--app-accent,#6366F1);">{{ grandTotalFmt }} <span style="font-size:12px; color:var(--app-text,#44454F);">{{ cur }}</span></span></div>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:4px;"><span style="font-size:12px; color:var(--app-muted,#7A7A88);">للفرد</span><span dir="ltr" style="font-size:13px; font-weight:600; color:var(--app-text,#44454F);">{{ perPersonFmt }} {{ cur }}</span></div>
             </div>
+            <div style="display:flex; gap:8px; margin-bottom:16px;">
+              <div style="flex:1; background:rgba(31,168,85,0.08); border:1px solid rgba(31,168,85,0.25); border-radius:11px; padding:10px 12px;"><div style="font-size:11px; color:var(--app-muted,#7A7A88); margin-bottom:2px;">الربح الصافي</div><div dir="ltr" style="font-size:15px; font-weight:700; color:#1FA855;">{{ profitFmt }} {{ cur }}</div></div>
+              <div style="flex:1; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:11px; padding:10px 12px;"><div style="font-size:11px; color:var(--app-muted,#7A7A88); margin-bottom:2px;">نسبة الربح</div><div dir="ltr" style="font-size:15px; font-weight:700; color:var(--app-ink,#14141B);">{{ profitPct }}%</div></div>
+            </div>
+            <sc-if value="{{ builderError }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px; font-weight:600; color:#A9700C; background:rgba(245,158,11,0.14); border:1px solid rgba(245,158,11,0.28); border-radius:10px; padding:9px 12px; margin-bottom:10px; text-align:center;">{{ builderError }}</div></sc-if>
+            <button onClick="{{ saveBuilderDraft }}" class="kh-ghost" style="width:100%; font-family:inherit; font-size:13.5px; font-weight:600; color:var(--app-text,#44454F); background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); cursor:pointer; padding:10px; border-radius:11px; margin-bottom:9px; display:flex; align-items:center; justify-content:center; gap:7px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path><path d="M17 21v-8H7v8M7 3v5h8"></path></svg>حفظ كمسودة</button>
             <sc-if value="{{ isClientMode }}" hint-placeholder-val="{{ true }}">
-            <button class="kh-cta" style="width:100%; font-family:inherit; font-size:15px; font-weight:600; color:var(--app-on-accent,#fff); background:var(--app-accent,#6366F1); border:none; cursor:pointer; padding:13px; border-radius:12px; margin-bottom:9px;">إرسال الجدول للعميل</button>
+            <button onClick="{{ sendSchedule }}" class="kh-cta" style="width:100%; font-family:inherit; font-size:15px; font-weight:600; color:var(--app-on-accent,#fff); background:var(--app-accent,#6366F1); border:none; cursor:pointer; padding:13px; border-radius:12px; margin-bottom:9px;">إرسال الجدول للعميل</button>
             </sc-if>
             <sc-if value="{{ isSaleMode }}" hint-placeholder-val="{{ false }}">
             <button onClick="{{ publishProgram }}" class="kh-cta" style="width:100%; font-family:inherit; font-size:15px; font-weight:600; color:var(--app-on-accent,#fff); background:var(--app-accent,#6366F1); border:none; cursor:pointer; padding:13px; border-radius:12px; margin-bottom:9px; display:flex; align-items:center; justify-content:center; gap:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.4"></circle></svg>نشر البرنامج في الموقع</button>
@@ -2572,6 +2618,24 @@
     </div>
   </sc-if>
 
+  <!-- ============ BUILDER: SENT CONFIRMATION ============ -->
+  <sc-if value="{{ builderSent }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeBuilderSent }}" style="position:fixed; inset:0; z-index:70; background:var(--app-overlay,rgba(20,20,28,0.5)); backdrop-filter:blur(3px); animation:khFade .2s ease; display:flex; align-items:center; justify-content:center; padding:24px;">
+      <div onClick="{{ closeBuilderSent }}" style="position:absolute; inset:0;"></div>
+      <div style="position:relative; width:440px; max-width:94vw; background:var(--app-surface,#fff); border:1px solid var(--app-border,#E9E5DC); border-radius:18px; box-shadow:var(--app-shadow-lg); padding:28px 26px; text-align:center; animation:khScale .28s cubic-bezier(.2,.8,.2,1);">
+        <span style="width:56px; height:56px; border-radius:9999px; background:rgba(31,168,85,0.14); color:#1FA855; display:flex; align-items:center; justify-content:center; margin:0 auto 16px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+        <div style="font-size:19px; font-weight:700; color:var(--app-ink,#14141B); margin-bottom:6px;">أُرسل الجدول للعميل</div>
+        <p style="font-size:14px; line-height:1.6; color:var(--app-text,#44454F); margin:0 0 16px;">أُنشئ طلب في «الطلبات» بحالة «بانتظار اعتماد العميل»، وحصل العميل على رابط متابعة خاص.</p>
+        <div style="display:flex; align-items:center; gap:8px; background:var(--app-bg,#FAF8F3); border:1px solid var(--app-border,#E9E5DC); border-radius:10px; padding:10px 12px; margin-bottom:16px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--app-accent,#6366F1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15 15 9M10 6.5l1-1a4 4 0 0 1 5.6 5.6l-1 1M14 17.5l-1 1A4 4 0 0 1 7.4 13l1-1"></path></svg>
+          <span dir="ltr" style="flex:1; min-width:0; font-size:13px; font-weight:600; color:var(--app-accent-2,#4F46E5); text-align:start; overflow:hidden; text-overflow:ellipsis;">{{ builderSentLink }}</span>
+        </div>
+        <button onClick="{{ openTrackingFromBuilder }}" class="kh-cta" style="width:100%; font-family:inherit; font-size:14.5px; font-weight:600; color:var(--app-on-accent,#fff); background:var(--app-accent,#6366F1); border:none; cursor:pointer; padding:12px; border-radius:11px; margin-bottom:9px;">افتح صفحة متابعة الرحلة</button>
+        <button onClick="{{ closeBuilderSent }}" class="kh-ghost" style="width:100%; font-family:inherit; font-size:14px; font-weight:600; color:var(--app-text,#44454F); background:none; border:1px solid var(--app-border,#E9E5DC); cursor:pointer; padding:11px; border-radius:11px;">إغلاق</button>
+      </div>
+    </div>
+  </sc-if>
+
   <!-- ============ DESTINATION FORM ============ -->
   <sc-if value="{{ destFormOpen }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed; inset:0; z-index:66; background:var(--app-overlay,rgba(20,20,28,0.42)); backdrop-filter:blur(3px); animation:khFade .2s ease; display:flex; align-items:center; justify-content:center; padding:24px;">
@@ -2781,6 +2845,8 @@ class Component extends DCLogic {
     bMarginPct:15, bVatOn:true, bVatPct:15, bMarketerPct:5,
     builderTargetDay:0, builderProgPickOpen:false, palCat:'activities', builderStartDate:'', builderEndDate:'',
     libCustomName:'', libCustomType:'walk',
+    savedSchedules:[], builderError:'', builderSent:false, builderSentLink:'',
+    builderChildren:0, builderCurrency:'ر.س',
     builderMode:'client', saleName:'', saleSummary:'', saleHighlights:'', saleIncludes:'', saleExcludes:'', saleCoverId:'edi', saleSeason:'', saleMinPax:1, salePrice:'', publishedPrograms:[],
     libOpen:false, libDay:0, libCat:'activities', libQuery:'', libExpanded:true,
     orderFilter: 'all', printOpen: false, tripTab: 'overview',
@@ -3051,10 +3117,27 @@ class Component extends DCLogic {
     cities:['أدنبرة','غلاسجو','إنفرنيس','ستيرلنغ','فورت ويليام'],
     landmarks:['قلعة أدنبرة','بحيرة لوخ نِس','مرتفعات الهايلاندز','شارع الميل الملكي','تلة آرثرز سيت','قلعة ستيرلنغ','وادي غلين كو'],
     summary:[{name:'الفنادق',type:'4 فنادق شريكة',icon:'hotel',cat:'hotels'},{name:'النقل والسائقون',type:'3 خيارات',icon:'car',cat:'drivers'},{name:'المرشدون',type:'مرشدون عرب',icon:'users',cat:'guides'},{name:'المطاعم',type:'مطاعم حلال',icon:'meal',cat:'restaurants'},{name:'الأنشطة والمعالم',type:'7 تجارب',icon:'walk',cat:'activities'},{name:'الطيران',type:'رحلات مباشرة',icon:'flight',cat:'flight'}],
-    hotels:[{name:'راديسون بلو · رويال مايل',sub:'5 نجوم · وسط المدينة'},{name:'ذا بالمورال',sub:'5 نجوم · فاخر'},{name:'فندق جورج',sub:'4 نجوم'},{name:'شقق أولد تاون',sub:'شقق فندقية'}],
-    drivers:[{name:'السائق أحمد · فان خاص',sub:'يتحدث العربية · 7 ركاب'},{name:'النقل الملكي · مرسيدس',sub:'سيارات فاخرة'},{name:'سائق الهايلاندز',sub:'رحلات المرتفعات'}],
-    activities:[{name:'قلعة أدنبرة',sub:'جولة مع مرشد'},{name:'بحيرة لوخ نِس بالقارب',sub:'رحلة نهارية'},{name:'مرتفعات الهايلاندز',sub:'يوم كامل'},{name:'شارع الميل الملكي',sub:'تجوّل'},{name:'تلة آرثرز سيت',sub:'نزهة وإطلالة'},{name:'قلعة ستيرلنغ',sub:'تاريخية'},{name:'متحف اسكتلندا',sub:'دخول مجاني'}],
-    restaurants:[{name:'مطعم حلال · رويال مايل',sub:'شرق أوسطي'},{name:'مطعم بانوراما',sub:'إطلالة على المدينة'},{name:'مقهى تقليدي',sub:'فطور اسكتلندي'}]
+    hotels:[{name:'راديسون بلو · رويال مايل',sub:'5 نجوم · وسط المدينة · /الليلة',price:820},{name:'ذا بالمورال',sub:'5 نجوم · فاخر · /الليلة',price:1450},{name:'فندق جورج',sub:'4 نجوم · /الليلة',price:640},{name:'شقق أولد تاون',sub:'شقق فندقية · /الليلة',price:520}],
+    drivers:[{name:'السائق أحمد · فان خاص',sub:'يتحدث العربية · 7 ركاب · /اليوم',price:430},{name:'النقل الملكي · مرسيدس',sub:'سيارات فاخرة · /اليوم',price:680},{name:'سائق الهايلاندز',sub:'رحلات المرتفعات · /اليوم',price:520}],
+    activities:[{name:'قلعة أدنبرة',sub:'جولة مع مرشد',price:180},{name:'بحيرة لوخ نِس بالقارب',sub:'رحلة نهارية',price:260},{name:'مرتفعات الهايلاندز',sub:'يوم كامل',price:340},{name:'شارع الميل الملكي',sub:'تجوّل',price:0},{name:'تلة آرثرز سيت',sub:'نزهة وإطلالة',price:0},{name:'قلعة ستيرلنغ',sub:'تاريخية',price:150},{name:'متحف اسكتلندا',sub:'دخول مجاني',price:0}],
+    restaurants:[{name:'مطعم حلال · رويال مايل',sub:'شرق أوسطي · /للفرد',price:120},{name:'مطعم بانوراما',sub:'إطلالة على المدينة · /للفرد',price:160},{name:'مقهى تقليدي',sub:'فطور اسكتلندي · /للفرد',price:70}]
+  };
+
+  libraryByCountry = {
+    'السعودية':{
+      landmarks:['الدرعية التاريخية','جبل الفيل بالعُلا','مرايا العُلا','واجهة جدة البحرية','إطلالة المملكة'],
+      hotels:[{name:'حبيتاس العُلا',sub:'منتجع فاخر · /الليلة',price:1900},{name:'فندق الرياض الفاخر',sub:'5 نجوم · /الليلة',price:780},{name:'شقق فندقية · جدة',sub:'/الليلة',price:520}],
+      drivers:[{name:'سائق خاص · جي إم سي',sub:'يتحدث العربية · /اليوم',price:500},{name:'ليموزين فاخر',sub:'/اليوم',price:760}],
+      activities:[{name:'جولة الحِجر (مدائن صالح)',sub:'مع مرشد',price:240},{name:'مناطيد العُلا',sub:'تجربة صباحية',price:650},{name:'جولة الدرعية',sub:'تاريخية',price:150},{name:'رحلة بحرية بجدة',sub:'نصف يوم',price:300}],
+      restaurants:[{name:'مطعم سعودي تراثي',sub:'/للفرد',price:130},{name:'مطعم بحري · جدة',sub:'/للفرد',price:170}]
+    },
+    'تركيا':{
+      landmarks:['آيا صوفيا','المسجد الأزرق','البازار الكبير','مضيق البوسفور','قصر توب كابي'],
+      hotels:[{name:'فندق سلطان أحمد',sub:'4 نجوم · وسط المدينة · /الليلة',price:360},{name:'فندق بإطلالة البوسفور',sub:'5 نجوم · /الليلة',price:620}],
+      drivers:[{name:'سائق خاص · فان',sub:'يتحدث العربية · /اليوم',price:300},{name:'مرسيدس فيانو',sub:'/اليوم',price:450}],
+      activities:[{name:'جولة آيا صوفيا والمسجد الأزرق',sub:'مع مرشد',price:150},{name:'رحلة بحرية في البوسفور',sub:'نصف يوم',price:130},{name:'جزر الأميرات',sub:'يوم كامل',price:220},{name:'تلفريك بورصة',sub:'يوم كامل',price:260}],
+      restaurants:[{name:'مطعم عثماني',sub:'/للفرد',price:90},{name:'مطعم بإطلالة',sub:'/للفرد',price:140}]
+    }
   };
 
   essentials = {
@@ -3070,7 +3153,16 @@ class Component extends DCLogic {
   componentDidMount(){
     if(this.state.theme === null) this.setState({ theme: this.props.direction || 'warm' });
     if(this.state.itin === null) this.setState({ itin: this.props.itineraryView || 'timeline' });
+    try{ if(typeof window!=='undefined' && window.localStorage){ const raw=window.localStorage.getItem('kh_savedSchedules'); if(raw){ const arr=JSON.parse(raw); if(Array.isArray(arr)) this.setState({ savedSchedules:arr }); } } }catch(e){}
   }
+  persistSaved = (arr) => { try{ if(typeof window!=='undefined' && window.localStorage){ window.localStorage.setItem('kh_savedSchedules', JSON.stringify(arr)); } }catch(e){} };
+  builderSnapshot = () => { const s=this.state; return { mode:s.builderMode, builderDays:s.builderDays, builderClient:s.builderClient, builderPhone:s.builderPhone, builderEmail:s.builderEmail, builderCountry:s.builderCountry, builderTravelers:s.builderTravelers, builderChildren:s.builderChildren, builderStartDate:s.builderStartDate, builderEndDate:s.builderEndDate, bFlight:s.bFlight, bTransport:s.bTransport, bDriverAr:s.bDriverAr, bGuide:s.bGuide, bSim:s.bSim, bLuxury:s.bLuxury, bTripType:s.bTripType, bInterests:s.bInterests, pFlight:s.pFlight, pCar:s.pCar, pDriver:s.pDriver, pGuide:s.pGuide, pSim:s.pSim, pLux:s.pLux, bMarginPct:s.bMarginPct, bVatOn:s.bVatOn, bVatPct:s.bVatPct, bMarketerPct:s.bMarketerPct, builderCurrency:s.builderCurrency, saleName:s.saleName, saleSummary:s.saleSummary, saleHighlights:s.saleHighlights, saleIncludes:s.saleIncludes, saleExcludes:s.saleExcludes, saleCoverId:s.saleCoverId, saleSeason:s.saleSeason, saleMinPax:s.saleMinPax, salePrice:s.salePrice }; };
+  saveBuilderDraft = () => { const s=this.state; const name=(s.builderMode==='sale'?(s.saleName||'برنامج بدون اسم'):(s.builderClient||'عميل بدون اسم')); const snap=this.builderSnapshot(); const id='DR-'+Math.floor(1000+((s.savedSchedules.length*37+7)%9000)); const rec={ id, name, mode:s.builderMode, country:s.builderCountry, days:s.builderDays.length, snap }; this.setState(st=>{ const arr=[rec, ...st.savedSchedules.filter(x=>x.id!==id)]; this.persistSaved(arr); return { savedSchedules:arr, builderError:'تم حفظ المسودة ✓' }; }); };
+  loadBuilderDraft = (id) => { const rec=(this.state.savedSchedules||[]).find(x=>x.id===id); if(!rec) return; this.setState({ ...rec.snap, screen:'dashboard', dashView:'builder', builderMode:rec.snap.mode||'client', builderTargetDay:0, builderError:'' }); try{ window.scrollTo(0,0); }catch(e){} };
+  deleteBuilderDraft = (id) => this.setState(st=>{ const arr=st.savedSchedules.filter(x=>x.id!==id); this.persistSaved(arr); return { savedSchedules:arr }; });
+  builderHasItems = () => this.state.builderDays.some(d=>d.items&&d.items.length>0);
+  sendScheduleToClient = (grandTotal) => { const s=this.state; if(!s.builderClient){ this.setState({ builderError:'أدخل اسم العميل أولاً.' }); return; } if(!this.builderHasItems()){ this.setState({ builderError:'أضِف عنصراً واحداً على الأقل للجدول قبل الإرسال.' }); return; } const id='BK-'+Math.floor(2900+((s.submittedOrders.length*17+9)%99)); const link='khattar.sa/t/'+id.toLowerCase(); this.setState(st=>({ submittedOrders:[{ id, customer:s.builderClient, program:(s.saleName||'جدول مخصّص'), dest:s.builderCountry, date:(s.builderStartDate||'قيد التحديد'), pax:s.builderTravelers, value:Number(grandTotal)||0, status:'بانتظار اعتماد العميل', agent:'مباشر', kind:'tourism', isTourism:true }, ...st.submittedOrders], itinApproval:{ ...st.itinApproval, [id]:'بانتظار اعتماد العميل' }, builderSent:true, builderSentLink:link, builderError:'' })); };
+  closeBuilderSent = () => this.setState({ builderSent:false });
 
   go = (screen) => { this.setState({ screen }); try{ window.scrollTo(0,0); }catch(e){} };
   openProgram = (id) => { this.setState({ screen:'program', programId:(typeof id==='string'&&this.programs[id])?id:'edi', activeDay:0, purchased:false, tripTab:'overview' }); try{ window.scrollTo(0,0); }catch(e){} };
@@ -3088,10 +3180,13 @@ class Component extends DCLogic {
   builderSetItem = (di, ii, f, v) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=> x===di ? { ...d, items:d.items.map((it,y)=> y===ii ? { ...it, [f]:v } : it) } : d) }));
   builderSetItemPrice = (di, ii, v) => this.builderSetItem(di, ii, 'price', Number(String(v).replace(/[^\d.]/g,''))||0);
   builderMoveItem = (di, ii, dir) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=>{ if(x!==di) return d; const j=ii+dir; if(j<0||j>=d.items.length) return d; const items=d.items.slice(); const t=items[ii]; items[ii]=items[j]; items[j]=t; return { ...d, items }; }) }));
+  builderMoveItemToDay = (di, ii, tgt) => { tgt=Number(tgt); if(tgt===di||isNaN(tgt)) return; this.setState(s=>{ if(tgt<0||tgt>=s.builderDays.length) return {}; const item=s.builderDays[di].items[ii]; if(!item) return {}; return { builderDays: s.builderDays.map((d,x)=> x===di ? { ...d, items:d.items.filter((_,y)=>y!==ii) } : (x===tgt ? { ...d, items:[ ...d.items, item ] } : d)) }; }); };
+  builderSortDay = (di) => this.setState(s=>({ builderDays: s.builderDays.map((d,x)=> x===di ? { ...d, items:d.items.slice().sort((a,b)=>String(a.t||'').localeCompare(String(b.t||''))) } : d) }));
+  builderSetItemNum = (di, ii, f, v) => this.builderSetItem(di, ii, f, Math.max(0, Number(String(v).replace(/[^\d.]/g,''))||0));
   builderAddFromPalette = (name, icon, defPrice) => { const di=Math.min(this.state.builderTargetDay, this.state.builderDays.length-1); const day=this.state.builderDays[di]||{items:[]}; const times=['09:00','11:00','13:00','15:00','17:00','19:00','21:00']; const t = icon==='hotel'?'15:00':(icon==='car'?'08:00':(icon==='meal'?'13:00':times[Math.min(day.items.length,times.length-1)])); this.builderAddItem(di, { t, title:name, icon, price:defPrice||0 }); };
   builderStartFromProgram = (id) => { const p=this.programs[id]; if(!p) return; const days=p.daysList.map(d=>({ title:d.sub||d.label, city:d.city||'', note:'', items:(d.entries||[]).map(e=>({ t:e.t, title:e.title, icon:e.icon, price:0 })) })); const country=(p.country||'').split('·')[0].trim(); this.setState({ screen:'dashboard', dashView:'builder', builderProgPickOpen:false, builderDays:days, builderClient:'', builderPhone:'', builderEmail:'', builderTargetDay:0, builderCountry: this.destinations.some(x=>x.country===country)?country:this.state.builderCountry }); try{ window.scrollTo(0,0); }catch(e){} };
   builderNewBlank = () => this.setState({ builderDays:[{ title:'اليوم 1', city:'', note:'', items:[] }], builderClient:'', builderPhone:'', builderEmail:'', builderTargetDay:0, bInterests:[], builderStartDate:'', builderEndDate:'' });
-  syncDaysToCount = (n) => { n=Math.max(1,Math.min(60,n)); this.setState(s=>{ const cur=s.builderDays; const days=[]; for(let i=0;i<n;i++){ days.push(cur[i] || { title:'اليوم '+(i+1), city:'', note:'', items:[] }); } return { builderDays:days, builderTargetDay:Math.min(s.builderTargetDay,n-1), libDay:Math.min(s.libDay,n-1) }; }); };
+  syncDaysToCount = (n) => { n=Math.max(1,Math.min(60,n)); this.setState(s=>{ const cur=s.builderDays; let lastWith=0; cur.forEach((d,i)=>{ if(d.items&&d.items.length) lastWith=i; }); const keep=Math.max(n, lastWith+1); const days=[]; for(let i=0;i<keep;i++){ days.push(cur[i] || { title:'اليوم '+(i+1), city:'', note:'', items:[] }); } return { builderDays:days, builderTargetDay:Math.min(s.builderTargetDay,keep-1), libDay:Math.min(s.libDay,keep-1), rangeWarn: keep>n }; }); };
   setBuilderDate = (which, val) => { this.setState(which==='from'?{builderStartDate:val}:{builderEndDate:val}); const from=which==='from'?val:this.state.builderStartDate; const to=which==='to'?val:this.state.builderEndDate; if(from&&to){ const a=new Date(from+'T00:00:00'), b=new Date(to+'T00:00:00'); if(!isNaN(a.getTime())&&!isNaN(b.getTime())&&b>=a){ const n=Math.round((b-a)/86400000)+1; this.syncDaysToCount(n); } } };
   addLibCustom = () => { const name=(this.state.libCustomName||'').trim(); if(!name) return; const di=Math.min(this.state.libDay, this.state.builderDays.length-1); const day=this.state.builderDays[di]||{items:[]}; const times=['09:00','11:00','13:00','15:00','17:00','19:00','21:00']; const ic=this.state.libCustomType; const t= ic==='hotel'?'15:00':(ic==='car'?'08:00':(ic==='meal'?'13:00':times[Math.min(day.items.length,times.length-1)])); this.builderAddItem(di,{ t, title:name, icon:ic, price:0 }); this.setState({ libCustomName:'' }); };
   builderToggle = (f) => this.setState(s=>({ [f]: !s[f] }));
@@ -3102,14 +3197,17 @@ class Component extends DCLogic {
   openLib = (di) => this.setState({ libOpen:true, libDay:di, libQuery:'' });
   closeLib = () => this.setState({ libOpen:false });
   publishProgram = () => {
-    const s=this.state; const name=(s.saleName||'').trim(); if(!name) return;
+    const s=this.state; const name=(s.saleName||'').trim();
+    if(!name){ this.setState({ builderError:'أدخل اسم البرنامج قبل النشر.' }); return; }
+    if(!this.builderHasItems()){ this.setState({ builderError:'أضِف عنصراً واحداً على الأقل قبل النشر.' }); return; }
+    if(!(Number(s.salePrice)>0)){ this.setState({ builderError:'حدّد سعر عرض أكبر من صفر قبل النشر.' }); return; }
     const cover=s.saleCoverId||'edi'; const country=s.builderCountry;
     const daysList=s.builderDays.map((d,i)=>({ label:'اليوم '+(i+1), sub:d.title||('اليوم '+(i+1)), city:d.city||country, entries:(d.items||[]).map(it=>({ t:it.t, icon:it.icon, tag:this.tagFromIcon(it.icon), title:it.title, note:'' })) }));
     const trav=Math.max(1,s.builderTravelers);
     const split=(x)=>(x||'').split('،').map(v=>v.trim()).filter(Boolean);
     const id='pub'+Date.now();
     const p={ id, name, country:country+' · برنامج مخصّص', type:'رحلة', price:Number(s.salePrice)||0, rating:4.8, reviews:0, days:s.builderDays.length, nights:Math.max(0,s.builderDays.length-1), group:'من '+s.saleMinPax+' مسافر', grad:"linear-gradient(135deg,#1E2B36 0%,#37545E 48%,#6E9079 100%)", coverId:cover, summary:s.saleSummary||('برنامج '+name+' — '+s.builderDays.length+' أيام في '+country+'.'), highlights:split(s.saleHighlights), includes:split(s.saleIncludes), excludes:split(s.saleExcludes), season:s.saleSeason, daysList, country2:country, status:'منشور' };
-    this.setState(st=>({ publishedPrograms:[p, ...st.publishedPrograms.filter(x=>x.id!==id)], programId:id, screen:'program', purchased:false, activeDay:0, tripTab:'overview' }));
+    this.setState(st=>({ publishedPrograms:[p, ...st.publishedPrograms.filter(x=>x.id!==id)], programId:id, screen:'program', purchased:false, activeDay:0, tripTab:'overview', builderError:'' }));
     try{ window.scrollTo(0,0); }catch(e){}
   };
   loadSaleProgram = (id) => { const p=(this.state.publishedPrograms||[]).find(x=>x.id===id); if(!p) return; const days=p.daysList.map(d=>({ title:d.sub||d.label, city:d.city||'', note:'', items:(d.entries||[]).map(e=>({ t:e.t, title:e.title, icon:e.icon, price:0 })) })); this.setState({ screen:'dashboard', dashView:'builder', builderMode:'sale', builderDays:days, builderCountry:p.country2||this.state.builderCountry, saleName:p.name, saleSummary:p.summary, saleHighlights:(p.highlights||[]).join('، '), saleIncludes:(p.includes||[]).join('، '), saleExcludes:(p.excludes||[]).join('، '), saleCoverId:p.coverId||'edi', saleSeason:p.season||'', salePrice:String(p.price||''), builderTargetDay:0 }); try{ window.scrollTo(0,0); }catch(e){} };
@@ -3124,6 +3222,7 @@ class Component extends DCLogic {
   saveDest = () => { if(!this.state.df_name) return; const s=this.state; const d={ id:'cd'+Date.now(), name:s.df_name, region:s.df_region, desc:s.df_desc, lang:s.df_lang, visa:s.df_visa, currency:s.df_currency, best:s.df_best, cities:(s.df_cities||'').split('،').map(x=>x.trim()).filter(Boolean), landmarks:(s.df_landmarks||'').split('،').map(x=>x.trim()).filter(Boolean), grad:'linear-gradient(150deg,#2B2540,#574A86 50%,#C9A6E0)' }; this.setState(st=>({ customDests:[d,...st.customDests], destFormOpen:false, df_name:'',df_region:'',df_desc:'',df_lang:'',df_visa:'',df_currency:'',df_best:'',df_cities:'',df_landmarks:'' })); };
   publishDest = (id) => this.setState(st=>({ destStatuses:{ ...st.destStatuses, [id]: (st.destStatuses[id]||'مسودة')==='منشور'?'مسودة':'منشور' } }));
   openProgramBuilder = (type) => this.setState({ screen:'dashboard', dashView:'programBuilder', pbType:(type==='study'||type==='tourism')?type:this.state.pbType });
+  openSaleBuilder = () => this.setState({ screen:'dashboard', dashView:'builder', builderMode:'sale', builderError:'' });
   savePbProgram = () => { if(!this.state.pbName) return; const s=this.state; const p={ id:'pp'+Date.now(), type:s.pbType, name:s.pbName, dest:s.pbDest, duration:s.pbDuration, price:s.pbPrice, desc:s.pbDesc, includes:(s.pbIncludes||'').split('،').map(x=>x.trim()).filter(Boolean), status:'مسودة' }; this.setState(st=>({ programDrafts:[p,...st.programDrafts], pbName:'',pbPrice:'',pbDesc:'',pbIncludes:'' })); };
   submitBooking = () => { if(!this.state.bName || !this.state.bPhone) return; const id='BK-'+Math.floor(2900+Math.random()*99); const subj=this.state.bSubject||this.program.name; this.setState(s=>({ bStep:'done', submittedOrders:[{ id, customer:s.bName, program:subj, dest:'—', date:s.bDate||'قيد التحديد', pax:s.bTravelers, value:this.program.price, status:'جديد', agent:'مباشر' }, ...s.submittedOrders] })); };
 
@@ -3393,8 +3492,8 @@ class Component extends DCLogic {
     const selectedClient = (selectedAgent.clients||[]).find(c=>c.name===this.state.selectedClientName) || (selectedAgent.clients||[])[0];
     const clientView = selectedClient ? { ...selectedClient, totalFmt:fmt(selectedClient.total), paidFmt:fmt(selectedClient.paid), remainingFmt:fmt(selectedClient.total-selectedClient.paid), commFmt:fmt(Math.round(selectedClient.total*selectedClient.pct/100)), services:selectedClient.services.map(sv=>({ ...sv, valueFmt:fmt(sv.value), pillStyle:stPill(sv.status), kindStyle:{ display:'inline-block', fontSize:'10.5px', fontWeight:600, padding:'2px 9px', borderRadius:'9999px', background: sv.kind==='دراسة'?'rgba(59,130,246,0.14)':'var(--app-accent-weak)', color: sv.kind==='دراسة'?'#2F6FE0':'var(--app-accent-2)' } })) } : null;
     const agentRemainingFmt = fmt(selectedAgent.commission - selectedAgent.paid);
-    const adminNav=[{v:'overview',t:'نظرة عامة',icon:'grid'},{v:'orders',t:'الطلبات',icon:'inbox'},{v:'consults',t:'الاستشارات',icon:'chat'},{v:'programBuilder',t:'منشئ البرامج',icon:'layers'},{v:'builder',t:'منشئ الجداول',icon:'edit'},{v:'destinations',t:'الوجهات',icon:'pin'},{v:'agents',t:'الوكلاء',icon:'briefcase'},{v:'providers',t:'مزوّدو الخدمات',icon:'truck'},{v:'programs',t:'البرامج',icon:'layers'},{v:'reports',t:'التقارير',icon:'chart'}];
-    const agentNav=[{v:'overview',t:'نظرة عامة',icon:'grid'},{v:'orders',t:'طلباتي',icon:'inbox'},{v:'programBuilder',t:'منشئ البرامج',icon:'layers'},{v:'builder',t:'منشئ الجداول',icon:'edit'},{v:'destinations',t:'الوجهات',icon:'pin'},{v:'programs',t:'برامجي',icon:'layers'},{v:'providers',t:'الخدمات',icon:'truck'}];
+    const adminNav=[{v:'overview',t:'نظرة عامة',icon:'grid'},{v:'orders',t:'الطلبات',icon:'inbox'},{v:'consults',t:'الاستشارات',icon:'chat'},{v:'programBuilder',t:'برامج الدراسة',icon:'cap'},{v:'builder',t:'منشئ الجداول',icon:'edit'},{v:'destinations',t:'الوجهات',icon:'pin'},{v:'agents',t:'الوكلاء',icon:'briefcase'},{v:'providers',t:'مزوّدو الخدمات',icon:'truck'},{v:'programs',t:'البرامج',icon:'layers'},{v:'reports',t:'التقارير',icon:'chart'}];
+    const agentNav=[{v:'overview',t:'نظرة عامة',icon:'grid'},{v:'orders',t:'طلباتي',icon:'inbox'},{v:'programBuilder',t:'برامج الدراسة',icon:'cap'},{v:'builder',t:'منشئ الجداول',icon:'edit'},{v:'destinations',t:'الوجهات',icon:'pin'},{v:'programs',t:'برامجي',icon:'layers'},{v:'providers',t:'الخدمات',icon:'truck'}];
     const dashNav=(isAdmin?adminNav:agentNav).map(n=>({ ...n, active:dashView===n.v, iconEl:this.icon(n.icon,18), onClick:()=>this.setState({ dashView:n.v }),
       style:{ display:'flex', alignItems:'center', gap:'11px', padding:'11px 14px', borderRadius:'10px', cursor:'pointer', fontFamily:'inherit', fontSize:'14.5px', fontWeight:600, border:'none', width:'100%', textAlign:'start', marginBottom:'2px',
         background: dashView===n.v?'var(--app-accent)':'transparent', color: dashView===n.v?'var(--app-on-accent)':'var(--app-text)' } }));
@@ -3455,9 +3554,10 @@ class Component extends DCLogic {
     const fmtDate=(iso, off)=>{ if(!iso) return ''; const d=new Date(iso+'T00:00:00'); if(isNaN(d.getTime())) return ''; d.setDate(d.getDate()+(off||0)); return arWeekdays[d.getDay()]+' '+d.getDate()+' '+arMonths[d.getMonth()]; };
     const bStartDate=this.state.builderStartDate;
     const bTypes=[{type:'walk',label:'نشاط',title:'نشاط سياحي'},{type:'hotel',label:'فندق',title:'إقامة / فندق'},{type:'car',label:'تنقل',title:'تنقل خاص'},{type:'meal',label:'وجبة',title:'وجبة'},{type:'action',label:'إجراء',title:'إجراء'}];
-    const builderDays = this.state.builderDays.map((d,i)=>({ ...d, num:i+1, dateLabel:fmtDate(bStartDate,i), hasDate:!!bStartDate, delDay:()=>this.builderDelDay(i), openLibForDay:()=>this.openLib(i), onTitle:(e)=>this.builderSetDay(i,'title',e.target.value), onCity:(e)=>this.builderSetDay(i,'city',e.target.value), onNote:(e)=>this.builderSetDay(i,'note',e.target.value),
+    const dayMoveOpts = this.state.builderDays.map((d,i)=>({ value:String(i), label:'اليوم '+(i+1) }));
+    const builderDays = this.state.builderDays.map((d,i)=>({ ...d, num:i+1, dateLabel:fmtDate(bStartDate,i), hasDate:!!bStartDate, empty:(d.items||[]).length===0, delDay:()=>this.builderDelDay(i), openLibForDay:()=>this.openLib(i), sortDay:()=>this.builderSortDay(i), moveOpts:dayMoveOpts, onTitle:(e)=>this.builderSetDay(i,'title',e.target.value), onCity:(e)=>this.builderSetDay(i,'city',e.target.value), onNote:(e)=>this.builderSetDay(i,'note',e.target.value),
       typeBtns: bTypes.map(t=>({ ...t, iconEl:this.icon(t.type==='action'?'tag':t.type,14), onClick:()=>this.setState({ builderPick:{ di:i, type:t.type } }) })),
-      items: d.items.map((it,ii)=>({ ...it, priceFmt: fmt(Number(it.price)||0), iconEl:this.icon(it.icon,15), del:()=>this.builderDelItem(i,ii), up:()=>this.builderMoveItem(i,ii,-1), down:()=>this.builderMoveItem(i,ii,1), onTime:(e)=>this.builderSetItem(i,ii,'t',e.target.value), onTitle:(e)=>this.builderSetItem(i,ii,'title',e.target.value), onPrice:(e)=>this.builderSetItemPrice(i,ii,e.target.value) })) }));
+      items: d.items.map((it,ii)=>{ const prev=d.items[ii-1]; const qty=Number(it.qty)||1; return { ...it, qty, dur:it.dur||'', priceFmt: fmt(Number(it.price)||0), lineFmt: fmt((Number(it.price)||0)*qty), conflict: ii>0 && it.t && prev && prev.t && String(it.t)<=String(prev.t), dayVal:String(i), iconEl:this.icon(it.icon,15), del:()=>this.builderDelItem(i,ii), up:()=>this.builderMoveItem(i,ii,-1), down:()=>this.builderMoveItem(i,ii,1), onTime:(e)=>this.builderSetItem(i,ii,'t',e.target.value), onTitle:(e)=>this.builderSetItem(i,ii,'title',e.target.value), onPrice:(e)=>this.builderSetItemPrice(i,ii,e.target.value), onQty:(e)=>this.builderSetItemNum(i,ii,'qty',e.target.value), onDur:(e)=>this.builderSetItemNum(i,ii,'dur',e.target.value), onMove:(e)=>this.builderMoveItemToDay(i,ii,e.target.value) }; }) }));
     const builderTotalItems = this.state.builderDays.reduce((a,d)=>a+d.items.length,0);
     const builderTripDates = bStartDate ? (fmtDate(bStartDate,0)+' – '+fmtDate(bStartDate, Math.max(0,this.state.builderDays.length-1))) : '';
     const bp=this.state.builderPick;
@@ -3474,7 +3574,8 @@ class Component extends DCLogic {
       {name:'نقطة لقاء المرشد', icon:'users', sub:'تجمّع المجموعة', t:'09:00'}
     ];
     const bc=this.state.builderCountry;
-    const provFor=(cat)=> bc==='اسكتلندا' ? (this.scotland[cat]||[]) : [{name:'فندق شريك · '+bc,sub:'يُربط لاحقاً'},{name:'خدمة · '+bc,sub:'ضمن الوجهة'}];
+    const libSrc = bc==='اسكتلندا' ? this.scotland : (this.libraryByCountry[bc]||null);
+    const provFor=(cat)=> libSrc ? (libSrc[cat]||[]) : [{name:'فندق شريك · '+bc,sub:'يُربط لاحقاً'},{name:'خدمة · '+bc,sub:'ضمن الوجهة'}];
     const pkTime=(ty,day)=> ty==='hotel'?'15:00':(ty==='car'?'08:00':(ty==='meal'?'13:00':bTimes[Math.min(day.items.length,bTimes.length-1)]));
     const catDefPrice={hotels:600,activities:250,restaurants:120,drivers:400,landmarks:180};
     const catIcon={hotels:'hotel',activities:'walk',restaurants:'meal',drivers:'car',landmarks:'castle'};
@@ -3484,18 +3585,21 @@ class Component extends DCLogic {
     // ===== Builder: client, options, palette, pricing engine =====
     const st=this.state;
     const trav=Math.max(1, st.builderTravelers);
+    const kids=Math.max(0, Number(st.builderChildren)||0);
+    const cur=st.builderCurrency||'ر.س';
+    const payUnits = trav + kids*0.75; // children billed at 75% for per-person add-ons
     const luxLabels={economy:'اقتصادي',comfort:'مريح',luxury:'فاخر'};
     const tripLabels={leisure:'سياحة وترفيه',business:'عمل',honeymoon:'شهر عسل',family:'عائلية'};
     const luxSurcharge = st.bLuxury==='luxury' ? Number(st.pLux)||0 : (st.bLuxury==='economy' ? -Math.round((Number(st.pLux)||0)/2) : 0);
     const addOnRows=[
-      { key:'flight', on: st.bFlight==='us', icon:'flight', label:'الطيران (نحن نحجز)', per:'لكل مسافر', unit:Number(st.pFlight)||0, amount:(st.bFlight==='us'?(Number(st.pFlight)||0)*trav:0), priceField:'pFlight', editable:true },
+      { key:'flight', on: st.bFlight==='us', icon:'flight', label:'الطيران (نحن نحجز)', per:'لكل مسافر', unit:Number(st.pFlight)||0, amount:(st.bFlight==='us'?Math.round((Number(st.pFlight)||0)*payUnits):0), priceField:'pFlight', editable:true },
       { key:'car', on: st.bTransport==='car', icon:'car', label:'سيارة خاصة بسائق', per:'للرحلة', unit:Number(st.pCar)||0, amount:(st.bTransport==='car'?(Number(st.pCar)||0):0), priceField:'pCar', editable:true },
       { key:'driver', on: !!st.bDriverAr, icon:'users', label:'سائق يتحدث العربية', per:'للرحلة', unit:Number(st.pDriver)||0, amount:(st.bDriverAr?(Number(st.pDriver)||0):0), priceField:'pDriver', editable:true },
       { key:'guide', on: !!st.bGuide, icon:'walk', label:'مرشد سياحي خاص', per:'للرحلة', unit:Number(st.pGuide)||0, amount:(st.bGuide?(Number(st.pGuide)||0):0), priceField:'pGuide', editable:true },
-      { key:'sim', on: !!st.bSim, icon:'wifi', label:'شريحة إنترنت', per:'لكل مسافر', unit:Number(st.pSim)||0, amount:(st.bSim?(Number(st.pSim)||0)*trav:0), priceField:'pSim', editable:true },
+      { key:'sim', on: !!st.bSim, icon:'wifi', label:'شريحة إنترنت', per:'لكل مسافر', unit:Number(st.pSim)||0, amount:(st.bSim?Math.round((Number(st.pSim)||0)*payUnits):0), priceField:'pSim', editable:true },
       { key:'lux', on: st.bLuxury==='luxury', icon:'gem', label:'ترقية مستوى الرفاهية', per:luxLabels[st.bLuxury], unit:Number(st.pLux)||0, amount:luxSurcharge, priceField:'pLux', editable:true }
     ].map(r=>({ ...r, iconEl:this.icon(r.icon,15), unitFmt:fmt(r.unit), amountFmt:fmt(r.amount), onPrice:(e)=>this.builderSetNum(r.priceField,e.target.value) }));
-    const itemsCost = this.state.builderDays.reduce((a,d)=>a+d.items.reduce((x,it)=>x+(Number(it.price)||0),0),0);
+    const itemsCost = this.state.builderDays.reduce((a,d)=>a+d.items.reduce((x,it)=>x+(Number(it.price)||0)*(Number(it.qty)||1),0),0);
     const addOnsCost = addOnRows.reduce((a,r)=>a+r.amount,0);
     const baseCost = itemsCost + addOnsCost;
     const marginAmt = Math.round(baseCost*(Number(st.bMarginPct)||0)/100);
@@ -3503,7 +3607,8 @@ class Component extends DCLogic {
     const preTax = baseCost + marginAmt + marketerAmt;
     const vatAmt = st.bVatOn ? Math.round(preTax*(Number(st.bVatPct)||0)/100) : 0;
     const grandTotal = preTax + vatAmt;
-    const perPerson = Math.round(grandTotal/trav);
+    const perPerson = Math.round(grandTotal/Math.max(1,trav+kids));
+    const profitPct = baseCost>0 ? Math.round(marginAmt*100/baseCost) : 0;
     const priceBreakdown=[
       { label:'تكلفة بنود الجدول', value:fmt(itemsCost) },
       { label:'الخدمات والإضافات', value:fmt(addOnsCost) },
@@ -3531,14 +3636,14 @@ class Component extends DCLogic {
     const palCats=[{cat:'activities',label:'الأنشطة'},{cat:'landmarks',label:'المعالم'},{cat:'hotels',label:'الفنادق'},{cat:'restaurants',label:'المطاعم'},{cat:'drivers',label:'النقل'},{cat:'action',label:'إجراءات'}];
     const palCat=st.palCat;
     const libQ=(st.libQuery||'').trim();
-    const rawFor=(cat)=> cat==='action' ? procedures : (cat==='landmarks' ? ((bc==='اسكتلندا'?this.scotland.landmarks:[]).map(n=>({name:n,sub:'معلم بارز'}))) : provFor(cat));
+    const rawFor=(cat)=> cat==='action' ? procedures : (cat==='landmarks' ? (((libSrc&&libSrc.landmarks)||[]).map(n=>({name:n,sub:'معلم بارز'}))) : provFor(cat));
     const itemIconFor=(cat,o)=> cat==='action' ? (o.icon||'check') : (catIcon[cat]||'walk');
-    const itemPriceFor=(cat)=> cat==='action' ? 0 : (catDefPrice[cat]||0);
+    const itemPriceFor=(cat,o)=> cat==='action' ? 0 : ((o && o.price!=null) ? Number(o.price)||0 : (catDefPrice[cat]||0));
     const matchQ=(o)=>!libQ || (o.name||'').indexOf(libQ)>-1 || (o.sub||'').indexOf(libQ)>-1;
     const palItemsRaw = rawFor(palCat).filter(matchQ);
     const builderPalCats = palCats.map(c=>({ ...c, count:rawFor(c.cat).length, active:palCat===c.cat, style:chip(palCat===c.cat), onClick:()=>this.setState({ palCat:c.cat }) }));
-    const builderPalette = palItemsRaw.map(o=>({ ...o, iconEl:this.icon(itemIconFor(palCat,o),16), onAdd:()=>this.builderAddFromPalette(o.name, itemIconFor(palCat,o), itemPriceFor(palCat)) }));
-    const addToDay=(di,cat,o)=>{ const day=this.state.builderDays[di]||{items:[]}; const times=['09:00','11:00','13:00','15:00','17:00','19:00','21:00']; const ic=itemIconFor(cat,o); const t= (cat==='action'&&o.t)?o.t:(ic==='hotel'?'15:00':(ic==='car'?'08:00':(ic==='meal'?'13:00':times[Math.min(day.items.length,times.length-1)]))); this.builderAddItem(di,{ t, title:o.name, icon:ic, price:itemPriceFor(cat) }); };
+    const builderPalette = palItemsRaw.map(o=>({ ...o, iconEl:this.icon(itemIconFor(palCat,o),16), onAdd:()=>this.builderAddFromPalette(o.name, itemIconFor(palCat,o), itemPriceFor(palCat,o)) }));
+    const addToDay=(di,cat,o)=>{ const day=this.state.builderDays[di]||{items:[]}; const times=['09:00','11:00','13:00','15:00','17:00','19:00','21:00']; const ic=itemIconFor(cat,o); const t= (cat==='action'&&o.t)?o.t:(ic==='hotel'?'15:00':(ic==='car'?'08:00':(ic==='meal'?'13:00':times[Math.min(day.items.length,times.length-1)]))); this.builderAddItem(di,{ t, title:o.name, icon:ic, price:itemPriceFor(cat,o) }); };
     const libCat=st.libCat;
     const libCats=palCats.concat([{cat:'custom',label:'✎ مخصّص'}]);
     const libCatChips = libCats.map(c=>({ ...c, chipLabel: c.cat==='custom'? c.label : (c.label+' · '+rawFor(c.cat).length), active:libCat===c.cat, style:chip(libCat===c.cat), onClick:()=>this.setState({ libCat:c.cat }) }));
@@ -3548,7 +3653,9 @@ class Component extends DCLogic {
     const libTypeChips=[{label:'نشاط',icon:'walk'},{label:'معلم',icon:'castle'},{label:'فندق',icon:'hotel'},{label:'تنقل',icon:'car'},{label:'طيران',icon:'flight'},{label:'وجبة',icon:'meal'},{label:'إجراء',icon:'check'},{label:'وقت حر',icon:'free'}].map(t=>({ ...t, active:st.libCustomType===t.icon, iconEl:this.icon(t.icon,15), onClick:()=>this.setState({ libCustomType:t.icon }), chipStyle:{ display:'flex', alignItems:'center', gap:'6px', fontFamily:'inherit', fontSize:'12.5px', fontWeight:600, cursor:'pointer', padding:'7px 12px', borderRadius:'9999px', border:'1px solid '+(st.libCustomType===t.icon?'transparent':'var(--app-border)'), background:st.libCustomType===t.icon?'var(--app-accent)':'var(--app-surface)', color:st.libCustomType===t.icon?'var(--app-on-accent)':'var(--app-text)' } }));
     const _libDayT=this.state.builderDays[libDayIdx]&&this.state.builderDays[libDayIdx].title; const libDayLabel = 'اليوم '+(libDayIdx+1)+((_libDayT && _libDayT!==('اليوم '+(libDayIdx+1)))?(' · '+_libDayT):'');
     const builderTargetOptions = this.state.builderDays.map((d,i)=>({ value:String(i), label:'اليوم '+(i+1)+(d.title?(' · '+d.title):'') }));
-    const builderProgList = Object.keys(this.programs).map(k=>({ id:k, name:this.programs[k].name, sub:(this.programs[k].days)+' أيام · '+(this.programs[k].country||''), onPick:()=>this.builderStartFromProgram(k) }));
+    const builderProgList = Object.keys(this.programs).map(k=>({ id:k, name:this.programs[k].name, sub:'برنامج جاهز · '+(this.programs[k].days)+' أيام · '+(this.programs[k].country||''), onPick:()=>this.builderStartFromProgram(k) }))
+      .concat((this.state.publishedPrograms||[]).map(p=>({ id:p.id, name:p.name, sub:'منشور · '+p.days+' أيام · '+(p.country2||''), onPick:()=>this.loadSaleProgram(p.id) })))
+      .concat((this.state.savedSchedules||[]).map(r=>({ id:r.id, name:r.name, sub:'مسودة · '+(r.mode==='sale'?'برنامج':'عميل')+' · '+r.days+' أيام', onPick:()=>this.loadBuilderDraft(r.id) })));
     const builderModeSeg=[{label:'جدول لعميل',value:'client'},{label:'برنامج للعرض والبيع',value:'sale'}].map(o=>({ ...o, active:st.builderMode===o.value, style:{ ...segWide(st.builderMode===o.value), padding:'9px 18px' }, onClick:()=>this.setState({ builderMode:o.value }) }));
     const isSaleMode=st.builderMode==='sale';
     const saleCoverOptions=this.destinations.map(d=>({ value:d.id, label:d.name }));
@@ -3681,11 +3788,17 @@ class Component extends DCLogic {
       saleMinPax:this.state.saleMinPax, saleMinInc:()=>this.setState(s=>({saleMinPax:Math.min(40,s.saleMinPax+1)})), saleMinDec:()=>this.setState(s=>({saleMinPax:Math.max(1,s.saleMinPax-1)})),
       salePrice:this.state.salePrice, onSalePrice:(e)=>this.setState({salePrice:String(e.target.value).replace(/[^\d.]/g,'')}), salePricePlaceholder:fmt(perPerson), publishProgram:this.publishProgram,
       builderStartDate:this.state.builderStartDate, onBuilderStartDate:(e)=>this.setBuilderDate('from',e.target.value), builderEndDate:this.state.builderEndDate, onBuilderEndDate:(e)=>this.setBuilderDate('to',e.target.value), builderTripDates, hasBuilderDates:!!bStartDate,
-      rangeDays:this.state.builderDays.length, rangeNights:Math.max(0,this.state.builderDays.length-1), hasRange:!!(this.state.builderStartDate&&this.state.builderEndDate),
+      rangeDays:this.state.builderDays.length, rangeNights:Math.max(0,this.state.builderDays.length-1), hasRange:!!(this.state.builderStartDate&&this.state.builderEndDate), rangeWarn:!!this.state.rangeWarn,
+      builderError:this.state.builderError, saveBuilderDraft:this.saveBuilderDraft,
+      savedSchedulesView:(this.state.savedSchedules||[]).map(r=>({ ...r, onLoad:()=>this.loadBuilderDraft(r.id), onDelete:()=>this.deleteBuilderDraft(r.id) })), hasSavedSchedules:(this.state.savedSchedules||[]).length>0,
+      sendSchedule:()=>this.sendScheduleToClient(grandTotal), builderSent:this.state.builderSent, builderSentLink:this.state.builderSentLink, closeBuilderSent:this.closeBuilderSent, openTrackingFromBuilder:()=>this.setState({ builderSent:false, screen:'program', programId:'edi', purchased:true, activeDay:0, tripTab:'overview' }),
       priceBreakdown, baseCostFmt:fmt(baseCost), grandTotalFmt:fmt(grandTotal), perPersonFmt:fmt(perPerson),
+      cur, profitFmt:fmt(marginAmt), profitPct, sellFmt:fmt(grandTotal),
+      builderCurrency:this.state.builderCurrency, onBuilderCurrency:(e)=>this.setState({builderCurrency:e.target.value}), currencyOptions:['ر.س','$','£','€'],
+      builderChildren:this.state.builderChildren, childrenInc:()=>this.setState(s=>({builderChildren:Math.min(20,(Number(s.builderChildren)||0)+1)})), childrenDec:()=>this.setState(s=>({builderChildren:Math.max(0,(Number(s.builderChildren)||0)-1)})),
       bMarginPct:this.state.bMarginPct, onBuilderMargin:(e)=>this.builderSetNum('bMarginPct',e.target.value), bMarketerPct:this.state.bMarketerPct, onBuilderMarketer:(e)=>this.builderSetNum('bMarketerPct',e.target.value),
       bVatOn:this.state.bVatOn, toggleVat:()=>this.builderToggle('bVatOn'), vatStyle:swStyle(this.state.bVatOn), vatDot:swDot(this.state.bVatOn), bVatPct:this.state.bVatPct, onBuilderVat:(e)=>this.builderSetNum('bVatPct',e.target.value),
-      dvProgramBuilder:dashView==='programBuilder', openProgramBuilder:()=>this.openProgramBuilder(), openTourismProgram:()=>this.openProgramBuilder('tourism'), openStudyProgramBuilder:()=>this.openProgramBuilder('study'),
+      dvProgramBuilder:dashView==='programBuilder', openProgramBuilder:()=>this.openSaleBuilder(), openTourismProgram:()=>this.openSaleBuilder(), openStudyProgramBuilder:()=>this.openProgramBuilder('study'),
       pbTypeSeg:[{label:'برنامج سياحي',value:'tourism'},{label:'دراسة وابتعاث',value:'study'}].map(o=>({ ...o, active:this.state.pbType===o.value, onClick:()=>this.setState({pbType:o.value}), style:{ flex:'1', fontFamily:'inherit', fontSize:'14px', fontWeight:600, cursor:'pointer', padding:'11px', borderRadius:'10px', border:'1px solid '+(this.state.pbType===o.value?'transparent':'var(--app-border)'), background:this.state.pbType===o.value?'var(--app-accent)':'var(--app-surface)', color:this.state.pbType===o.value?'var(--app-on-accent)':'var(--app-text)' } })),
       pbIsStudy:this.state.pbType==='study', pbName:this.state.pbName, pbDest:this.state.pbDest, pbDuration:this.state.pbDuration, pbPrice:this.state.pbPrice, pbDesc:this.state.pbDesc, pbIncludes:this.state.pbIncludes,
       onPbName:(e)=>this.setState({pbName:e.target.value}), onPbDest:(e)=>this.setState({pbDest:e.target.value}), onPbDuration:(e)=>this.setState({pbDuration:e.target.value}), onPbPrice:(e)=>this.setState({pbPrice:e.target.value}), onPbDesc:(e)=>this.setState({pbDesc:e.target.value}), onPbIncludes:(e)=>this.setState({pbIncludes:e.target.value}),
